@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 const HistoricalArchive = () => {
@@ -14,6 +14,40 @@ const HistoricalArchive = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [expandedSection, setExpandedSection] = useState(null);
+  
+  // New state for CMS data
+  const [families, setFamilies] = useState([]);
+  const [stories, setStories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch data from CMS
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        
+        // Fetch families
+        const familiesResponse = await fetch('https://children-families-cms.onrender.com/api/families');
+        const familiesData = await familiesResponse.json();
+        
+        // Fetch stories
+        const storiesResponse = await fetch('https://children-families-cms.onrender.com/api/stories?populate=*');
+        const storiesData = await storiesResponse.json();
+        
+        setFamilies(familiesData.data || []);
+        setStories(storiesData.data || []);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setError('Failed to load content from archive');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleSendMessage = () => {
     if (!currentMessage.trim()) return;
@@ -29,9 +63,9 @@ const HistoricalArchive = () => {
     
     setTimeout(() => {
       const responses = [
-        "That's a fascinating question about the Little Rock Nine. Let me share some context and point you to Sarah's powerful oral history video in our Family Stories section that directly relates to your question.",
-        "I found several resources about that topic! There's a beautiful photograph in our Visual Timeline from 1957 that captures that exact moment, plus an audio interview with a family member who experienced it firsthand.",
-        "What an important question about hidden histories. I recommend checking out the Johnson family's story in our Archives - they have incredible photos and documents from that time period."
+        "That's a fascinating question about the Little Rock Nine. Let me share some context and point you to our Family Stories section that directly relates to your question.",
+        "I found several resources about that topic! Check out our archived family stories and documents.",
+        "What an important question about hidden histories. I recommend exploring the family stories in our Archives section."
       ];
       
       setChatMessages(prev => [...prev, {
@@ -101,7 +135,7 @@ const HistoricalArchive = () => {
                 Discover the hidden histories of children and families impacted by Little Rock School Integration through personal stories, photographs, documents, and interactive experiences.
               </p>
               <div className="hero-buttons">
-                <button className="btn-primary">Explore Stories</button>
+                <button className="btn-primary" onClick={() => setActiveSection('families')}>Explore Stories</button>
                 <button className="btn-secondary">Watch Introduction</button>
               </div>
               <div className="search-container">
@@ -118,26 +152,228 @@ const HistoricalArchive = () => {
                 <div className="feature-icon">👨‍👩‍👧‍👦</div>
                 <h3>Family Stories</h3>
                 <p>Personal accounts and oral histories from families who lived through integration.</p>
-                <a href="#families">Explore Families →</a>
+                <a href="#" onClick={() => setActiveSection('families')}>Explore Families →</a>
               </div>
               <div className="feature-card card-blue">
                 <div className="feature-icon">⏰</div>
                 <h3>Interactive Timeline</h3>
                 <p>Journey through key moments and personal experiences chronologically.</p>
-                <a href="#timeline">View Timeline →</a>
+                <a href="#" onClick={() => setActiveSection('timeline')}>View Timeline →</a>
               </div>
               <div className="feature-card card-green">
                 <div className="feature-icon">🎭</div>
                 <h3>Multimedia Archive</h3>
                 <p>Photos, videos, audio recordings, and documents from the era.</p>
-                <a href="#multimedia">Browse Media →</a>
+                <a href="#" onClick={() => setActiveSection('multimedia')}>Browse Media →</a>
               </div>
             </div>
           </section>
+
+          {/* Featured Families Section */}
+          {families.length > 0 && (
+            <section className="featured-families">
+              <div className="container">
+                <h2>Featured Family Stories</h2>
+                <p>Real stories from families who experienced the Little Rock School Integration Crisis</p>
+                <div className="families-preview">
+                  {families.slice(0, 3).map((family) => (
+                    <div key={family.id} className="family-preview-card">
+                      <h3>{family.attributes.familyName}</h3>
+                      <p className="time-period">{family.attributes.timePeriod}</p>
+                      <p className="description">{family.attributes.description?.substring(0, 150)}...</p>
+                      <p className="location">📍 {family.attributes.location}</p>
+                      {family.attributes.childrenNames && (
+                        <p className="children">Children: {family.attributes.childrenNames}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <button className="btn-primary" onClick={() => setActiveSection('families')}>
+                  View All Families
+                </button>
+              </div>
+            </section>
+          )}
         </div>
       )}
 
-      {/* Scholarship Section */}
+      {/* Families Section */}
+      {activeSection === 'families' && (
+        <section className="families-section">
+          <div className="container">
+            <h1>Family Stories</h1>
+            <p>Personal accounts from families who lived through the Little Rock School Integration Crisis</p>
+            
+            {loading && (
+              <div className="loading">
+                <p>Loading family stories from the archive...</p>
+              </div>
+            )}
+            
+            {error && (
+              <div className="error">
+                <p>{error}</p>
+                <button onClick={() => window.location.reload()}>Try Again</button>
+              </div>
+            )}
+            
+            {!loading && !error && families.length === 0 && (
+              <div className="no-content">
+                <p>No family stories available yet. Stories are being added to the archive.</p>
+              </div>
+            )}
+            
+            {!loading && families.length > 0 && (
+              <div className="families-grid">
+                {families.map((family) => (
+                  <div key={family.id} className="family-card">
+                    <div className="family-header">
+                      <h2>{family.attributes.familyName}</h2>
+                      <span className="time-badge">{family.attributes.timePeriod}</span>
+                    </div>
+                    
+                    <div className="family-content">
+                      <p className="family-description">{family.attributes.description}</p>
+                      
+                      <div className="family-details">
+                        <div className="detail-item">
+                          <span className="label">Location:</span>
+                          <span className="value">{family.attributes.location}</span>
+                        </div>
+                        
+                        {family.attributes.childrenNames && (
+                          <div className="detail-item">
+                            <span className="label">Children:</span>
+                            <span className="value">{family.attributes.childrenNames}</span>
+                          </div>
+                        )}
+                        
+                        <div className="detail-item">
+                          <span className="label">Archived:</span>
+                          <span className="value">
+                            {new Date(family.attributes.publishedAt).toLocaleDateString()}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="family-actions">
+                      <button className="btn-primary">View Full Story</button>
+                      <button className="btn-secondary">Related Documents</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* Stories Section */}
+      {activeSection === 'stories' && (
+        <section className="stories-section">
+          <div className="container">
+            <h1>Individual Stories</h1>
+            <p>Detailed accounts and documents from the integration experience</p>
+            
+            {loading && (
+              <div className="loading">
+                <p>Loading stories from the archive...</p>
+              </div>
+            )}
+            
+            {!loading && stories.length === 0 && (
+              <div className="no-content">
+                <p>Individual stories are being added to the archive. Check back soon.</p>
+              </div>
+            )}
+            
+            {!loading && stories.length > 0 && (
+              <div className="stories-grid">
+                {stories.map((story) => (
+                  <div key={story.id} className="story-card">
+                    <div className="story-header">
+                      <h3>{story.attributes.title}</h3>
+                      {story.attributes.storyType && (
+                        <span className="story-type-badge">{story.attributes.storyType}</span>
+                      )}
+                    </div>
+                    
+                    <div className="story-content">
+                      <p>{story.attributes.content?.substring(0, 200)}...</p>
+                      
+                      {story.attributes.timePeriod && (
+                        <p className="story-time">Time Period: {story.attributes.timePeriod}</p>
+                      )}
+                    </div>
+                    
+                    <div className="story-actions">
+                      <button className="btn-primary">Read Full Story</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* Timeline Section */}
+      {activeSection === 'timeline' && (
+        <section className="timeline-section">
+          <div className="container">
+            <h1>Interactive Timeline</h1>
+            <p>Journey through key moments and personal experiences chronologically</p>
+            
+            <div className="timeline-placeholder">
+              <p>Timeline visualization will be built using the family and story data from the archive.</p>
+              <p>Stories from {families.length} families will be plotted chronologically.</p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Multimedia Section */}
+      {activeSection === 'multimedia' && (
+        <section className="multimedia-section">
+          <div className="container">
+            <h1>Multimedia Archive</h1>
+            <p>Photos, videos, audio recordings, and documents from the era</p>
+            
+            <div className="multimedia-placeholder">
+              <p>Multimedia content from family stories will be displayed here.</p>
+              <p>Content is being processed and will be available soon.</p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* About Section */}
+      {activeSection === 'about' && (
+        <section className="about-section">
+          <div className="container">
+            <h1>About This Archive</h1>
+            <p>This digital archive preserves the untold stories of children and families impacted by the Little Rock School Integration Crisis through innovative use of AI and machine learning technologies.</p>
+            
+            <div className="about-stats">
+              <div className="stat-card">
+                <h3>{families.length}</h3>
+                <p>Families Documented</p>
+              </div>
+              <div className="stat-card">
+                <h3>{stories.length}</h3>
+                <p>Individual Stories</p>
+              </div>
+              <div className="stat-card">
+                <h3>Live</h3>
+                <p>Archive Status</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Scholarship Section - Keep existing scholarship section exactly as is */}
       {activeSection === 'scholarship' && (
         <section className="scholarship">
           <div className="scholarship-content">
@@ -161,7 +397,7 @@ const HistoricalArchive = () => {
               <div className="progress-bar">
                 <div className="progress-fill" style={{width: '75%'}}></div>
               </div>
-              <p className="progress-text">5 families documented • Literature review complete • Analysis in progress</p>
+              <p className="progress-text">{families.length} families documented • Literature review complete • Analysis in progress</p>
             </div>
 
             {/* Academic Sections */}
@@ -196,7 +432,7 @@ const HistoricalArchive = () => {
                     
                     <div className="academic-actions">
                       <button className="action-btn blue">Download Section PDF</button>
-                      <button className="link-btn">View Related Stories →</button>
+                      <button className="link-btn" onClick={() => setActiveSection('families')}>View Related Stories →</button>
                     </div>
                   </div>
                 )}
@@ -322,17 +558,17 @@ const HistoricalArchive = () => {
                     
                     <div className="research-status">
                       <h4>Research in Progress</h4>
-                      <p>Final analysis will be available upon completion of data collection from all 5 families.</p>
+                      <p>Final analysis will be available upon completion of data collection from all families.</p>
                     </div>
                     
                     <div className="stats-grid">
                       <div className="stat">
-                        <div className="stat-number">5</div>
+                        <div className="stat-number">{families.length}</div>
                         <div className="stat-label">Families Documented</div>
                       </div>
                       <div className="stat">
-                        <div className="stat-number">24</div>
-                        <div className="stat-label">Hours of Interviews</div>
+                        <div className="stat-number">{stories.length}</div>
+                        <div className="stat-label">Stories Archived</div>
                       </div>
                       <div className="stat">
                         <div className="stat-number">127</div>
@@ -342,7 +578,7 @@ const HistoricalArchive = () => {
                     
                     <div className="academic-actions">
                       <button className="action-btn orange">Preliminary Findings</button>
-                      <button className="link-btn">Explore Connected Stories →</button>
+                      <button className="link-btn" onClick={() => setActiveSection('families')}>Explore Connected Stories →</button>
                     </div>
                   </div>
                 )}

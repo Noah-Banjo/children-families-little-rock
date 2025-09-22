@@ -15,65 +15,16 @@ const HistoricalArchive = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [expandedSection, setExpandedSection] = useState(null);
   
-  // New state for CMS data
+  // State for CMS data
   const [families, setFamilies] = useState([]);
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isUsingFallback, setIsUsingFallback] = useState(false);
   
   // Timeline specific state
   const [selectedYear, setSelectedYear] = useState(null);
   const [timelineFilter, setTimelineFilter] = useState('all');
   const [timelineSearch, setTimelineSearch] = useState('');
-
-  // Fallback data for when CMS is unavailable
-  const fallbackFamilies = [
-    {
-      id: 1,
-      familyName: "The Bridges Family",
-      timePeriod: "1957-1960",
-      location: "Little Rock, Arkansas",
-      childrenNames: "Elizabeth Eckford",
-      description: "Elizabeth Eckford was one of the Little Rock Nine, the first nine African American students to integrate Central High School in Little Rock, Arkansas, in 1957. Her courage in the face of hostile crowds became an iconic symbol of the civil rights movement.",
-      publishedAt: "2025-01-01T00:00:00.000Z"
-    },
-    {
-      id: 2,
-      familyName: "The Thomas Family",
-      timePeriod: "1957-1961",
-      location: "Little Rock, Arkansas",
-      childrenNames: "Jefferson Thomas",
-      description: "Jefferson Thomas was one of the Little Rock Nine who persevered through the challenges of integration. He later became successful in business and remained an advocate for education and civil rights throughout his life.",
-      publishedAt: "2025-01-02T00:00:00.000Z"
-    },
-    {
-      id: 3,
-      familyName: "The Green Family",
-      timePeriod: "1957-1962",
-      location: "Little Rock, Arkansas",
-      childrenNames: "Ernest Green",
-      description: "Ernest Green was the first African American to graduate from Central High School in 1958. He went on to become a successful businessman and government official, paving the way for future generations.",
-      publishedAt: "2025-01-03T00:00:00.000Z"
-    }
-  ];
-
-  const fallbackStories = [
-    {
-      id: 1,
-      title: "Walking Through the Crowd",
-      content: "The morning of September 4, 1957, I walked toward Central High School surrounded by an angry mob. The Arkansas National Guard blocked our entry, but our determination remained unshaken. This was bigger than just going to school - this was about changing history.",
-      storyType: "Personal Account",
-      timePeriod: "September 1957"
-    },
-    {
-      id: 2,
-      title: "Letters from Home",
-      content: "During the most difficult days at Central High, letters of support from around the world kept us going. People we'd never met were praying for us, believing in us, and supporting our cause for equal education.",
-      storyType: "Family Memory",
-      timePeriod: "1957-1958"
-    }
-  ];
 
   // Historical events data
   const historicalEvents = {
@@ -161,94 +112,57 @@ const HistoricalArchive = () => {
     ]
   };
 
-  // Enhanced fetch function with retry logic
-  const fetchWithRetry = async (url, retries = 2) => {
-    for (let i = 0; i <= retries; i++) {
-      try {
-        console.log(`Fetching from: ${url} (attempt ${i + 1})`);
-        
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          signal: AbortSignal.timeout(8000) // 8 second timeout
-        });
-        
-        if (response.ok) {
-          const data = await response.json();
-          console.log(`✅ Success from ${url}:`, data);
-          return { success: true, data };
-        } else {
-          console.warn(`❌ HTTP ${response.status} from ${url} (attempt ${i + 1})`);
-          if (i === retries) {
-            return { success: false, error: `HTTP ${response.status}`, data: null };
-          }
-        }
-      } catch (error) {
-        console.warn(`❌ Network error from ${url} (attempt ${i + 1}):`, error.message);
-        if (i === retries) {
-          return { success: false, error: error.message, data: null };
-        }
-        // Wait before retry (1s, 2s, 3s...)
-        await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+  // Robust fetch function
+  const fetchFromCMS = async (url) => {
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        signal: AbortSignal.timeout(10000)
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
+      
+      const data = await response.json();
+      return { success: true, data: data.data || [] };
+    } catch (error) {
+      console.error('CMS fetch error:', error);
+      return { success: false, error: error.message, data: [] };
     }
   };
 
-  // Fetch data from CMS with fallback
+  // Fetch data from CMS only
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      
       try {
-        setLoading(true);
-        setError(null);
-        setIsUsingFallback(false);
-        
-        console.log('🔄 Starting data fetch from CMS...');
-        
-        // Try fetching from CMS with retries
         const [familiesResult, storiesResult] = await Promise.all([
-          fetchWithRetry('https://children-families-cms.onrender.com/api/families'),
-          fetchWithRetry('https://children-families-cms.onrender.com/api/stories?populate=*')
+          fetchFromCMS('https://children-families-cms.onrender.com/api/families'),
+          fetchFromCMS('https://children-families-cms.onrender.com/api/stories?populate=*')
         ]);
         
-        // Handle families data
-        if (familiesResult.success && familiesResult.data?.data?.length > 0) {
-          setFamilies(familiesResult.data.data);
-          console.log('✅ Families loaded from CMS');
-        } else {
-          setFamilies(fallbackFamilies);
-          setIsUsingFallback(true);
-          console.log('⚠️ Using fallback families data');
-        }
+        // Only set data if successful, otherwise keep empty arrays
+        setFamilies(familiesResult.success ? familiesResult.data : []);
+        setStories(storiesResult.success ? storiesResult.data : []);
         
-        // Handle stories data
-        if (storiesResult.success && storiesResult.data?.data?.length > 0) {
-          setStories(storiesResult.data.data);
-          console.log('✅ Stories loaded from CMS');
-        } else {
-          setStories(fallbackStories);
-          setIsUsingFallback(true);
-          console.log('⚠️ Using fallback stories data');
-        }
-        
-        // Set appropriate error message
-        if (!familiesResult.success || !storiesResult.success) {
-          if (familiesResult.error?.includes('403') || storiesResult.error?.includes('403')) {
-            setError('CMS needs configuration. Displaying archive content.');
-          } else {
-            setError('CMS temporarily unavailable. Showing archive content.');
-          }
-        } else if (isUsingFallback) {
-          setError('CMS connected but no content found. Showing sample archive.');
+        // Set error only if both failed
+        if (!familiesResult.success && !storiesResult.success) {
+          setError('Unable to connect to archive database. Please check your connection or try again later.');
+        } else if (!familiesResult.success || !storiesResult.success) {
+          setError('Some archive content may be temporarily unavailable.');
         }
         
       } catch (err) {
-        console.error('💥 Critical error in fetchData:', err);
-        setFamilies(fallbackFamilies);
-        setStories(fallbackStories);
-        setError('Displaying archive content.');
-        setIsUsingFallback(true);
+        console.error('Data fetch error:', err);
+        setFamilies([]);
+        setStories([]);
+        setError('Archive temporarily unavailable. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -257,54 +171,59 @@ const HistoricalArchive = () => {
     fetchData();
   }, []);
 
-  // Process timeline data
+  // Process timeline data safely
   const getTimelineData = () => {
     const timelineYears = {};
     
     // Add historical events
     Object.keys(historicalEvents).forEach(year => {
       timelineYears[year] = {
-        historical: historicalEvents[year],
+        historical: historicalEvents[year] || [],
         families: []
       };
     });
     
-    // Add family events
-    families.forEach(family => {
-      if (family.timePeriod) {
-        // Extract years from time period (e.g., "1957-1960" or "1957")
-        const yearMatch = family.timePeriod.match(/(\d{4})/);
-        if (yearMatch) {
-          const year = yearMatch[1];
-          if (!timelineYears[year]) {
-            timelineYears[year] = { historical: [], families: [] };
+    // Add family events safely
+    if (Array.isArray(families)) {
+      families.forEach(family => {
+        if (family && family.timePeriod) {
+          const yearMatch = family.timePeriod.match(/(\d{4})/);
+          if (yearMatch) {
+            const year = yearMatch[1];
+            if (!timelineYears[year]) {
+              timelineYears[year] = { historical: [], families: [] };
+            }
+            timelineYears[year].families.push({
+              id: `f${family.id}`,
+              family: family.familyName || 'Unknown Family',
+              title: `${family.familyName || 'Unknown Family'} Integration Experience`,
+              description: family.description || 'Family experience during integration',
+              children: family.childrenNames || '',
+              location: family.location || '',
+              category: 'family-experience',
+              icon: '👨‍👩‍👧‍👦'
+            });
           }
-          timelineYears[year].families.push({
-            id: `f${family.id}`,
-            family: family.familyName,
-            title: `${family.familyName} Integration Experience`,
-            description: `${family.familyName} experience during integration`,
-            children: family.childrenNames,
-            location: family.location,
-            category: 'family-experience',
-            icon: '👨‍👩‍👧‍👦'
-          });
         }
-      }
-    });
+      });
+    }
     
     return timelineYears;
   };
 
-  // Filter timeline events
+  // Filter timeline events safely
   const filterTimelineEvents = (events) => {
+    if (!Array.isArray(events)) return [];
+    
     if (timelineFilter === 'all' && !timelineSearch) return events;
     
     return events.filter(event => {
+      if (!event) return false;
+      
       const matchesFilter = timelineFilter === 'all' || event.category === timelineFilter;
       const matchesSearch = !timelineSearch || 
-        event.title.toLowerCase().includes(timelineSearch.toLowerCase()) ||
-        event.description.toLowerCase().includes(timelineSearch.toLowerCase()) ||
+        (event.title && event.title.toLowerCase().includes(timelineSearch.toLowerCase())) ||
+        (event.description && event.description.toLowerCase().includes(timelineSearch.toLowerCase())) ||
         (event.family && event.family.toLowerCase().includes(timelineSearch.toLowerCase()));
       
       return matchesFilter && matchesSearch;
@@ -391,21 +310,6 @@ const HistoricalArchive = () => {
         </div>
       )}
 
-      {/* Archive Status Banner */}
-      {isUsingFallback && (
-        <div style={{
-          background: 'linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1))',
-          border: '1px solid rgba(251, 191, 36, 0.3)',
-          padding: '1rem 2rem',
-          textAlign: 'center',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
-        }}>
-          <p style={{ margin: 0, fontSize: '0.9rem' }}>
-            📚 <strong>Archive Mode:</strong> Displaying representative content from the Little Rock Integration collection
-          </p>
-        </div>
-      )}
-
       {/* Main Content */}
       {activeSection === 'home' && (
         <div>
@@ -453,7 +357,7 @@ const HistoricalArchive = () => {
             </div>
           </section>
 
-          {/* Featured Families Section */}
+          {/* Featured Families Section - Only show if families exist */}
           {!loading && families.length > 0 && (
             <section className="featured-families">
               <div className="container">
@@ -504,7 +408,7 @@ const HistoricalArchive = () => {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
                   <span style={{ fontSize: '2rem' }}>⚠️</span>
                   <div>
-                    <p style={{ margin: 0, fontWeight: 'bold' }}>Archive Notice</p>
+                    <p style={{ margin: 0, fontWeight: 'bold' }}>Archive Connection Issue</p>
                     <p style={{ margin: 0, fontSize: '0.9rem' }}>{error}</p>
                   </div>
                 </div>
@@ -522,7 +426,7 @@ const HistoricalArchive = () => {
                       fontWeight: '600'
                     }}
                   >
-                    🔄 Reconnect to CMS
+                    🔄 Try Again
                   </button>
                   
                   <a 
@@ -539,24 +443,15 @@ const HistoricalArchive = () => {
                       fontWeight: '600'
                     }}
                   >
-                    ⚙️ CMS Admin Panel
+                    ⚙️ CMS Admin
                   </a>
-                  
-                  <button 
-                    onClick={() => setError(null)}
-                    style={{
-                      background: 'rgba(156, 163, 175, 0.2)',
-                      color: '#9ca3af',
-                      border: '1px solid rgba(156, 163, 175, 0.5)',
-                      padding: '0.75rem 1.5rem',
-                      borderRadius: '0.5rem',
-                      cursor: 'pointer',
-                      fontWeight: '600'
-                    }}
-                  >
-                    ✕ Continue
-                  </button>
                 </div>
+              </div>
+            )}
+            
+            {!loading && !error && families.length === 0 && (
+              <div className="no-content">
+                <p>No family stories available yet. Stories are being added to the archive.</p>
               </div>
             )}
             
@@ -720,7 +615,9 @@ const HistoricalArchive = () => {
               <div className="timeline-spine">
                 {years.map((year, index) => {
                   const yearData = timelineData[year];
-                  const allEvents = [...yearData.historical, ...yearData.families];
+                  if (!yearData) return null;
+                  
+                  const allEvents = [...(yearData.historical || []), ...(yearData.families || [])];
                   const filteredEvents = filterTimelineEvents(allEvents);
                   
                   if (filteredEvents.length === 0 && timelineFilter !== 'all') return null;
@@ -741,51 +638,53 @@ const HistoricalArchive = () => {
                         {index < years.length - 1 && <div className="timeline-line"></div>}
                       </div>
 
-                      {/* Year Events */}
+                      {/* Year Events - Fixed scrolling */}
                       <div className={`timeline-events ${selectedYear === year ? 'expanded' : ''}`}>
-                        {filteredEvents.map((event) => (
-                          <div key={event.id} className={`timeline-event ${event.category}`}>
-                            <div className="event-icon">{event.icon}</div>
-                            <div className="event-content">
-                              <div className="event-header">
-                                <h4>{event.title}</h4>
-                                <span className="event-date">{event.date || year}</span>
-                              </div>
-                              <p className="event-description">{event.description}</p>
-                              
-                              {event.children && (
-                                <p className="event-children">
-                                  <strong>Children involved:</strong> {event.children}
-                                </p>
-                              )}
-                              
-                              {event.location && (
-                                <p className="event-location">
-                                  <strong>Location:</strong> {event.location}
-                                </p>
-                              )}
-                              
-                              {event.significance && (
-                                <div className="event-significance">
-                                  <h5>Historical Significance:</h5>
-                                  <p>{event.significance}</p>
+                        <div className="timeline-events-container">
+                          {filteredEvents.map((event) => (
+                            <div key={event.id} className={`timeline-event ${event.category}`}>
+                              <div className="event-icon">{event.icon}</div>
+                              <div className="event-content">
+                                <div className="event-header">
+                                  <h4>{event.title}</h4>
+                                  <span className="event-date">{event.date || year}</span>
                                 </div>
-                              )}
-                              
-                              <div className="event-actions">
-                                {event.family && (
-                                  <button 
-                                    className="btn-timeline"
-                                    onClick={() => setActiveSection('families')}
-                                  >
-                                    View {event.family} Story
-                                  </button>
+                                <p className="event-description">{event.description}</p>
+                                
+                                {event.children && (
+                                  <p className="event-children">
+                                    <strong>Children involved:</strong> {event.children}
+                                  </p>
                                 )}
-                                <button className="btn-timeline-secondary">Learn More</button>
+                                
+                                {event.location && (
+                                  <p className="event-location">
+                                    <strong>Location:</strong> {event.location}
+                                  </p>
+                                )}
+                                
+                                {event.significance && (
+                                  <div className="event-significance">
+                                    <h5>Historical Significance:</h5>
+                                    <p>{event.significance}</p>
+                                  </div>
+                                )}
+                                
+                                <div className="event-actions">
+                                  {event.family && (
+                                    <button 
+                                      className="btn-timeline"
+                                      onClick={() => setActiveSection('families')}
+                                    >
+                                      View {event.family} Story
+                                    </button>
+                                  )}
+                                  <button className="btn-timeline-secondary">Learn More</button>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
                     </div>
                   );
@@ -827,7 +726,7 @@ const HistoricalArchive = () => {
                 <p>Years Documented</p>
               </div>
               <div className="stat-card">
-                <h3>{Object.values(timelineData).reduce((acc, year) => acc + year.historical.length, 0)}</h3>
+                <h3>{Object.values(timelineData).reduce((acc, year) => acc + (year.historical?.length || 0), 0)}</h3>
                 <p>Historical Events</p>
               </div>
               <div className="stat-card">

@@ -35,12 +35,15 @@ const HistoricalArchive = () => {
         const storiesResponse = await fetch('https://children-families-cms.onrender.com/api/stories?populate=*');
         const storiesData = await storiesResponse.json();
         
-        setFamilies(familiesData.data || []);
-        setStories(storiesData.data || []);
+        // Ensure data is properly structured
+        setFamilies(Array.isArray(familiesData.data) ? familiesData.data : []);
+        setStories(Array.isArray(storiesData.data) ? storiesData.data : []);
         setError(null);
       } catch (err) {
         console.error('Error fetching data:', err);
         setError('Failed to load content from archive');
+        setFamilies([]);
+        setStories([]);
       } finally {
         setLoading(false);
       }
@@ -176,17 +179,27 @@ const HistoricalArchive = () => {
                 <h2>Featured Family Stories</h2>
                 <p>Real stories from families who experienced the Little Rock School Integration Crisis</p>
                 <div className="families-preview">
-                  {families.slice(0, 3).map((family) => (
-                    <div key={family.id} className="family-preview-card">
-                      <h3>{family.attributes.familyName}</h3>
-                      <p className="time-period">{family.attributes.timePeriod}</p>
-                      <p className="description">{family.attributes.description?.substring(0, 150)}...</p>
-                      <p className="location">📍 {family.attributes.location}</p>
-                      {family.attributes.childrenNames && (
-                        <p className="children">Children: {family.attributes.childrenNames}</p>
-                      )}
-                    </div>
-                  ))}
+                  {families.slice(0, 3).map((family) => {
+                    // Safety check for data structure
+                    if (!family || !family.attributes) return null;
+                    
+                    return (
+                      <div key={family.id} className="family-preview-card">
+                        <h3>{family.attributes.familyName || 'Unknown Family'}</h3>
+                        <p className="time-period">{family.attributes.timePeriod || 'Unknown Period'}</p>
+                        <p className="description">
+                          {family.attributes.description 
+                            ? `${family.attributes.description.substring(0, 150)}...`
+                            : 'No description available.'
+                          }
+                        </p>
+                        <p className="location">📍 {family.attributes.location || 'Unknown Location'}</p>
+                        {family.attributes.childrenNames && (
+                          <p className="children">Children: {family.attributes.childrenNames}</p>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
                 <button className="btn-primary" onClick={() => setActiveSection('families')}>
                   View All Families
@@ -225,44 +238,54 @@ const HistoricalArchive = () => {
             
             {!loading && families.length > 0 && (
               <div className="families-grid">
-                {families.map((family) => (
-                  <div key={family.id} className="family-card">
-                    <div className="family-header">
-                      <h2>{family.attributes.familyName}</h2>
-                      <span className="time-badge">{family.attributes.timePeriod}</span>
-                    </div>
-                    
-                    <div className="family-content">
-                      <p className="family-description">{family.attributes.description}</p>
+                {families.map((family) => {
+                  // Safety check for data structure
+                  if (!family || !family.attributes) return null;
+                  
+                  return (
+                    <div key={family.id} className="family-card">
+                      <div className="family-header">
+                        <h2>{family.attributes.familyName || 'Unknown Family'}</h2>
+                        <span className="time-badge">{family.attributes.timePeriod || 'Unknown Period'}</span>
+                      </div>
                       
-                      <div className="family-details">
-                        <div className="detail-item">
-                          <span className="label">Location:</span>
-                          <span className="value">{family.attributes.location}</span>
-                        </div>
+                      <div className="family-content">
+                        <p className="family-description">
+                          {family.attributes.description || 'No description available.'}
+                        </p>
                         
-                        {family.attributes.childrenNames && (
+                        <div className="family-details">
                           <div className="detail-item">
-                            <span className="label">Children:</span>
-                            <span className="value">{family.attributes.childrenNames}</span>
+                            <span className="label">Location:</span>
+                            <span className="value">{family.attributes.location || 'Unknown'}</span>
                           </div>
-                        )}
-                        
-                        <div className="detail-item">
-                          <span className="label">Archived:</span>
-                          <span className="value">
-                            {new Date(family.attributes.publishedAt).toLocaleDateString()}
-                          </span>
+                          
+                          {family.attributes.childrenNames && (
+                            <div className="detail-item">
+                              <span className="label">Children:</span>
+                              <span className="value">{family.attributes.childrenNames}</span>
+                            </div>
+                          )}
+                          
+                          <div className="detail-item">
+                            <span className="label">Archived:</span>
+                            <span className="value">
+                              {family.attributes.publishedAt 
+                                ? new Date(family.attributes.publishedAt).toLocaleDateString()
+                                : 'Unknown date'
+                              }
+                            </span>
+                          </div>
                         </div>
                       </div>
+                      
+                      <div className="family-actions">
+                        <button className="btn-primary">View Full Story</button>
+                        <button className="btn-secondary">Related Documents</button>
+                      </div>
                     </div>
-                    
-                    <div className="family-actions">
-                      <button className="btn-primary">View Full Story</button>
-                      <button className="btn-secondary">Related Documents</button>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
@@ -290,28 +313,38 @@ const HistoricalArchive = () => {
             
             {!loading && stories.length > 0 && (
               <div className="stories-grid">
-                {stories.map((story) => (
-                  <div key={story.id} className="story-card">
-                    <div className="story-header">
-                      <h3>{story.attributes.title}</h3>
-                      {story.attributes.storyType && (
-                        <span className="story-type-badge">{story.attributes.storyType}</span>
-                      )}
-                    </div>
-                    
-                    <div className="story-content">
-                      <p>{story.attributes.content?.substring(0, 200)}...</p>
+                {stories.map((story) => {
+                  // Safety check for data structure
+                  if (!story || !story.attributes) return null;
+                  
+                  return (
+                    <div key={story.id} className="story-card">
+                      <div className="story-header">
+                        <h3>{story.attributes.title || 'Untitled Story'}</h3>
+                        {story.attributes.storyType && (
+                          <span className="story-type-badge">{story.attributes.storyType}</span>
+                        )}
+                      </div>
                       
-                      {story.attributes.timePeriod && (
-                        <p className="story-time">Time Period: {story.attributes.timePeriod}</p>
-                      )}
+                      <div className="story-content">
+                        <p>
+                          {story.attributes.content 
+                            ? `${story.attributes.content.substring(0, 200)}...`
+                            : 'No content available.'
+                          }
+                        </p>
+                        
+                        {story.attributes.timePeriod && (
+                          <p className="story-time">Time Period: {story.attributes.timePeriod}</p>
+                        )}
+                      </div>
+                      
+                      <div className="story-actions">
+                        <button className="btn-primary">Read Full Story</button>
+                      </div>
                     </div>
-                    
-                    <div className="story-actions">
-                      <button className="btn-primary">Read Full Story</button>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>

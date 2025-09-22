@@ -20,6 +20,97 @@ const HistoricalArchive = () => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  // Timeline specific state
+  const [selectedYear, setSelectedYear] = useState(null);
+  const [timelineFilter, setTimelineFilter] = useState('all');
+  const [timelineSearch, setTimelineSearch] = useState('');
+
+  // Historical events data
+  const historicalEvents = {
+    1954: [
+      {
+        id: 'h1',
+        date: 'May 17, 1954',
+        title: 'Brown v. Board of Education Decision',
+        category: 'legal-milestone',
+        description: 'Supreme Court declares segregated schools unconstitutional',
+        significance: 'Landmark ruling that set the legal foundation for school integration',
+        icon: '⚖️'
+      }
+    ],
+    1955: [
+      {
+        id: 'h2',
+        date: 'May 31, 1955',
+        title: 'Brown II Implementation Decision',
+        category: 'legal-milestone',
+        description: 'Supreme Court orders integration "with all deliberate speed"',
+        significance: 'Established timeline for implementation but left room for delay',
+        icon: '📋'
+      }
+    ],
+    1957: [
+      {
+        id: 'h3',
+        date: 'September 2, 1957',
+        title: 'Governor Faubus Calls National Guard',
+        category: 'government-resistance',
+        description: 'Arkansas Governor prevents integration of Central High School',
+        significance: 'State resistance to federal integration orders',
+        icon: '🛡️'
+      },
+      {
+        id: 'h4',
+        date: 'September 4, 1957',
+        title: 'Little Rock Nine Attempt Entry',
+        category: 'integration-attempt',
+        description: 'Nine Black students attempt to enter Central High School',
+        significance: 'First major test of Brown v. Board implementation',
+        icon: '🎒'
+      },
+      {
+        id: 'h5',
+        date: 'September 24, 1957',
+        title: 'Federal Troops Deployed',
+        category: 'federal-intervention',
+        description: 'President Eisenhower sends 1,000 paratroopers to Little Rock',
+        significance: 'Federal government enforces integration by military force',
+        icon: '🇺🇸'
+      },
+      {
+        id: 'h6',
+        date: 'September 25, 1957',
+        title: 'Little Rock Nine Enter School',
+        category: 'integration-success',
+        description: 'Nine students successfully enter Central High under federal protection',
+        significance: 'Historic moment of successful school integration',
+        icon: '🏫'
+      }
+    ],
+    1958: [
+      {
+        id: 'h7',
+        date: 'September 1958',
+        title: 'Schools Closed by Governor',
+        category: 'government-resistance',
+        description: 'Faubus closes all Little Rock high schools for the year',
+        significance: 'Massive resistance to integration continues',
+        icon: '🔒'
+      }
+    ],
+    1959: [
+      {
+        id: 'h8',
+        date: 'August 1959',
+        title: 'Schools Reopen',
+        category: 'integration-success',
+        description: 'Federal court orders reopening of Little Rock schools',
+        significance: 'Integration resumes after year-long closure',
+        icon: '🔓'
+      }
+    ]
+  };
 
   // Fetch data from CMS
   useEffect(() => {
@@ -55,6 +146,60 @@ const HistoricalArchive = () => {
     fetchData();
   }, []);
 
+  // Process timeline data
+  const getTimelineData = () => {
+    const timelineYears = {};
+    
+    // Add historical events
+    Object.keys(historicalEvents).forEach(year => {
+      timelineYears[year] = {
+        historical: historicalEvents[year],
+        families: []
+      };
+    });
+    
+    // Add family events
+    families.forEach(family => {
+      if (family.timePeriod) {
+        // Extract years from time period (e.g., "1957-1960" or "1957")
+        const yearMatch = family.timePeriod.match(/(\d{4})/);
+        if (yearMatch) {
+          const year = yearMatch[1];
+          if (!timelineYears[year]) {
+            timelineYears[year] = { historical: [], families: [] };
+          }
+          timelineYears[year].families.push({
+            id: `f${family.id}`,
+            family: family.familyName,
+            title: `${family.familyName} Integration Experience`,
+            description: `${family.familyName} experience during integration`,
+            children: family.childrenNames,
+            location: family.location,
+            category: 'family-experience',
+            icon: '👨‍👩‍👧‍👦'
+          });
+        }
+      }
+    });
+    
+    return timelineYears;
+  };
+
+  // Filter timeline events
+  const filterTimelineEvents = (events) => {
+    if (timelineFilter === 'all' && !timelineSearch) return events;
+    
+    return events.filter(event => {
+      const matchesFilter = timelineFilter === 'all' || event.category === timelineFilter;
+      const matchesSearch = !timelineSearch || 
+        event.title.toLowerCase().includes(timelineSearch.toLowerCase()) ||
+        event.description.toLowerCase().includes(timelineSearch.toLowerCase()) ||
+        (event.family && event.family.toLowerCase().includes(timelineSearch.toLowerCase()));
+      
+      return matchesFilter && matchesSearch;
+    });
+  };
+
   const handleSendMessage = () => {
     if (!currentMessage.trim()) return;
     
@@ -81,6 +226,9 @@ const HistoricalArchive = () => {
       }]);
     }, 1000);
   };
+
+  const timelineData = getTimelineData();
+  const years = Object.keys(timelineData).sort();
 
   return (
     <div className="app">
@@ -347,16 +495,175 @@ const HistoricalArchive = () => {
         </section>
       )}
 
-      {/* Timeline Section */}
+      {/* Interactive Timeline Section */}
       {activeSection === 'timeline' && (
         <section className="timeline-section">
           <div className="container">
-            <h1>Interactive Timeline</h1>
-            <p>Journey through key moments and personal experiences chronologically</p>
-            
-            <div className="timeline-placeholder">
-              <p>Timeline visualization will be built using the family and story data from the archive.</p>
-              <p>Stories from {families.length} families will be plotted chronologically.</p>
+            <div className="timeline-header">
+              <h1>Interactive Timeline</h1>
+              <p>Journey through the Little Rock School Integration Crisis chronologically</p>
+              
+              {/* Timeline Controls */}
+              <div className="timeline-controls">
+                <div className="timeline-search">
+                  <input
+                    type="text"
+                    placeholder="Search events, families, or people..."
+                    value={timelineSearch}
+                    onChange={(e) => setTimelineSearch(e.target.value)}
+                    className="timeline-search-input"
+                  />
+                  <span className="search-icon">🔍</span>
+                </div>
+                
+                <div className="timeline-filters">
+                  <button 
+                    className={timelineFilter === 'all' ? 'filter-btn active' : 'filter-btn'}
+                    onClick={() => setTimelineFilter('all')}
+                  >
+                    All Events
+                  </button>
+                  <button 
+                    className={timelineFilter === 'legal-milestone' ? 'filter-btn active' : 'filter-btn'}
+                    onClick={() => setTimelineFilter('legal-milestone')}
+                  >
+                    Legal Milestones
+                  </button>
+                  <button 
+                    className={timelineFilter === 'family-experience' ? 'filter-btn active' : 'filter-btn'}
+                    onClick={() => setTimelineFilter('family-experience')}
+                  >
+                    Family Stories
+                  </button>
+                  <button 
+                    className={timelineFilter === 'integration-attempt' ? 'filter-btn active' : 'filter-btn'}
+                    onClick={() => setTimelineFilter('integration-attempt')}
+                  >
+                    Integration Events
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Timeline Visualization */}
+            <div className="timeline-container">
+              <div className="timeline-spine">
+                {years.map((year, index) => {
+                  const yearData = timelineData[year];
+                  const allEvents = [...yearData.historical, ...yearData.families];
+                  const filteredEvents = filterTimelineEvents(allEvents);
+                  
+                  if (filteredEvents.length === 0 && timelineFilter !== 'all') return null;
+                  
+                  return (
+                    <div key={year} className="timeline-year" id={`year-${year}`}>
+                      {/* Year Node */}
+                      <div className="timeline-year-node">
+                        <button
+                          className={`year-button ${selectedYear === year ? 'active' : ''}`}
+                          onClick={() => setSelectedYear(selectedYear === year ? null : year)}
+                        >
+                          <span className="year-number">{year}</span>
+                          <span className="event-count">{filteredEvents.length}</span>
+                        </button>
+                        
+                        {/* Year Line */}
+                        {index < years.length - 1 && <div className="timeline-line"></div>}
+                      </div>
+
+                      {/* Year Events */}
+                      <div className={`timeline-events ${selectedYear === year ? 'expanded' : ''}`}>
+                        {filteredEvents.map((event) => (
+                          <div key={event.id} className={`timeline-event ${event.category}`}>
+                            <div className="event-icon">{event.icon}</div>
+                            <div className="event-content">
+                              <div className="event-header">
+                                <h4>{event.title}</h4>
+                                <span className="event-date">{event.date || year}</span>
+                              </div>
+                              <p className="event-description">{event.description}</p>
+                              
+                              {event.children && (
+                                <p className="event-children">
+                                  <strong>Children involved:</strong> {event.children}
+                                </p>
+                              )}
+                              
+                              {event.location && (
+                                <p className="event-location">
+                                  <strong>Location:</strong> {event.location}
+                                </p>
+                              )}
+                              
+                              {event.significance && (
+                                <div className="event-significance">
+                                  <h5>Historical Significance:</h5>
+                                  <p>{event.significance}</p>
+                                </div>
+                              )}
+                              
+                              <div className="event-actions">
+                                {event.family && (
+                                  <button 
+                                    className="btn-timeline"
+                                    onClick={() => setActiveSection('families')}
+                                  >
+                                    View {event.family} Story
+                                  </button>
+                                )}
+                                <button className="btn-timeline-secondary">Learn More</button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Timeline Legend */}
+            <div className="timeline-legend">
+              <h3>Event Categories</h3>
+              <div className="legend-items">
+                <div className="legend-item">
+                  <span className="legend-color legal-milestone"></span>
+                  <span>Legal Milestones</span>
+                </div>
+                <div className="legend-item">
+                  <span className="legend-color family-experience"></span>
+                  <span>Family Experiences</span>
+                </div>
+                <div className="legend-item">
+                  <span className="legend-color integration-attempt"></span>
+                  <span>Integration Events</span>
+                </div>
+                <div className="legend-item">
+                  <span className="legend-color federal-intervention"></span>
+                  <span>Federal Actions</span>
+                </div>
+                <div className="legend-item">
+                  <span className="legend-color government-resistance"></span>
+                  <span>Government Resistance</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Timeline Statistics */}
+            <div className="timeline-stats">
+              <div className="stat-card">
+                <h3>{years.length}</h3>
+                <p>Years Documented</p>
+              </div>
+              <div className="stat-card">
+                <h3>{Object.values(timelineData).reduce((acc, year) => acc + year.historical.length, 0)}</h3>
+                <p>Historical Events</p>
+              </div>
+              <div className="stat-card">
+                <h3>{families.length}</h3>
+                <p>Family Stories</p>
+              </div>
             </div>
           </div>
         </section>

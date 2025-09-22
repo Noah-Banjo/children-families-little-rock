@@ -1,4 +1,4 @@
-/* Complete App.css with CMS Integration Styles */
+/* Complete App.css with CMS Integration and Timeline Styles */
 
 .app {
   min-height: 100vh;
@@ -565,7 +565,446 @@
   min-width: 120px;
 }
 
-/* Timeline and Multimedia Placeholders */
+/* Timeline Section */
+.timeline-section {
+  padding: 2rem 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3a8a, #312e81);
+}
+
+.timeline-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.timeline-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #fbbf24, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.timeline-header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+/* Timeline Controls */
+.timeline-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.timeline-search {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+}
+
+.timeline-search-input {
+  width: 100%;
+  padding: 1rem 3rem 1rem 1rem;
+  border: none;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.timeline-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.timeline-search .search-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+}
+
+.timeline-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.filter-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: linear-gradient(45deg, #fbbf24, #f59e0b);
+  color: #1e3a8a;
+  font-weight: bold;
+}
+
+/* Timeline Container */
+.timeline-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.timeline-spine {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  position: relative;
+}
+
+/* Year Nodes */
+.timeline-year {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  position: relative;
+}
+
+.timeline-year-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.year-button {
+  background: linear-gradient(135deg, #4c1d95, #1e3a8a);
+  border: 3px solid #fbbf24;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  position: relative;
+}
+
+.year-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 30px rgba(251, 191, 36, 0.3);
+}
+
+.year-button.active {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #1e3a8a;
+  transform: scale(1.15);
+}
+
+.year-number {
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.event-count {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+.timeline-line {
+  width: 3px;
+  height: 60px;
+  background: linear-gradient(to bottom, #fbbf24, #f59e0b);
+  margin-top: 10px;
+}
+
+/* Timeline Events */
+.timeline-events {
+  flex: 1;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+  opacity: 0;
+}
+
+.timeline-events.expanded {
+  max-height: 1000px;
+  opacity: 1;
+  padding-top: 1rem;
+}
+
+.timeline-event {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid;
+  transition: all 0.3s ease;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.timeline-event:hover {
+  transform: translateX(10px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Event Categories */
+.timeline-event.legal-milestone {
+  border-left-color: #3b82f6;
+}
+
+.timeline-event.family-experience {
+  border-left-color: #f59e0b;
+}
+
+.timeline-event.integration-attempt {
+  border-left-color: #10b981;
+}
+
+.timeline-event.federal-intervention {
+  border-left-color: #ef4444;
+}
+
+.timeline-event.government-resistance {
+  border-left-color: #8b5cf6;
+}
+
+.timeline-event.integration-success {
+  border-left-color: #06b6d4;
+}
+
+.event-icon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  opacity: 0.7;
+}
+
+.event-content {
+  padding-right: 3rem;
+}
+
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.event-header h4 {
+  font-size: 1.3rem;
+  margin: 0;
+  color: #fbbf24;
+}
+
+.event-date {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 10px;
+}
+
+.event-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+.event-children,
+.event-location {
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+  opacity: 0.8;
+}
+
+.event-children strong,
+.event-location strong {
+  color: #fbbf24;
+}
+
+.event-significance {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 10px;
+  margin: 1rem 0;
+  border-left: 3px solid #fbbf24;
+}
+
+.event-significance h5 {
+  margin: 0 0 0.5rem 0;
+  color: #fbbf24;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.event-significance p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.event-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.btn-timeline {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(45deg, #fbbf24, #f59e0b);
+  color: #1e3a8a;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.btn-timeline:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(251, 191, 36, 0.3);
+}
+
+.btn-timeline-secondary {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.btn-timeline-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Timeline Legend */
+.timeline-legend {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 3rem auto;
+  max-width: 800px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.timeline-legend h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #fbbf24;
+}
+
+.legend-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+}
+
+.legend-color.legal-milestone {
+  background: #3b82f6;
+}
+
+.legend-color.family-experience {
+  background: #f59e0b;
+}
+
+.legend-color.integration-attempt {
+  background: #10b981;
+}
+
+.legend-color.federal-intervention {
+  background: #ef4444;
+}
+
+.legend-color.government-resistance {
+  background: #8b5cf6;
+}
+
+.legend-color.integration-success {
+  background: #06b6d4;
+}
+
+/* Timeline Statistics */
+.timeline-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin: 3rem auto;
+  max-width: 800px;
+}
+
+.timeline-stats .stat-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.timeline-stats .stat-card:hover {
+  transform: scale(1.05);
+}
+
+.timeline-stats .stat-card h3 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fbbf24;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-stats .stat-card p {
+  color: #d1d5db;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Multimedia and Other Placeholders */
 .timeline-placeholder, .multimedia-placeholder {
   text-align: center;
   padding: 4rem 2rem;
@@ -1199,6 +1638,88 @@
   font-weight: 600;
   cursor: pointer;
   font-size: 0.875rem;
+}
+
+/* Responsive Timeline */
+@media (max-width: 768px) {
+  .timeline-header h1 {
+    font-size: 2rem;
+  }
+  
+  .timeline-controls {
+    gap: 1rem;
+  }
+  
+  .timeline-filters {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .filter-btn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .timeline-container {
+    padding: 1rem;
+  }
+  
+  .timeline-year {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .timeline-year-node {
+    margin-bottom: 1rem;
+  }
+  
+  .year-button {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .year-number {
+    font-size: 0.9rem;
+  }
+  
+  .timeline-events {
+    width: 100%;
+  }
+  
+  .timeline-event {
+    margin-bottom: 1rem;
+  }
+  
+  .event-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .event-actions {
+    flex-direction: column;
+  }
+  
+  .btn-timeline,
+  .btn-timeline-secondary {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .timeline-legend {
+    padding: 1rem;
+  }
+  
+  .legend-items {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .timeline-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }
 
 /* Responsive Design */

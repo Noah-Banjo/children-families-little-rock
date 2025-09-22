@@ -173,28 +173,26 @@ const HistoricalArchive = () => {
           </section>
 
           {/* Featured Families Section */}
-          {families.length > 0 && (
+          {!loading && families.length > 0 && (
             <section className="featured-families">
               <div className="container">
                 <h2>Featured Family Stories</h2>
                 <p>Real stories from families who experienced the Little Rock School Integration Crisis</p>
                 <div className="families-preview">
                   {families.slice(0, 3).map((family) => {
-                    // Safety check for data structure
-                    if (!family || !family.attributes) return null;
-                    
+                    console.log('Rendering family:', family);
                     return (
                       <div key={family.id} className="family-preview-card">
-                        <h3>{family.attributes.familyName || 'Unknown Family'}</h3>
-                        <p className="time-period">{family.attributes.timePeriod || 'Unknown Period'}</p>
+                        <h3>{family.attributes?.familyName || 'Unknown Family'}</h3>
+                        <p className="time-period">{family.attributes?.timePeriod || 'Unknown Period'}</p>
                         <p className="description">
-                          {family.attributes.description 
+                          {family.attributes?.description 
                             ? `${family.attributes.description.substring(0, 150)}...`
                             : 'No description available.'
                           }
                         </p>
-                        <p className="location">📍 {family.attributes.location || 'Unknown Location'}</p>
-                        {family.attributes.childrenNames && (
+                        <p className="location">📍 {family.attributes?.location || 'Unknown Location'}</p>
+                        {family.attributes?.childrenNames && (
                           <p className="children">Children: {family.attributes.childrenNames}</p>
                         )}
                       </div>
@@ -239,28 +237,26 @@ const HistoricalArchive = () => {
             {!loading && families.length > 0 && (
               <div className="families-grid">
                 {families.map((family) => {
-                  // Safety check for data structure
-                  if (!family || !family.attributes) return null;
-                  
+                  console.log('Rendering family in grid:', family);
                   return (
                     <div key={family.id} className="family-card">
                       <div className="family-header">
-                        <h2>{family.attributes.familyName || 'Unknown Family'}</h2>
-                        <span className="time-badge">{family.attributes.timePeriod || 'Unknown Period'}</span>
+                        <h2>{family.attributes?.familyName || 'Unknown Family'}</h2>
+                        <span className="time-badge">{family.attributes?.timePeriod || 'Unknown Period'}</span>
                       </div>
                       
                       <div className="family-content">
                         <p className="family-description">
-                          {family.attributes.description || 'No description available.'}
+                          {family.attributes?.description || 'No description available.'}
                         </p>
                         
                         <div className="family-details">
                           <div className="detail-item">
                             <span className="label">Location:</span>
-                            <span className="value">{family.attributes.location || 'Unknown'}</span>
+                            <span className="value">{family.attributes?.location || 'Unknown'}</span>
                           </div>
                           
-                          {family.attributes.childrenNames && (
+                          {family.attributes?.childrenNames && (
                             <div className="detail-item">
                               <span className="label">Children:</span>
                               <span className="value">{family.attributes.childrenNames}</span>
@@ -270,7 +266,7 @@ const HistoricalArchive = () => {
                           <div className="detail-item">
                             <span className="label">Archived:</span>
                             <span className="value">
-                              {family.attributes.publishedAt 
+                              {family.attributes?.publishedAt 
                                 ? new Date(family.attributes.publishedAt).toLocaleDateString()
                                 : 'Unknown date'
                               }

@@ -35,9 +35,12 @@ const HistoricalArchive = () => {
         const storiesResponse = await fetch('https://children-families-cms.onrender.com/api/stories?populate=*');
         const storiesData = await storiesResponse.json();
         
-        // Ensure data is properly structured
-        setFamilies(Array.isArray(familiesData.data) ? familiesData.data : []);
-        setStories(Array.isArray(storiesData.data) ? storiesData.data : []);
+        console.log('Fetched families:', familiesData);
+        console.log('Fetched stories:', storiesData);
+        
+        // Extract the actual data array
+        setFamilies(familiesData.data || []);
+        setStories(storiesData.data || []);
         setError(null);
       } catch (err) {
         console.error('Error fetching data:', err);
@@ -183,17 +186,17 @@ const HistoricalArchive = () => {
                     console.log('Rendering family:', family);
                     return (
                       <div key={family.id} className="family-preview-card">
-                        <h3>{family.attributes?.familyName || 'Unknown Family'}</h3>
-                        <p className="time-period">{family.attributes?.timePeriod || 'Unknown Period'}</p>
+                        <h3>{family.familyName || 'Unknown Family'}</h3>
+                        <p className="time-period">{family.timePeriod || 'Unknown Period'}</p>
                         <p className="description">
-                          {family.attributes?.description 
-                            ? `${family.attributes.description.substring(0, 150)}...`
+                          {family.description 
+                            ? `${family.description.substring(0, 150)}...`
                             : 'No description available.'
                           }
                         </p>
-                        <p className="location">📍 {family.attributes?.location || 'Unknown Location'}</p>
-                        {family.attributes?.childrenNames && (
-                          <p className="children">Children: {family.attributes.childrenNames}</p>
+                        <p className="location">📍 {family.location || 'Unknown Location'}</p>
+                        {family.childrenNames && (
+                          <p className="children">Children: {family.childrenNames}</p>
                         )}
                       </div>
                     );
@@ -241,33 +244,33 @@ const HistoricalArchive = () => {
                   return (
                     <div key={family.id} className="family-card">
                       <div className="family-header">
-                        <h2>{family.attributes?.familyName || 'Unknown Family'}</h2>
-                        <span className="time-badge">{family.attributes?.timePeriod || 'Unknown Period'}</span>
+                        <h2>{family.familyName || 'Unknown Family'}</h2>
+                        <span className="time-badge">{family.timePeriod || 'Unknown Period'}</span>
                       </div>
                       
                       <div className="family-content">
                         <p className="family-description">
-                          {family.attributes?.description || 'No description available.'}
+                          {family.description || 'No description available.'}
                         </p>
                         
                         <div className="family-details">
                           <div className="detail-item">
                             <span className="label">Location:</span>
-                            <span className="value">{family.attributes?.location || 'Unknown'}</span>
+                            <span className="value">{family.location || 'Unknown'}</span>
                           </div>
                           
-                          {family.attributes?.childrenNames && (
+                          {family.childrenNames && (
                             <div className="detail-item">
                               <span className="label">Children:</span>
-                              <span className="value">{family.attributes.childrenNames}</span>
+                              <span className="value">{family.childrenNames}</span>
                             </div>
                           )}
                           
                           <div className="detail-item">
                             <span className="label">Archived:</span>
                             <span className="value">
-                              {family.attributes?.publishedAt 
-                                ? new Date(family.attributes.publishedAt).toLocaleDateString()
+                              {family.publishedAt 
+                                ? new Date(family.publishedAt).toLocaleDateString()
                                 : 'Unknown date'
                               }
                             </span>
@@ -310,28 +313,25 @@ const HistoricalArchive = () => {
             {!loading && stories.length > 0 && (
               <div className="stories-grid">
                 {stories.map((story) => {
-                  // Safety check for data structure
-                  if (!story || !story.attributes) return null;
-                  
                   return (
                     <div key={story.id} className="story-card">
                       <div className="story-header">
-                        <h3>{story.attributes.title || 'Untitled Story'}</h3>
-                        {story.attributes.storyType && (
-                          <span className="story-type-badge">{story.attributes.storyType}</span>
+                        <h3>{story.title || 'Untitled Story'}</h3>
+                        {story.storyType && (
+                          <span className="story-type-badge">{story.storyType}</span>
                         )}
                       </div>
                       
                       <div className="story-content">
                         <p>
-                          {story.attributes.content 
-                            ? `${story.attributes.content.substring(0, 200)}...`
+                          {story.content 
+                            ? `${story.content.substring(0, 200)}...`
                             : 'No content available.'
                           }
                         </p>
                         
-                        {story.attributes.timePeriod && (
-                          <p className="story-time">Time Period: {story.attributes.timePeriod}</p>
+                        {story.timePeriod && (
+                          <p className="story-time">Time Period: {story.timePeriod}</p>
                         )}
                       </div>
                       
@@ -402,7 +402,7 @@ const HistoricalArchive = () => {
         </section>
       )}
 
-      {/* Scholarship Section - Keep existing scholarship section exactly as is */}
+      {/* Scholarship Section */}
       {activeSection === 'scholarship' && (
         <section className="scholarship">
           <div className="scholarship-content">

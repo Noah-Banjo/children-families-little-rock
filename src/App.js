@@ -230,7 +230,132 @@ const HistoricalArchive = () => {
     });
   };
 
-  const handleSendMessage = () => {
+  // Create enhanced prompt with all site data
+  const createEnhancedPrompt = (userMessage) => {
+    // Get conversation history for context
+    const recentMessages = chatMessages.slice(-6).map(msg => 
+      `${msg.type === 'user' ? 'User' : 'Dr. Archives'}: ${msg.message}`
+    ).join('\n');
+
+    return `You are Dr. Archives, a distinguished historian and archivist specializing in the Little Rock School Integration Crisis of 1957-1959. You are an expert on the families, children, and communities affected by this pivotal moment in civil rights history.
+
+CURRENT ARCHIVE DATA FROM THE WEBSITE:
+You have access to detailed information about these families currently documented in the archive:
+
+${families.map(family => `
+FAMILY: ${family.familyName || 'Unknown Family'}
+Time Period: ${family.timePeriod || 'Unknown'}
+Location: ${family.location || 'Unknown'}
+Children: ${family.childrenNames || 'Not specified'}
+Story: ${family.description || 'No description available'}
+Archive Date: ${family.publishedAt ? new Date(family.publishedAt).toLocaleDateString() : 'Unknown'}
+`).join('\n')}
+
+ADDITIONAL STORY DATA:
+${stories.map(story => `
+STORY: ${story.title || 'Untitled'}
+Type: ${story.storyType || 'Unknown type'}
+Content: ${story.content ? story.content.substring(0, 300) + '...' : 'No content available'}
+Time Period: ${story.timePeriod || 'Unknown'}
+`).join('\n')}
+
+WEBSITE STATISTICS:
+- Total Families Documented: ${families.length}
+- Total Individual Stories: ${stories.length}
+- Archive Status: Live and growing
+- Current Section User is Viewing: ${activeSection}
+
+HISTORICAL CONTEXT YOU KNOW:
+- 1954: Brown v. Board of Education declared segregated schools unconstitutional
+- 1957: Little Rock Nine attempted integration; Governor Faubus used National Guard to block entry
+- September 1957: President Eisenhower federalized National Guard and deployed 101st Airborne
+- 1958-1959: Continued resistance and gradual integration process
+
+RECENT CONVERSATION HISTORY:
+${recentMessages}
+
+USER'S CURRENT MESSAGE: "${userMessage}"
+
+IMPORTANT INSTRUCTIONS:
+1. Respond as Dr. Archives - knowledgeable, empathetic, and passionate about preserving these stories
+2. ALWAYS prioritize information from the current archive data above when discussing families
+3. If asked about specific families, provide detailed information from the archive data
+4. If asked about families not in the archive, acknowledge the gap and invite users to contribute
+5. Connect personal stories to broader historical events when relevant
+6. Reference the website sections (Timeline, Families, Stories, Multimedia, Scholarship) when appropriate
+7. If user asks about website navigation, help them understand what's available
+8. Show genuine care for the human stories behind the historical events
+9. Ask follow-up questions to encourage deeper exploration
+10. Keep responses focused and informative but not overly lengthy (aim for 2-3 paragraphs max)
+11. If the archive data is limited, be honest about it and explain this is a growing archive
+12. Always prioritize the human experience and family perspectives
+13. Reference the specific data you have rather than making assumptions
+
+Current context: The user is on the ${activeSection} section of the website, which ${
+  activeSection === 'families' ? 'shows detailed family stories and information' :
+  activeSection === 'timeline' ? 'displays an interactive timeline of historical events and family experiences' :
+  activeSection === 'stories' ? 'contains individual stories and documents' :
+  activeSection === 'multimedia' ? 'will contain photos, videos, and audio recordings' :
+  activeSection === 'scholarship' ? 'contains the academic research and thesis information' :
+  activeSection === 'about' ? 'provides information about the archive project' :
+  'is the main homepage with featured content'
+}.
+
+Respond as Dr. Archives would - with expertise about the Little Rock integration crisis, empathy for the families involved, and specific knowledge of what's currently in this archive.`;
+  };
+
+  // Enhanced fallback responses based on site data
+  const getFallbackResponse = (message) => {
+    const lowerMessage = message.toLowerCase();
+    
+    // Check if asking about specific families in our archive
+    const familyNames = families.map(f => f.familyName?.toLowerCase()).filter(Boolean);
+    const mentionedFamily = familyNames.find(name => 
+      lowerMessage.includes(name.toLowerCase()) || 
+      lowerMessage.includes(name.split(' ')[1]?.toLowerCase())
+    );
+    
+    if (mentionedFamily) {
+      const family = families.find(f => 
+        f.familyName?.toLowerCase().includes(mentionedFamily)
+      );
+      if (family) {
+        return `I have detailed information about ${family.familyName} in our archive. They lived in ${family.location} during ${family.timePeriod}. ${family.description ? family.description.substring(0, 200) + '...' : ''} Would you like me to share more details about their experience during the integration crisis?`;
+      }
+    }
+    
+    if (lowerMessage.includes('elizabeth') || lowerMessage.includes('eckford')) {
+      const bridgesFamily = families.find(f => 
+        f.familyName?.toLowerCase().includes('bridges') || 
+        f.childrenNames?.toLowerCase().includes('elizabeth')
+      );
+      if (bridgesFamily) {
+        return `Yes! ${bridgesFamily.description} This story is part of our current archive of ${families.length} families who experienced the integration crisis.`;
+      }
+    }
+    
+    if (lowerMessage.includes('families') || lowerMessage.includes('how many')) {
+      return `Our archive currently documents ${families.length} families affected by the Little Rock School Integration Crisis. Each family has a unique story of courage and resilience. ${families.length > 0 ? `We have stories from families like ${families.slice(0, 2).map(f => f.familyName).join(' and ')}.` : 'We are actively collecting more family stories.'} Would you like to explore a specific family's experience?`;
+    }
+    
+    if (lowerMessage.includes('timeline') || lowerMessage.includes('when') || lowerMessage.includes('1957')) {
+      return `The integration crisis spanned several crucial years, with 1957 being the pivotal moment when the Little Rock Nine first attempted to enter Central High School. Our interactive timeline section shows both major historical events and personal family experiences. ${families.length > 0 ? `We have family stories from ${families.map(f => f.timePeriod).filter(Boolean).join(', ')}.` : ''} You can explore the timeline section to see how these personal stories connect to the broader historical events.`;
+    }
+    
+    if (lowerMessage.includes('stories') || lowerMessage.includes('documents')) {
+      return `Our archive contains ${stories.length} individual stories and ${families.length} family accounts. ${stories.length > 0 ? 'These include oral histories, documents, photographs, and personal accounts.' : 'We are actively collecting stories, documents, and multimedia content.'} Each story provides a unique perspective on how the integration crisis affected real families and children.`;
+    }
+    
+    if (lowerMessage.includes('help') || lowerMessage.includes('navigation')) {
+      return `I can help you explore our archive! We have several sections: Families (${families.length} family stories), Timeline (interactive historical events), Stories (${stories.length} individual accounts), Multimedia (photos and documents), and Scholarship (academic research). Currently you're viewing the ${activeSection} section. What would you like to learn about?`;
+    }
+    
+    // Default response with current archive stats
+    return `I'm here to help you explore the rich histories of families affected by the Little Rock School Integration Crisis. Our archive currently contains ${families.length} family stories and ${stories.length} individual accounts. You can ask me about specific families, historical events, or browse our different sections. What aspect of these important histories would you like to discover?`;
+  };
+
+  // Enhanced handleSendMessage with Claude API and site data integration
+  const handleSendMessage = async () => {
     if (!currentMessage.trim()) return;
     
     const userMessage = {
@@ -240,21 +365,65 @@ const HistoricalArchive = () => {
     };
     
     setChatMessages(prev => [...prev, userMessage]);
+    const messageToSend = currentMessage;
     setCurrentMessage('');
     
-    setTimeout(() => {
-      const responses = [
-        "That's a fascinating question about the Little Rock Nine. Let me share some context and point you to our Family Stories section that directly relates to your question.",
-        "I found several resources about that topic! Check out our archived family stories and documents.",
-        "What an important question about hidden histories. I recommend exploring the family stories in our Archives section."
-      ];
+    // Add typing indicator
+    const typingMessage = {
+      id: Date.now() + 1,
+      type: 'bot',
+      message: 'Dr. Archives is thinking...',
+      isTyping: true
+    };
+    setChatMessages(prev => [...prev, typingMessage]);
+    
+    try {
+      // Create enhanced prompt with all site data
+      const siteDataPrompt = createEnhancedPrompt(messageToSend);
       
-      setChatMessages(prev => [...prev, {
-        id: Date.now() + 1,
-        type: 'bot',
-        message: responses[Math.floor(Math.random() * responses.length)],
-      }]);
-    }, 1000);
+      // Call Claude API
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          messages: [
+            { role: "user", content: siteDataPrompt }
+          ]
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`API request failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const aiResponse = data.content[0].text;
+      
+      // Remove typing indicator and add real response
+      setChatMessages(prev => 
+        prev.filter(msg => !msg.isTyping).concat([{
+          id: Date.now() + 2,
+          type: 'bot',
+          message: aiResponse,
+        }])
+      );
+      
+    } catch (error) {
+      console.error('Error calling Claude API:', error);
+      
+      // Remove typing indicator and add fallback response
+      setChatMessages(prev => 
+        prev.filter(msg => !msg.isTyping).concat([{
+          id: Date.now() + 2,
+          type: 'bot',
+          message: getFallbackResponse(messageToSend),
+        }])
+      );
+    }
   };
 
   const handleRetry = () => {
@@ -638,7 +807,7 @@ const HistoricalArchive = () => {
                         {index < years.length - 1 && <div className="timeline-line"></div>}
                       </div>
 
-                      {/* Year Events - Fixed scrolling */}
+                      {/* Year Events */}
                       <div className={`timeline-events ${selectedYear === year ? 'expanded' : ''}`}>
                         <div className="timeline-events-container">
                           {filteredEvents.map((event) => (
@@ -1006,7 +1175,7 @@ const HistoricalArchive = () => {
         </section>
       )}
 
-      {/* Chatbot */}
+      {/* Enhanced AI Chatbot */}
       <div className="chatbot-container">
         {!isChatOpen && (
           <button 
@@ -1018,33 +1187,95 @@ const HistoricalArchive = () => {
         )}
 
         {isChatOpen && (
-          <div className="chatbot">
-            <div className="chatbot-header">
+          <div className="enhanced-chatbot">
+            {/* Header */}
+            <div className="enhanced-chatbot-header">
               <div className="chatbot-info">
-                <div className="chatbot-avatar">📚</div>
+                <div className="enhanced-chatbot-avatar">🎓</div>
                 <div>
                   <h4>Dr. Archives</h4>
-                  <p>Your AI Historian</p>
+                  <p>Your Personal Historian</p>
                 </div>
+              </div>
+              <div className="chatbot-status">
+                <div className="status-indicator"></div>
+                <span>Online</span>
               </div>
               <button onClick={() => setIsChatOpen(false)} className="close-btn">×</button>
             </div>
-            <div className="chatbot-messages">
+
+            {/* Messages Area */}
+            <div className="enhanced-chatbot-messages">
               {chatMessages.map((msg) => (
-                <div key={msg.id} className={`message ${msg.type}`}>
-                  <p>{msg.message}</p>
+                <div key={msg.id} className={`enhanced-message ${msg.type}`}>
+                  <div className="message-content">
+                    <p>{msg.message}</p>
+                    <span className="message-time">
+                      {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
-            <div className="chatbot-input">
-              <input 
-                type="text"
-                value={currentMessage}
-                onChange={(e) => setCurrentMessage(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                placeholder="Ask about the stories..."
-              />
-              <button onClick={handleSendMessage}>Send</button>
+
+            {/* Quick Suggestions */}
+            <div className="quick-suggestions">
+              <p className="suggestions-label">Quick Questions:</p>
+              <div className="suggestions-grid">
+                <button 
+                  className="suggestion-btn"
+                  onClick={() => setCurrentMessage("Tell me about Elizabeth Eckford")}
+                >
+                  Tell me about Elizabeth Eckford
+                </button>
+                <button 
+                  className="suggestion-btn"
+                  onClick={() => setCurrentMessage("What happened in 1957?")}
+                >
+                  What happened in 1957?
+                </button>
+                <button 
+                  className="suggestion-btn"
+                  onClick={() => setCurrentMessage("Which families are documented here?")}
+                >
+                  Which families are documented?
+                </button>
+                <button 
+                  className="suggestion-btn"
+                  onClick={() => setCurrentMessage("How did integration affect children?")}
+                >
+                  How did integration affect children?
+                </button>
+              </div>
+            </div>
+
+            {/* Input Area */}
+            <div className="enhanced-chatbot-input">
+              <div className="input-wrapper">
+                <textarea
+                  value={currentMessage}
+                  onChange={(e) => setCurrentMessage(e.target.value)}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSendMessage();
+                    }
+                  }}
+                  placeholder="Ask about families, events, or historical context..."
+                  className="enhanced-input"
+                  rows="2"
+                />
+                <button 
+                  onClick={handleSendMessage}
+                  disabled={!currentMessage.trim()}
+                  className="enhanced-send-btn"
+                >
+                  <span className="send-icon">📤</span>
+                </button>
+              </div>
+              <p className="ai-disclaimer">
+                Dr. Archives is powered by AI and specializes in Little Rock integration history
+              </p>
             </div>
           </div>
         )}

@@ -588,7 +588,7 @@ const HistoricalArchive = () => {
 
                     <div className="research-question">
                       <h4>Research Question</h4>
-                      <p>How did the Little Rock integration crisis affect the families and siblings of student who integrated Little Rock schools, and what do these hidden stories reveal about how children's agency actually operates during moments of historical change? Also how can emerging technologies enhance the preservation and accessibility of hidden family histories from the Little Rock School Integration Crisis?</p>
+                      <p>How did the Little Rock integration crisis affect the families and siblings of students who integrated Little Rock schools, and what do these hidden stories reveal about how children's agency actually operates during moments of historical change? How can emerging technologies enhance the preservation and accessibility of hidden family histories from the Little Rock School Integration Crisis?</p>
                     </div>
 
                     <div className="academic-actions">

@@ -514,7 +514,15 @@ const HistoricalArchive = () => {
         <section className="about-section">
           <div className="container">
             <h1>About This Archive</h1>
-            <p>This digital archive preserves the untold stories of children and families impacted by the Little Rock School Integration Crisis through innovative use of AI and machine learning technologies.</p>
+            <div className="about-content">
+              <p>Many people know the names of the Little Rock Nine. They don't ask about their siblings, their parents who lost jobs, or their grandmothers who stood guard at night. This digital archive recovers those hidden stories - not as background context, but as evidence of how historical change actually happens through family networks.</p>
+
+              <p>The archive organizes materials by families rather than famous individuals, revealing how the integration crisis transformed entire households: siblings who faced harassment at their own schools, parents who developed security protocols for daily survival, extended family members who provided economic support when segregationists cut off credit. These experiences have remained hidden because traditional archives were never designed to capture the intimate, family-centered experiences that shaped children's historical agency.</p>
+
+              <p>An AI-powered chatbot makes these stories accessible through personalized interaction. Ask about protection strategies, and the system synthesizes information across multiple family accounts. Ask what it was like to be a sibling, and you'll get responses drawn from experiences that have never been centered in civil rights history. The technology serves the historical argument: that children's agency emerges from and reshapes family systems, not from isolated individual heroism.</p>
+
+              <p>This archive challenges how we preserve, access and understand history. It makes visible what historians have systematically overlooked, and it provides a methodology for recovering hidden histories in other contexts where children's experiences have been treated as merely supplementary to adult action.</p>
+            </div>
 
             <div className="about-stats">
               <div className="stat-card">

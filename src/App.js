@@ -582,13 +582,13 @@ const HistoricalArchive = () => {
 
                 {expandedSection === 'introduction' && (
                   <div className="academic-content">
-                    <p>This research addresses a critical gap in historical documentation: the untold stories of children and families who experienced the Little Rock School Integration Crisis. While major events and figures are well-documented, the intimate, personal experiences of ordinary families often remain hidden in attics, memories, and family stories.</p>
+                    <p>This research addresses a critical gap in historical documentation: the untold stories of children and families who experienced the Little Rock School Integration Crisis. While major events and figures are well-documented, the intimate, personal experiences of ordinary families often remain hidden in memories, and family stories.</p>
 
                     <p>By leveraging artificial intelligence and machine learning technologies, this project creates an innovative digital archive that not only preserves these stories but makes them accessible, searchable, and interactive for future generations.</p>
 
                     <div className="research-question">
                       <h4>Research Question</h4>
-                      <p>How can emerging technologies enhance the preservation and accessibility of hidden family histories from the Little Rock School Integration Crisis?</p>
+                      <p>How did the Little Rock integration crisis affect the families and siblings of student who integrated Little Rock schools, and what do these hidden stories reveal about how children's agency actually operates during moments of historical change? Also how can emerging technologies enhance the preservation and accessibility of hidden family histories from the Little Rock School Integration Crisis?</p>
                     </div>
 
                     <div className="academic-actions">
@@ -621,24 +621,24 @@ const HistoricalArchive = () => {
 
                     <div className="literature-grid">
                       <div className="lit-category">
-                        <h4>Digital Archive Theory</h4>
-                        <p>Studies on digital preservation and community memory projects</p>
-                        <span>15 key sources</span>
-                      </div>
-                      <div className="lit-category">
-                        <h4>AI in Historical Research</h4>
-                        <p>Applications of machine learning in cultural heritage</p>
-                        <span>12 key sources</span>
+                        <h4>Children's Agency and Family Networks</h4>
+                        <p>How children develop the capacity for historical action within family systems</p>
+                        <span>number of sources coming soon</span>
                       </div>
                       <div className="lit-category">
                         <h4>Civil Rights Documentation</h4>
-                        <p>Existing archives and missing perspectives</p>
-                        <span>23 key sources</span>
+                        <p>How children learn race</p>
+                        <span>number of sources coming soon</span>
                       </div>
                       <div className="lit-category">
-                        <h4>Oral History Methods</h4>
-                        <p>Best practices for collecting family stories</p>
-                        <span>18 key sources</span>
+                        <h4>Oral History Methods </h4>
+                        <p>Best practices for recovering family stories and the limitations of memory</p>
+                        <span>number of sources coming soon</span>
+                      </div>
+                      <div className="lit-category">
+                        <h4>Digital Preservation Theory</h4>
+                        <p>Best practices and How emerging technologies can reclaibrate user experiences for hidden histories</p>
+                        <span>number of sources coming soon</span>
                       </div>
                     </div>
 
@@ -668,24 +668,24 @@ const HistoricalArchive = () => {
 
                 {expandedSection === 'methodology' && (
                   <div className="academic-content">
-                    <p>This mixed-methods research combines qualitative oral history techniques with quantitative digital analysis to create a comprehensive archive of family experiences.</p>
+                    <p>This research uses primary sources like oral interviews, newspaper articles, and memoirs to recover family experiences historians have unwittingly ignored, then builds a digital archive that makes these hidden stories permanently accessible. The methodology addresses both problems: the historiographical gap (families missing from civil rights narratives) and the preservation gap by adding usercentric accesibility using emerging technologies.</p>
 
                     <div className="methodology-phases">
                       <div className="phase">
                         <h4>Phase 1: Family Identification</h4>
-                        <p>Community outreach and snowball sampling to locate families willing to share their stories</p>
+                        <p>Working with existing oral histories from the Butler Center's "Beyond Central, Toward Acceptance" collection, newspaper archives (Arkansas Gazette, State Press, Detroit Tribune), memoirs, and secondary scholarship to identify patterns in how families experienced the integration crisis. This phase focuses on reading sources for what they reveal about siblings, parents, extended family networks, and community support systems - the stories buried in sources that historians have mined primarily for information about the Nine themselves.</p>
                       </div>
                       <div className="phase">
-                        <h4>Phase 2: Story Collection</h4>
-                        <p>Semi-structured interviews, document scanning, and multimedia gathering</p>
+                        <h4>Phase 2: Digital Archive Design Story Collection</h4>
+                        <p>Creating a web-based archive that organizes materials by family networks rather than individual students, making visible the connections between siblings' experiences, parents' strategies, and community responses. The platform includes interactive timelines, thematic organization (economic retaliation, security measures, educational disruption), and multimedia integration of photographs and documents.</p>
                       </div>
                       <div className="phase">
-                        <h4>Phase 3: Digital Archive Creation</h4>
-                        <p>AI-powered transcription, tagging, and cross-referencing of materials</p>
+                        <h4>Phase 3: AI Integration</h4>
+                        <p>Developing an intelligent chatbot for personalized historical engagement. Implementing machine learning to create a chatbot that can answer specific questions about family experiences, identify patterns across multiple family stories, and adapt responses to different users' needs. A middle school student asking "what was it like to be a sibling?" gets age-appropriate answers drawing from multiple families. A researcher asking about protection strategies gets a synthesized analysis across all archived materials. The AI makes these hidden histories truly accessible rather than just digitally stored.</p>
                       </div>
                       <div className="phase">
                         <h4>Phase 4: Analysis & Interpretation</h4>
-                        <p>Pattern identification and thematic analysis using both human insight and machine learning</p>
+                        <p>Understanding what family stories reveal about children's agency. Analyzing patterns across family experiences to answer the research question: how did integration affect families, and what does this reveal about how children's historical agency actually works? This phase synthesizes findings about family structure transformations, economic pressures, sibling experiences, security adaptations, and long-term impacts - building the argument that children's agency emerges from and reshapes family networks rather than operating in isolation.</p>
                       </div>
                     </div>
 
@@ -732,7 +732,7 @@ const HistoricalArchive = () => {
                         <div className="stat-label">Stories Archived</div>
                       </div>
                       <div className="stat">
-                        <div className="stat-number">127</div>
+                        <div className="stat-number">coming soon</div>
                         <div className="stat-label">Documents Archived</div>
                       </div>
                     </div>

@@ -28,3 +28,5 @@ yarn-error.log*
 
 # Backup files
 *.backup.js
+.env
+.env.local

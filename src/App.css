@@ -302,7 +302,7 @@
 /* REMOVED FIRE EMOJI FROM HERO BADGE */
 
 .hero-title {
-  font-size: clamp(3rem, 8vw, 6rem);
+  font-size: clamp(2.5rem, 6vw, 3rem);
   font-weight: 900;
   color: var(--brand-offwhite);
   margin-bottom: 1.5rem;
@@ -319,7 +319,7 @@
 }
 
 .hero-description {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: var(--brand-offwhite);
   max-width: 650px;
   margin: 0 0 3rem 0;
@@ -856,7 +856,7 @@
 
 
 .families-section h1, .stories-section h1, .timeline-section h1, .multimedia-section h1, .about-section h1 {
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-size: clamp(2.5rem, 5vw, 3rem);
   font-weight: 800;
   margin-bottom: 1rem;
   text-align: center;
@@ -1109,7 +1109,7 @@
 }
 
 .timeline-header h1 {
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-size: clamp(2.5rem, 5vw, 3rem);
   margin-bottom: 1rem;
   color: var(--brand-black);
   font-weight: 800;
@@ -1948,7 +1948,7 @@
 }
 
 .researcher-name {
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 800;
   color: var(--brand-yellow);
   margin-bottom: 0.5rem;
@@ -2288,7 +2288,7 @@
 }
 
 .scholarship-hero h1 {
-  font-size: clamp(3rem, 8vw, 5rem);
+  font-size: clamp(2.5rem, 6vw, 3rem);
   font-weight: 800;
   margin-bottom: 1.5rem;
   color: var(--brand-black);
@@ -2840,6 +2840,119 @@
   box-shadow: 0 20px 60px rgba(252, 192, 44, 0.5);
 }
 
+/* ChatBot Prompt - Floating Tooltip */
+.chatbot-prompt {
+  position: fixed;
+  bottom: 9rem;
+  right: 2.5rem;
+  max-width: 280px;
+  background: var(--brand-yellow);
+  color: var(--brand-black);
+  border: 2px solid var(--brand-red);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  z-index: 999;
+  animation: pulsePrompt 2s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.chatbot-prompt:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  animation: none;
+}
+
+@keyframes pulsePrompt {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.prompt-dismiss {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--brand-black);
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  line-height: 1;
+  padding: 0;
+}
+
+.prompt-dismiss:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: rotate(90deg);
+}
+
+.prompt-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.prompt-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.prompt-text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--brand-black);
+}
+
+.prompt-text strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  font-weight: 700;
+}
+
+.prompt-arrow {
+  position: absolute;
+  bottom: -0.75rem;
+  right: 1.5rem;
+  font-size: 1.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Mobile responsive adjustments for prompt */
+@media (max-width: 768px) {
+  .chatbot-prompt {
+    bottom: 7rem;
+    right: 50%;
+    transform: translateX(50%);
+    max-width: 260px;
+  }
+
+  .chatbot-prompt:hover {
+    transform: translateX(50%) translateY(-4px);
+  }
+
+  .prompt-arrow {
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+  }
+}
+
 .chatbot {
   width: 340px;
   height: 450px;
@@ -2909,6 +3022,35 @@
 .close-btn:hover {
   color: var(--brand-offwhite);
   background: rgba(255, 255, 255, 0.1);
+}
+
+/* Chatbot Disclaimer Banner */
+.chatbot-disclaimer-banner {
+  background: var(--brand-charcoal);
+  border-bottom: 1px solid rgba(222, 45, 34, 0.3);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.disclaimer-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.disclaimer-text {
+  color: var(--brand-offwhite);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin: 0;
+  opacity: 0.95;
+}
+
+.disclaimer-text strong {
+  color: var(--brand-yellow);
+  font-weight: 700;
 }
 
 .chatbot-messages {

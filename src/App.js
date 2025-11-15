@@ -9,6 +9,7 @@ import FamiliesSection from './components/FamiliesSection';
 import TimelineSection from './components/TimelineSection';
 import AboutSection from './components/AboutSection';
 import ChatBot from './components/ChatBot';
+import ChatBotPrompt from './components/ChatBotPrompt';
 
 // Custom Hooks
 import { useArchiveData } from './hooks/useArchiveData';
@@ -34,6 +35,7 @@ const HistoricalArchive = () => {
     }
   ]);
   const [currentMessage, setCurrentMessage] = useState('');
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   // Use custom hooks
   const { families, stories, loading, error, handleRetry, handleRefresh } = useArchiveData();
@@ -744,6 +746,9 @@ const HistoricalArchive = () => {
         </section>
       )}
 
+      {/* ChatBot Visibility Prompt */}
+      <ChatBotPrompt onChatBotOpen={() => setIsChatOpen(true)} />
+
       {/* Enhanced AI Chatbot */}
       <ErrorBoundary fallbackMessage="The chatbot encountered an error. Please refresh the page to restore functionality.">
         <ChatBot
@@ -755,6 +760,8 @@ const HistoricalArchive = () => {
           setChatMessages={setChatMessages}
           currentMessage={currentMessage}
           setCurrentMessage={setCurrentMessage}
+          isChatOpen={isChatOpen}
+          setIsChatOpen={setIsChatOpen}
         />
       </ErrorBoundary>
     </div>

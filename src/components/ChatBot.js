@@ -8,9 +8,10 @@ const ChatBot = React.memo(({
   chatMessages,
   setChatMessages,
   currentMessage,
-  setCurrentMessage
+  setCurrentMessage,
+  isChatOpen,
+  setIsChatOpen
 }) => {
-  const [isChatOpen, setIsChatOpen] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
 
   // Extract all timeline events into a flat array for searching
@@ -409,6 +410,14 @@ const ChatBot = React.memo(({
               <span>Online</span>
             </div>
             <button onClick={() => setIsChatOpen(false)} className="close-btn">×</button>
+          </div>
+
+          {/* Disclaimer Banner */}
+          <div className="chatbot-disclaimer-banner">
+            <span className="disclaimer-icon">⚠️</span>
+            <p className="disclaimer-text">
+              <strong>Important Note:</strong> This chatbot does not replace traditional archival research or professional historians. Users are advised to verify chatbot responses against primary sources. The bot synthesizes information based on available data in this exhibit but cannot evaluate historical nuance or resolve interpretive ambiguities the way trained historians can. Use this as a starting point for further investigation.
+            </p>
           </div>
 
           {/* Messages Area */}

@@ -57,32 +57,7 @@ const AboutSection = ({ families, stories }) => {
           </div>
         </div>
 
-        {/* ===== SECTION 3: THESIS INFORMATION ===== */}
-        <div className="about-section-divider"></div>
-        <h2 className="about-section-title">The Thesis</h2>
-
-        <div className="thesis-card about-card">
-          <h3 className="thesis-full-title">
-            Preserving the Untold Stories: Leveraging Emerging Technologies (AI and Machine Learning) for Archiving Hidden Histories of Children and Families Impacted by the Little Rock School Integration Crisis
-          </h3>
-
-          <div className="thesis-details">
-            <div className="thesis-detail-item">
-              <span className="detail-label">Completion:</span>
-              <span className="detail-value">[DATE - e.g., May 2025]</span>
-            </div>
-            <div className="thesis-detail-item">
-              <span className="detail-label">Institution:</span>
-              <span className="detail-value">University of Arkansas at Little Rock</span>
-            </div>
-            <div className="thesis-detail-item">
-              <span className="detail-label">Degree:</span>
-              <span className="detail-value">Master of Public History</span>
-            </div>
-          </div>
-        </div>
-
-        {/* ===== SECTION 4: THESIS SUPERVISORS ===== */}
+        {/* ===== SECTION 3: THESIS SUPERVISORS ===== */}
         <div className="about-section-divider"></div>
         <h2 className="about-section-title">Academic Supervisors &amp; Committee</h2>
 
@@ -175,36 +150,6 @@ const AboutSection = ({ families, stories }) => {
               <li>[MENTORS - Add mentors who guided you]</li>
               <li>[OTHER_SUPPORTERS - Add anyone else who helped make this project possible]</li>
             </ul>
-          </div>
-        </div>
-
-        {/* ===== SECTION 6: CONTACT & CITATION ===== */}
-        <div className="about-section-divider"></div>
-        <h2 className="about-section-title">Contact &amp; How to Cite</h2>
-
-        <div className="contact-card about-card">
-          <div className="contact-section">
-            <h3 className="card-title">Contact Information</h3>
-            <p>For questions about this project or to share family stories for inclusion in the archive:</p>
-            <div className="contact-details">
-              <div className="contact-item">
-                <span className="contact-label">Email:</span>
-                <span className="contact-value">[YOUR_EMAIL]</span>
-              </div>
-              <div className="contact-item">
-                <span className="contact-label">Website:</span>
-                <a href="https://childrenandfamilieslr.com" className="contact-link" target="_blank" rel="noopener noreferrer">
-                  https://childrenandfamilieslr.com
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="citation-section">
-            <h3 className="card-title">Suggested Citation</h3>
-            <div className="citation-box">
-              <p>[Your Name]. (2025). <em>Preserving the Untold Stories: Leveraging Emerging Technologies for Archiving Hidden Histories of Children and Families Impacted by the Little Rock School Integration Crisis</em>. Digital Archive. https://childrenandfamilieslr.com</p>
-            </div>
           </div>
         </div>
 

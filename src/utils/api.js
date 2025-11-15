@@ -182,12 +182,14 @@ export const fetchAllData = async () => {
     const families = familiesResult.success ? familiesResult.data : [];
     const stories = storiesResult.success ? storiesResult.data : [];
 
-    // Set error only if both failed
+    // Clear error if families loaded successfully with data
     let error = null;
-    if (!familiesResult.success && !storiesResult.success) {
+    if (familiesResult.success && families.length > 0) {
+      // Data loaded successfully - clear any errors
+      error = null;
+    } else if (!familiesResult.success) {
+      // Families fetch failed - show error
       error = 'Unable to connect to archive database. Please check your connection or try again later.';
-    } else if (!familiesResult.success || !storiesResult.success) {
-      error = 'Some archive content may be temporarily unavailable.';
     }
 
     return { families, stories, error };

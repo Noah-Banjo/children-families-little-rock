@@ -64,13 +64,17 @@ TONE: Professional, warm, educational. You're a knowledgeable guide, not a robot
     // Build conversation messages array
     const messages = buildConversationMessages(conversationHistory, userMessage);
 
-    // Make API request
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    // Determine API endpoint (works in both dev and production)
+    // In development: calls localhost:3001
+    // In production: calls the same domain (childrenandfamilieslr.com)
+    const apiUrl = process.env.NODE_ENV === 'production'
+      ? '/api/chat'  // Relative URL for production
+      : 'http://localhost:3001/api/chat';  // Absolute URL for development
+
+    const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.REACT_APP_ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',

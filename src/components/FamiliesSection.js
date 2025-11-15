@@ -7,6 +7,7 @@ const FamiliesSection = React.memo(({
   loading,
   error,
   handleRetry,
+  handleRefresh,
   isSearchActive,
   searchResults
 }) => {
@@ -25,8 +26,31 @@ const FamiliesSection = React.memo(({
   return (
     <section className="families-section">
       <div className="container">
-        <h1>Family Stories</h1>
-        <p>Personal accounts from families who lived through the Little Rock School Integration Crisis</p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+          <div>
+            <h1>Family Stories</h1>
+            <p>Personal accounts from families who lived through the Little Rock School Integration Crisis</p>
+          </div>
+          {!loading && handleRefresh && (
+            <button
+              onClick={handleRefresh}
+              style={{
+                background: 'rgba(34, 197, 94, 0.2)',
+                color: '#4ade80',
+                border: '1px solid rgba(34, 197, 94, 0.5)',
+                padding: '0.75rem 1.5rem',
+                borderRadius: '0.5rem',
+                cursor: 'pointer',
+                fontWeight: '600',
+                whiteSpace: 'nowrap',
+                marginTop: '1rem'
+              }}
+              title="Refresh data from Strapi CMS"
+            >
+              🔄 Refresh Data
+            </button>
+          )}
+        </div>
 
         {loading && (
           <div className="loading">

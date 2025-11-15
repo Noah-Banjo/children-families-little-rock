@@ -35,7 +35,7 @@ const HistoricalArchive = () => {
   const [currentMessage, setCurrentMessage] = useState('');
 
   // Use custom hooks
-  const { families, stories, loading, error, handleRetry } = useArchiveData();
+  const { families, stories, loading, error, handleRetry, handleRefresh } = useArchiveData();
 
   // Historical events data for timeline
   const getTimelineData = useCallback(() => {
@@ -412,6 +412,7 @@ const HistoricalArchive = () => {
             loading={loading}
             error={error}
             handleRetry={handleRetry}
+            handleRefresh={handleRefresh}
             isSearchActive={isSearchActive}
             searchResults={searchResults}
           />

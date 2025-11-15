@@ -1838,6 +1838,416 @@
   font-size: 0.9rem;
 }
 
+/* ===== ABOUT PAGE - CARD-BASED SECTIONS ===== */
+
+/* Section Dividers */
+.about-section-divider {
+  height: 3px;
+  background: linear-gradient(to right, transparent, var(--brand-red), transparent);
+  margin: 5rem 0 3rem;
+  border-radius: 2px;
+}
+
+.about-section-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--brand-red);
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.about-section-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: var(--brand-yellow);
+  margin: 1rem auto 0;
+  border-radius: 2px;
+}
+
+/* Base About Card Styling */
+.about-card {
+  background: var(--brand-charcoal);
+  border: 2px solid var(--brand-red);
+  border-radius: 16px;
+  padding: 3rem;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.about-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(222, 45, 34, 0.2);
+}
+
+.about-card .card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--brand-yellow);
+  margin-bottom: 1.5rem;
+}
+
+.about-card .card-intro {
+  color: var(--brand-offwhite);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+/* Researcher Card */
+.researcher-card {
+  margin-bottom: 3rem;
+}
+
+.researcher-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.researcher-photo {
+  position: relative;
+}
+
+.photo-placeholder {
+  width: 300px;
+  height: 300px;
+  background: var(--brand-offwhite);
+  border: 4px solid var(--brand-red);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand-charcoal);
+  transition: all 0.3s ease;
+}
+
+.photo-placeholder:hover {
+  border-color: var(--brand-yellow);
+  transform: scale(1.02);
+}
+
+.photo-icon {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.photo-placeholder p {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.researcher-bio {
+  color: var(--brand-offwhite);
+}
+
+.researcher-name {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--brand-yellow);
+  margin-bottom: 0.5rem;
+}
+
+.researcher-program {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--brand-offwhite);
+  margin-bottom: 0.3rem;
+}
+
+.researcher-institution {
+  font-size: 1.1rem;
+  color: var(--brand-offwhite);
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+.bio-text p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--brand-offwhite);
+  margin-bottom: 1rem;
+}
+
+/* Thesis Card */
+.thesis-card {
+  text-align: center;
+}
+
+.thesis-full-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--brand-yellow);
+  line-height: 1.5;
+  margin-bottom: 2.5rem;
+}
+
+.thesis-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.thesis-detail-item {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(241, 245, 249, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid var(--brand-red);
+}
+
+.detail-label {
+  font-weight: 700;
+  color: var(--brand-yellow);
+  min-width: 120px;
+  font-size: 1.05rem;
+}
+
+.detail-value {
+  color: var(--brand-offwhite);
+  font-size: 1.05rem;
+  flex: 1;
+}
+
+/* Supervisors Grid */
+.supervisors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.supervisor-card {
+  text-align: center;
+  position: relative;
+  padding-top: 4rem;
+}
+
+.supervisor-role-badge {
+  position: absolute;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--brand-red);
+  color: var(--brand-offwhite);
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.supervisor-role-badge.chair {
+  background: var(--brand-yellow);
+  color: var(--brand-black);
+}
+
+.supervisor-name {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--brand-yellow);
+  margin-bottom: 0.8rem;
+}
+
+.supervisor-title {
+  font-size: 1.1rem;
+  color: var(--brand-offwhite);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.supervisor-institution {
+  font-size: 1rem;
+  color: var(--brand-offwhite);
+  opacity: 0.8;
+}
+
+/* Contributors Grid */
+.contributors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.contributor-card {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.contributor-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.contributor-list li {
+  color: var(--brand-offwhite);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  padding: 0.8rem 0 0.8rem 2rem;
+  position: relative;
+  border-bottom: 1px solid rgba(241, 245, 249, 0.1);
+}
+
+.contributor-list li:last-child {
+  border-bottom: none;
+}
+
+.contributor-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--brand-yellow);
+  font-weight: 700;
+}
+
+.contributor-list li em {
+  color: var(--brand-yellow);
+  font-style: italic;
+}
+
+/* Contact Card */
+.contact-card {
+  max-width: 900px;
+  margin: 0 auto 3rem;
+}
+
+.contact-section {
+  margin-bottom: 3rem;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(241, 245, 249, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid var(--brand-yellow);
+}
+
+.contact-label {
+  font-weight: 700;
+  color: var(--brand-yellow);
+  min-width: 100px;
+}
+
+.contact-value {
+  color: var(--brand-offwhite);
+  font-size: 1.05rem;
+}
+
+.contact-link {
+  color: var(--brand-yellow);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.contact-link:hover {
+  color: var(--brand-red);
+  text-decoration: underline;
+}
+
+.citation-section {
+  padding-top: 2rem;
+  border-top: 2px solid rgba(241, 245, 249, 0.1);
+}
+
+.citation-box {
+  background: rgba(241, 245, 249, 0.05);
+  border: 1px solid var(--brand-yellow);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 1.5rem;
+}
+
+.citation-box p {
+  color: var(--brand-offwhite);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin: 0;
+  font-family: 'Georgia', serif;
+}
+
+.citation-box em {
+  color: var(--brand-yellow);
+}
+
+/* Responsive Design for About Cards */
+@media (max-width: 768px) {
+  .researcher-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .researcher-photo {
+    display: flex;
+    justify-content: center;
+  }
+
+  .photo-placeholder {
+    width: 250px;
+    height: 250px;
+  }
+
+  .researcher-bio {
+    text-align: center;
+  }
+
+  .thesis-full-title {
+    font-size: 1.4rem;
+  }
+
+  .supervisors-grid,
+  .contributors-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-card {
+    padding: 2rem;
+  }
+
+  .about-section-title {
+    font-size: 2rem;
+  }
+
+  .thesis-details {
+    text-align: left;
+  }
+
+  .thesis-detail-item {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .detail-label {
+    min-width: auto;
+  }
+}
+
 /* Scholarship Section - UPDATED BACKGROUNDS */
 .scholarship {
   padding: 6rem 2rem;

@@ -66,11 +66,22 @@ export const getStrapiImageUrl = (imageObj) => {
  */
 export const fetchFromCMS = async (url, timeout = 10000) => {
   try {
-    console.log('🌐 Making API request to URL:', url);
-    const response = await fetch(url, {
+    // Add timestamp for cache-busting
+    const cacheBuster = `_t=${Date.now()}`;
+    const urlWithCacheBuster = url.includes('?')
+      ? `${url}&${cacheBuster}`
+      : `${url}?${cacheBuster}`;
+
+    console.log('🌐 Making API request to URL:', urlWithCacheBuster);
+    console.log('🕐 Cache-buster timestamp:', Date.now());
+
+    const response = await fetch(urlWithCacheBuster, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
       },
       signal: AbortSignal.timeout(timeout)
     });

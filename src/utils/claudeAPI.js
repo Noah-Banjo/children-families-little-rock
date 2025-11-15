@@ -64,12 +64,9 @@ TONE: Professional, warm, educational. You're a knowledgeable guide, not a robot
     // Build conversation messages array
     const messages = buildConversationMessages(conversationHistory, userMessage);
 
-    // Determine API endpoint (works in both dev and production)
-    // In development: calls localhost:3001
-    // In production: calls the same domain (childrenandfamilieslr.com)
-    const apiUrl = process.env.NODE_ENV === 'production'
-      ? '/api/chat'  // Relative URL for production
-      : 'http://localhost:3001/api/chat';  // Absolute URL for development
+    // API endpoint for Vercel serverless function
+    // Works in both development and production
+    const apiUrl = '/api/chat';
 
     const response = await fetch(apiUrl, {
       method: 'POST',

@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import './App.css';
+import './chatbot-mobile-first.css';
 
 // Components
 import ErrorBoundary from './components/ErrorBoundary';

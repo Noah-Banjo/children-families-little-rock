@@ -296,50 +296,6 @@ const TimelineSection = React.memo(({
               <p className="timeline-instruction">Click on any year below to expand and view detailed events</p>
             </div>
 
-            <div className="timeline-filters">
-              <button
-                className={timelineFilter === 'all' ? 'filter-btn active' : 'filter-btn'}
-                onClick={() => setTimelineFilter('all')}
-              >
-                All Events
-              </button>
-              <button
-                className={timelineFilter === 'legal-milestone' ? 'filter-btn active' : 'filter-btn'}
-                onClick={() => setTimelineFilter('legal-milestone')}
-              >
-                Legal Milestones
-              </button>
-              <button
-                className={timelineFilter === 'family-experience' ? 'filter-btn active' : 'filter-btn'}
-                onClick={() => setTimelineFilter('family-experience')}
-              >
-                Family Stories
-              </button>
-              <button
-                className={timelineFilter === 'integration-events' ? 'filter-btn active' : 'filter-btn'}
-                onClick={() => setTimelineFilter('integration-events')}
-              >
-                Integration Events
-              </button>
-              <button
-                className={timelineFilter === 'federal-intervention' ? 'filter-btn active' : 'filter-btn'}
-                onClick={() => setTimelineFilter('federal-intervention')}
-              >
-                Federal Actions
-              </button>
-              <button
-                className={timelineFilter === 'government-resistance' ? 'filter-btn active' : 'filter-btn'}
-                onClick={() => setTimelineFilter('government-resistance')}
-              >
-                Government Resistance
-              </button>
-              <button
-                className={timelineFilter === 'graduation' ? 'filter-btn active' : 'filter-btn'}
-                onClick={() => setTimelineFilter('graduation')}
-              >
-                Graduation
-              </button>
-            </div>
 
             {/* Timeline Legend */}
             <div className="timeline-legend">
@@ -418,7 +374,7 @@ const TimelineSection = React.memo(({
                     <div className="timeline-events-container">
                       {filteredEvents.map((event) => (
                         <div key={event.id} className={`timeline-event ${event.category}`}>
-                          <div className="event-icon">{event.icon}</div>
+                          {event.id === 'h1' && <div className="event-icon">📅</div>}
                           <div className="event-content">
                             <div className="event-header">
                               <h4>{event.title}</h4>

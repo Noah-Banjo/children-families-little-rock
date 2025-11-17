@@ -39,6 +39,9 @@ const ChatBotPrompt = ({ onChatBotOpen }) => {
     return null;
   }
 
+  // Detect if mobile
+  const isMobile = window.innerWidth <= 768;
+
   return (
     <div className="chatbot-prompt" onClick={handleClick}>
       <button className="prompt-dismiss" onClick={(e) => {
@@ -50,10 +53,9 @@ const ChatBotPrompt = ({ onChatBotOpen }) => {
       <div className="prompt-content">
         <span className="prompt-icon">💬</span>
         <p className="prompt-text">
-          <strong>Ask Dr. Archives!</strong> Click here to explore family stories with AI assistance
+          {isMobile ? "Tap to explore with AI" : "Click here to explore family stories with AI assistance"}
         </p>
       </div>
-      <div className="prompt-arrow">↘️</div>
     </div>
   );
 };

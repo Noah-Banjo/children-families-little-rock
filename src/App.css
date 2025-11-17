@@ -2193,7 +2193,8 @@
 }
 
 .citation-box em {
-  color: var(--brand-yellow);
+  color: var(--brand-black);
+  font-style: italic;
 }
 
 /* Responsive Design for About Cards */
@@ -2840,11 +2841,11 @@
   box-shadow: 0 20px 60px rgba(252, 192, 44, 0.5);
 }
 
-/* ChatBot Prompt - Floating Tooltip */
+/* ChatBot Prompt - Connected to Button */
 .chatbot-prompt {
   position: fixed;
-  bottom: 9rem;
-  right: 2.5rem;
+  bottom: 2rem;
+  right: 6rem;
   max-width: 280px;
   background: var(--brand-yellow);
   color: var(--brand-black);
@@ -2856,6 +2857,33 @@
   z-index: 999;
   animation: pulsePrompt 2s ease-in-out infinite;
   transition: all 0.3s ease;
+}
+
+.chatbot-prompt::after {
+  content: '';
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-left: 12px solid var(--brand-red);
+}
+
+.chatbot-prompt::before {
+  content: '';
+  position: absolute;
+  right: -9px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid var(--brand-yellow);
+  z-index: 1;
 }
 
 .chatbot-prompt:hover {
@@ -2926,30 +2954,48 @@
 }
 
 .prompt-arrow {
-  position: absolute;
-  bottom: -0.75rem;
-  right: 1.5rem;
-  font-size: 1.5rem;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  display: none;
 }
 
 /* Mobile responsive adjustments for prompt */
 @media (max-width: 768px) {
   .chatbot-prompt {
     bottom: 7rem;
-    right: 50%;
-    transform: translateX(50%);
-    max-width: 260px;
+    right: 1rem;
+    left: 1rem;
+    max-width: none;
+  }
+
+  .chatbot-prompt::after {
+    content: '';
+    position: absolute;
+    right: auto;
+    left: 50%;
+    top: auto;
+    bottom: -12px;
+    transform: translateX(-50%);
+    border-top: 12px solid var(--brand-red);
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: none;
+  }
+
+  .chatbot-prompt::before {
+    content: '';
+    position: absolute;
+    right: auto;
+    left: 50%;
+    top: auto;
+    bottom: -9px;
+    transform: translateX(-50%);
+    border-top: 10px solid var(--brand-yellow);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: none;
   }
 
   .chatbot-prompt:hover {
-    transform: translateX(50%) translateY(-4px);
-  }
-
-  .prompt-arrow {
-    left: 50%;
-    transform: translateX(-50%);
-    right: auto;
+    transform: translateY(-4px);
   }
 }
 

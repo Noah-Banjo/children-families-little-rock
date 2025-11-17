@@ -27,7 +27,7 @@
   justify-content: center;
   position: relative;
   z-index: 1001;
-  animation: bounceChatbot 2s ease-in-out 3;
+  animation: bounceChatbot 1.8s ease-in-out 3.5s 3;
 }
 
 @keyframes bounceChatbot {
@@ -40,7 +40,7 @@
 }
 
 .chatbot-toggle:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
   box-shadow: 0 6px 20px rgba(252, 192, 44, 0.5);
   animation: none;
 }

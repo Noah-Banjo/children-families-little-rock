@@ -21,10 +21,10 @@ const ChatBotPrompt = ({ onChatBotOpen }) => {
       return;
     }
 
-    // Show prompt after 3 seconds with fade-in animation
+    // Show prompt immediately with fade-in animation (0.5s)
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 3000);
+    }, 100);
 
     return () => {
       clearTimeout(timer);
@@ -58,10 +58,10 @@ const ChatBotPrompt = ({ onChatBotOpen }) => {
       onClick={handleClick}
     >
       <div className="chatbot-prompt-icon">
-        📚
+        💬
       </div>
       <div className="chatbot-prompt-text">
-        {isMobile ? "Chat with Dr. Archives" : "Need Help? Chat with Dr. Archives"}
+        {isMobile ? "Chat with Dr. Archives for quick research" : "Got questions? Do a quick research by chatting with Dr. Archives"}
       </div>
       <button
         className="chatbot-prompt-close"

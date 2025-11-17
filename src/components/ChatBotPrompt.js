@@ -3,8 +3,17 @@ import React, { useState, useEffect } from 'react';
 const ChatBotPrompt = ({ onChatBotOpen }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Detect mobile on mount and resize
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     // Check if prompt was already dismissed in this session
     const dismissed = sessionStorage.getItem('chatbotPromptDismissed');
     if (dismissed === 'true') {
@@ -12,15 +21,19 @@ const ChatBotPrompt = ({ onChatBotOpen }) => {
       return;
     }
 
-    // Show prompt after 3 seconds
+    // Show prompt after 3 seconds with fade-in animation
     const timer = setTimeout(() => {
       setIsVisible(true);
     }, 3000);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
-  const handleDismiss = () => {
+  const handleDismiss = (e) => {
+    e.stopPropagation();
     setIsVisible(false);
     setIsDismissed(true);
     sessionStorage.setItem('chatbotPromptDismissed', 'true');
@@ -35,27 +48,29 @@ const ChatBotPrompt = ({ onChatBotOpen }) => {
     }
   };
 
-  if (isDismissed || !isVisible) {
+  if (isDismissed) {
     return null;
   }
 
-  // Detect if mobile
-  const isMobile = window.innerWidth <= 768;
-
   return (
-    <div className="chatbot-prompt" onClick={handleClick}>
-      <button className="prompt-dismiss" onClick={(e) => {
-        e.stopPropagation();
-        handleDismiss();
-      }}>
+    <div
+      className={`chatbot-prompt-widget ${isVisible ? 'visible' : ''}`}
+      onClick={handleClick}
+    >
+      <div className="chatbot-prompt-icon">
+        📚
+      </div>
+      <div className="chatbot-prompt-text">
+        {isMobile ? "Chat with Dr. Archives" : "Need Help? Chat with Dr. Archives"}
+      </div>
+      <button
+        className="chatbot-prompt-close"
+        onClick={handleDismiss}
+        aria-label="Dismiss prompt"
+      >
         ×
       </button>
-      <div className="prompt-content">
-        <span className="prompt-icon">💬</span>
-        <p className="prompt-text">
-          {isMobile ? "Tap to explore with AI" : "Click here to explore family stories with AI assistance"}
-        </p>
-      </div>
+      <div className="chatbot-prompt-arrow"></div>
     </div>
   );
 };

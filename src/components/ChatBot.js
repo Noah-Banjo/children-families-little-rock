@@ -338,7 +338,7 @@ const ChatBot = React.memo(({
               </button>
             </div>
             <p className="ai-disclaimer-mini">
-              Powered by Claude AI • Always verify against primary sources
+              Always verify against primary sources
             </p>
           </div>
         </div>

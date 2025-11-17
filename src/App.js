@@ -355,19 +355,19 @@ const HistoricalArchive = () => {
           <section className="features">
             <div className="features-grid">
               <div className="feature-card card-pink">
-                <div className="feature-icon">👨‍👩‍👧‍👦</div>
+                <div className="feature-icon">📖</div>
                 <h3>Family Stories</h3>
                 <p>Personal accounts from families who lived through integration.</p>
                 <a href="#" onClick={() => setActiveSection('families')}>Explore Families →</a>
               </div>
               <div className="feature-card card-blue">
-                <div className="feature-icon">⏰</div>
+                <div className="feature-icon">📅</div>
                 <h3>Interactive Timeline</h3>
                 <p>Journey through key moments and personal experiences chronologically.</p>
                 <a href="#" onClick={() => setActiveSection('timeline')}>View Timeline →</a>
               </div>
               <div className="feature-card card-green">
-                <div className="feature-icon">🎭</div>
+                <div className="feature-icon">📁</div>
                 <h3>Multimedia Archive</h3>
                 <p>Photos, videos, and documents from the era.</p>
                 <a href="#" onClick={() => setActiveSection('multimedia')}>Browse Media →</a>

@@ -27,15 +27,15 @@
   justify-content: center;
   position: relative;
   z-index: 1001;
-  animation: bounceChatbot 1.8s ease-in-out 3.5s 3;
+  animation: bounceChatbot 1.8s ease-in-out 2s 3;
 }
 
 @keyframes bounceChatbot {
   0%, 100% {
-    transform: scale(1);
+    transform: translateY(0) scale(1);
   }
   50% {
-    transform: scale(1.1);
+    transform: translateY(-10px) scale(1.05);
   }
 }
 

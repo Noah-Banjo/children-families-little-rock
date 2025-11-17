@@ -2844,11 +2844,11 @@
 /* ChatBot Prompt Widget - Professional Style */
 .chatbot-prompt-widget {
   position: fixed;
-  bottom: 2rem;
-  right: 6.5rem;
+  bottom: 30px;
+  right: 90px;
   background: #2E3748;
   color: #FFFFFF;
-  padding: 8px 16px 8px 8px;
+  padding: 12px 20px 12px 12px;
   border-radius: 28px;
   display: flex;
   align-items: center;
@@ -2860,7 +2860,9 @@
   opacity: 0;
   transform: translateX(-20px);
   pointer-events: none;
-  max-width: 280px;
+  max-width: 350px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .chatbot-prompt-widget.visible {
@@ -2900,8 +2902,8 @@
 
 .chatbot-prompt-text {
   font-size: 14px;
-  font-weight: 600;
-  line-height: 1.4;
+  font-weight: 500;
+  line-height: 1.3;
   flex: 1;
   padding-right: 24px;
 }
@@ -2948,16 +2950,17 @@
 /* Mobile responsive adjustments for prompt widget */
 @media (max-width: 768px) {
   .chatbot-prompt-widget {
-    bottom: 6rem;
-    right: 1rem;
-    left: 1rem;
-    max-width: 240px;
+    bottom: 100px;
+    right: 20px;
+    left: 20px;
+    max-width: 280px;
     margin: 0 auto;
-    padding: 8px 12px 8px 8px;
+    padding: 12px 16px 12px 12px;
+    font-size: 13px;
   }
 
   .chatbot-prompt-widget.visible {
-    animation: slideInFromBottom 0.5s ease;
+    animation: slideInFromBottom 0.5s ease-out;
   }
 
   @keyframes slideInFromBottom {
@@ -2986,14 +2989,16 @@
     font-size: 16px;
     width: 18px;
     height: 18px;
+    top: 6px;
+    right: 6px;
   }
 
   .chatbot-prompt-arrow {
     bottom: -8px;
-    right: auto;
-    left: 50%;
+    right: 30px;
+    left: auto;
     top: auto;
-    transform: translateX(-50%);
+    transform: none;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-top: 8px solid #2E3748;
@@ -3812,9 +3817,10 @@
 }
 
 .search-results {
-  background: var(--brand-offwhite);
-  border-radius: 1rem;
-  box-shadow: var(--shadow-xl);
+  background: #2E3748;
+  border: 2px solid #DE2D22;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   max-width: 800px;
   width: 100%;
   max-height: 80vh;
@@ -3855,9 +3861,11 @@
 }
 
 .search-content {
-  padding: 2rem;
+  padding: 20px;
   max-height: calc(80vh - 120px);
   overflow-y: auto;
+  background: #2E3748;
+  color: #F1F5F9;
 }
 
 .search-section {
@@ -3872,7 +3880,7 @@
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: var(--brand-black);
+  color: #FFFFFF;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -3883,39 +3891,39 @@
 }
 
 .search-item {
-  padding: 1rem;
-  background: white;
-  border: 1px solid var(--border-subtle);
-  border-radius: 0.75rem;
+  padding: 16px;
+  background: rgba(46, 55, 72, 0.8);
+  border: 1px solid rgba(222, 45, 34, 0.3);
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  margin-bottom: 0.75rem;
+  transition: all 0.3s ease;
+  margin-bottom: 12px;
 }
 
 .search-item:hover {
-  background: var(--brand-offwhite);
-  border-color: var(--brand-red);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  background: rgba(55, 66, 84, 1);
+  border-color: #DE2D22;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .search-item h5 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--brand-black);
+  font-size: 1.125rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #FFFFFF;
 }
 
 .search-item p {
-  font-size: 0.875rem;
-  color: var(--medium-gray);
-  margin-bottom: 0.5rem;
-  line-height: 1.4;
+  font-size: 0.9rem;
+  color: #F1F5F9;
+  margin-bottom: 8px;
+  line-height: 1.5;
 }
 
 .search-meta {
-  font-size: 0.75rem;
-  color: var(--brand-charcoal);
+  font-size: 0.8rem;
+  color: rgba(241, 245, 249, 0.7);
   font-weight: 500;
 }
 
@@ -3940,18 +3948,19 @@
 .no-search-results {
   text-align: center;
   padding: 3rem 2rem;
-  color: var(--medium-gray);
+  color: #F1F5F9;
 }
 
 .no-search-results h4 {
   font-size: 1.25rem;
   margin-bottom: 1rem;
-  color: var(--brand-black);
+  color: #FFFFFF;
 }
 
 .no-search-results p {
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1.5;
+  color: #F1F5F9;
 }
 
 /* Search Input Enhancements */
@@ -3973,10 +3982,11 @@
 
 /* Search Result Highlighting */
 .search-highlight {
-  background: rgba(251, 191, 36, 0.3);
+  background: #FCC02C;
+  color: #000000;
   font-weight: 600;
-  padding: 0.1rem 0.2rem;
-  border-radius: 0.25rem;
+  padding: 2px 4px;
+  border-radius: 3px;
 }
 
 /* Animations */
@@ -4016,7 +4026,7 @@
   }
 
   .search-content {
-    padding: 1.5rem;
+    padding: 16px;
   }
 
   .search-header h3 {
@@ -4024,7 +4034,7 @@
   }
 
   .search-item {
-    padding: 0.75rem;
+    padding: 12px;
   }
 }
 

@@ -32,7 +32,7 @@ const HistoricalArchive = () => {
     {
       id: 1,
       type: 'bot',
-      message: "Hello! I'm Dr. Archives, your personal historian and guide to the untold stories of Little Rock School Integration Crisis. I'm here to help you explore these precious histories, find connections between stories, and discover multimedia content. What would you like to learn about today?",
+      message: "Hello! I'm Dr. Archives, your personal historian and guide to the untold stories of Little Rock School Integration Crisis. I'm here to help you explore these precious histories, find connections between stories, and discover anything at all relating to the focus of this topic. What would you like to learn about today?",
     }
   ]);
   const [currentMessage, setCurrentMessage] = useState('');
@@ -88,9 +88,9 @@ const HistoricalArchive = () => {
         {
           id: 'h11',
           date: 'August 1957',
-          title: 'Thelma Mothershed Family Conference',
+          title: 'Thelma Mothershed Family Meeting',
           category: 'family-experience',
-          description: 'Family holds conference when Thelma wants to attend Central despite cardiac condition',
+          description: 'Family holds a meeting when Thelma wants to attend Central despite cardiac condition',
           significance: 'Multi-generational family decision-making process with health concerns',
           icon: '💬'
         },
@@ -146,7 +146,7 @@ const HistoricalArchive = () => {
           category: 'federal-intervention',
           description: 'President Eisenhower sends 1,000 paratroopers to Little Rock',
           significance: 'Federal government enforces integration by military force',
-          icon: '🇺🇸'
+          icon: 'US'
         },
         {
           id: 'h6',
@@ -175,7 +175,7 @@ const HistoricalArchive = () => {
           category: 'government-resistance',
           description: 'Faubus closes all Little Rock high schools for the year',
           significance: 'Massive resistance to integration continues',
-          icon: '🔒'
+          icon: ''
         },
         {
           id: 'h16',
@@ -195,7 +195,7 @@ const HistoricalArchive = () => {
           category: 'integration-success',
           description: 'Federal court orders reopening of Little Rock schools',
           significance: 'Integration resumes after year-long closure',
-          icon: '🔓'
+          icon: ''
         }
       ],
       1960: [

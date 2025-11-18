@@ -45,7 +45,7 @@ const AboutSection = ({ families, stories }) => {
             </div>
 
             <div className="researcher-bio">
-              <h3 className="researcher-name">[YOUR_NAME]</h3>
+              <h3 className="researcher-name">Noah Adebanjo</h3>
               <p className="researcher-program">Master of Public History</p>
               <p className="researcher-institution">University of Arkansas at Little Rock</p>
 
@@ -65,24 +65,21 @@ const AboutSection = ({ families, stories }) => {
           {/* Committee Chair */}
           <div className="supervisor-card about-card">
             <div className="supervisor-role-badge chair">Committee Chair</div>
-            <h3 className="supervisor-name">[CHAIR_NAME]</h3>
-            <p className="supervisor-title">[THEIR_TITLE]</p>
+            <h3 className="supervisor-name">Dr. Barclay Key</h3>
             <p className="supervisor-institution">University of Arkansas at Little Rock</p>
           </div>
 
           {/* Committee Member 1 */}
           <div className="supervisor-card about-card">
             <div className="supervisor-role-badge">Committee Member</div>
-            <h3 className="supervisor-name">[MEMBER_1_NAME]</h3>
-            <p className="supervisor-title">[THEIR_TITLE]</p>
+            <h3 className="supervisor-name">Dr. Charles Romney</h3>
             <p className="supervisor-institution">University of Arkansas at Little Rock</p>
           </div>
 
           {/* Committee Member 2 */}
           <div className="supervisor-card about-card">
             <div className="supervisor-role-badge">Committee Member</div>
-            <h3 className="supervisor-name">[MEMBER_2_NAME]</h3>
-            <p className="supervisor-title">[THEIR_TITLE]</p>
+            <h3 className="supervisor-name">Dr. Jess Porter</h3>
             <p className="supervisor-institution">University of Arkansas at Little Rock</p>
           </div>
 

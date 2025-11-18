@@ -139,16 +139,6 @@ const FamiliesSection = React.memo(({
                         <span className="value">{family.childrenNames}</span>
                       </div>
                     )}
-
-                    <div className="detail-item">
-                      <span className="label">Archived:</span>
-                      <span className="value">
-                        {family.publishedAt
-                          ? new Date(family.publishedAt).toLocaleDateString()
-                          : 'Unknown date'
-                        }
-                      </span>
-                    </div>
                   </div>
                 </div>
 

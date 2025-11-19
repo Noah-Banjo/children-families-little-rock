@@ -51,7 +51,7 @@ const AboutSection = ({ families, stories }) => {
 
               <div className="bio-text">
                 {/* USER: Add your bio here */}
-                <p>[YOUR_BIO - Please add your biography here. This should describe your background, research interests, and what motivated you to undertake this project. You can discuss your academic journey, previous work, and why preserving these hidden histories matters to you personally.]</p>
+                <p>Research is my calling. I am deeply passionate about Childhood History and archival studies, and I'm dedicated to making a meaningful impact in this field. I always look for ways to combine my love for technology with my passion for research to create a positive impact.</p>
               </div>
             </div>
           </div>
@@ -142,10 +142,8 @@ const AboutSection = ({ families, stories }) => {
             <p className="card-intro">The researcher would also like to thank:</p>
             <ul className="contributor-list">
               {/* USER: Replace these placeholders with actual names */}
-              <li>[FAMILY_MEMBERS - Add family members who supported your work]</li>
-              <li>[FRIENDS - Add friends who provided encouragement]</li>
-              <li>[MENTORS - Add mentors who guided you]</li>
-              <li>[OTHER_SUPPORTERS - Add anyone else who helped make this project possible]</li>
+              <li>My family and church members, Emily Housdan, Joshua Ozovehe</li>
+              <li>Brigitte Billeaudeaux, Elise Tanner, Emily Summers, James Young Blood and Somaya Langley</li>
             </ul>
           </div>
         </div>

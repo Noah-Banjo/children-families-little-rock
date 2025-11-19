@@ -11,6 +11,7 @@ import TimelineSection from './components/TimelineSection';
 import AboutSection from './components/AboutSection';
 import ChatBot from './components/ChatBot';
 import ChatBotPrompt from './components/ChatBotPrompt';
+import CitationModal from './components/CitationModal';
 
 // Custom Hooks
 import { useArchiveData } from './hooks/useArchiveData';
@@ -37,6 +38,9 @@ const HistoricalArchive = () => {
   ]);
   const [currentMessage, setCurrentMessage] = useState('');
   const [isChatOpen, setIsChatOpen] = useState(false);
+
+  // Citation modal state
+  const [showCitationModal, setShowCitationModal] = useState(false);
 
   // Use custom hooks
   const { families, stories, loading, error, handleRetry, handleRefresh } = useArchiveData();
@@ -529,8 +533,17 @@ const HistoricalArchive = () => {
               <h1>The Academic Foundation</h1>
               <p>Leveraging Emerging Technologies (AI and Machine Learning) for Archiving Hidden Histories of Children and Families Impacted by the Little Rock School Integration</p>
               <div className="scholarship-buttons">
-                <button className="btn-primary">📥 Download Full Thesis</button>
-                <button className="btn-primary">Cite This Work</button>
+                <a
+                  href="/thesis/thesis.pdf"
+                  download="Adebanjo_Thesis_2025.pdf"
+                  className="btn-primary"
+                  style={{ textDecoration: 'none', display: 'inline-block' }}
+                >
+                  📥 Download Full Thesis
+                </a>
+                <button className="btn-primary" onClick={() => setShowCitationModal(true)}>
+                  Cite This Work
+                </button>
               </div>
             </div>
 
@@ -577,7 +590,7 @@ const HistoricalArchive = () => {
                     </div>
 
                     <div className="academic-actions">
-                      <button className="action-btn blue">Download Section PDF</button>
+                      <button className="action-btn blue" disabled>Download Section PDF</button>
                       <button className="link-btn" onClick={() => setActiveSection('families')}>View Related Stories →</button>
                     </div>
                   </div>
@@ -628,8 +641,8 @@ const HistoricalArchive = () => {
                     </div>
 
                     <div className="academic-actions">
-                      <button className="action-btn green">View Bibliography</button>
-                      <button className="link-btn">Interactive Citations →</button>
+                      <button className="action-btn green" disabled>View Bibliography</button>
+                      <button className="link-btn" disabled>Interactive Citations →</button>
                     </div>
                   </div>
                 )}
@@ -675,8 +688,8 @@ const HistoricalArchive = () => {
                     </div>
 
                     <div className="academic-actions">
-                      <button className="action-btn purple">Download Methodology</button>
-                      <button className="link-btn">See Process in Action →</button>
+                      <button className="action-btn purple" disabled>Download Methodology</button>
+                      <button className="link-btn" disabled>See Process in Action →</button>
                     </div>
                   </div>
                 )}
@@ -723,7 +736,7 @@ const HistoricalArchive = () => {
                     </div>
 
                     <div className="academic-actions">
-                      <button className="action-btn orange">Preliminary Findings</button>
+                      <button className="action-btn orange" disabled>Preliminary Findings</button>
                       <button className="link-btn" onClick={() => setActiveSection('families')}>Explore Connected Stories →</button>
                     </div>
                   </div>
@@ -738,9 +751,9 @@ const HistoricalArchive = () => {
                 <p>[Noah]. (2025). <em>Preserving the Untold Stories: Leveraging Emerging Technologies (AI and Machine Learning) for Archiving Hidden Histories of Children and Families Impacted by the Little Rock School Integration Crisis</em>. Master's Thesis, [University of Arkansas at Little Rock].</p>
               </div>
               <div className="citation-buttons">
-                <button className="citation-btn">Copy APA Citation</button>
-                <button className="citation-btn">Copy MLA Citation</button>
-                <button className="citation-btn">Export BibTeX</button>
+                <button className="citation-btn" disabled>Copy APA Citation</button>
+                <button className="citation-btn" disabled>Copy MLA Citation</button>
+                <button className="citation-btn" disabled>Export BibTeX</button>
               </div>
             </div>
           </div>
@@ -765,6 +778,12 @@ const HistoricalArchive = () => {
           setIsChatOpen={setIsChatOpen}
         />
       </ErrorBoundary>
+
+      {/* Citation Modal */}
+      <CitationModal
+        isOpen={showCitationModal}
+        onClose={() => setShowCitationModal(false)}
+      />
     </div>
   );
 };

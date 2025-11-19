@@ -7,13 +7,13 @@ const AboutSection = ({ families, stories }) => {
         {/* ===== SECTION 1: EXISTING CONTENT ===== */}
         <h1>About This Archive</h1>
         <div className="about-content">
-          <p>Many people know the names of the Little Rock Nine. They don't ask about their siblings, their parents who lost jobs, or their grandmothers who stood guard at night. This digital archive recovers those hidden stories - not as background context, but as evidence of how historical change actually happens through family networks.</p>
+          <p>Many people are familiar with the names of the Little Rock Nine, but often the stories of their siblings, parents who faced job losses, or grandmothers who kept watch go unnoticed. This mini digital exhibit aims to bring those lesser-known stories to light, highlighting how real change often happens within family networks rather than through historic events alone.</p>
 
-          <p>The archive organizes materials by families rather than famous individuals, revealing how the integration crisis transformed entire households: siblings who faced harassment at their own schools, parents who developed security protocols for daily survival, extended family members who provided economic support when segregationists cut off credit. These experiences have remained hidden because traditional archives were never designed to capture the intimate, family-centered experiences that shaped children's historical agency.</p>
+          <p>The exhibit arranges materials by families rather than by famous individuals, offering a glimpse into how the integration crisis touched entire households: siblings who endured harassment in their schools, parents who developed security measures for daily protection, and extended family members who provided financial support when segregationists cut off credit. These glimpses help us understand the deeply personal, family-centered experiences that contributed to children's sense of agency in history.</p>
 
-          <p>An AI-powered chatbot makes these stories accessible through personalized interaction. Ask about protection strategies, and the system synthesizes information across multiple family accounts. Ask what it was like to be a sibling, and you'll get responses drawn from experiences that have never been centered in civil rights history. The technology serves the historical argument: that children's agency emerges from and reshapes family systems, not from isolated individual heroism.</p>
+          <p>To make these stories even more accessible, an AI-powered chatbot has been introduced. You can ask it questions about protective strategies or what it was like to be a sibling, and it synthesizes information from various family stories to give you thoughtful, personalized responses. This technology aims to reach those who want quick insights or cannot access these stories easily from afar.</p>
 
-          <p>This archive challenges how we preserve, access and understand history. It makes visible what historians have systematically overlooked, and it provides a methodology for recovering hidden histories in other contexts where children's experiences have been treated as merely supplementary to adult action.</p>
+          <p>In a gentle way, this exhibit shapes how we access and understand hidden histories.</p>
         </div>
 
         <div className="about-stats">

@@ -61,10 +61,10 @@ export const getStrapiImageUrl = (imageObj) => {
 /**
  * Robust fetch function with error handling and timeout
  * @param {string} url - The API endpoint URL
- * @param {number} timeout - Timeout in milliseconds (default: 10000)
+ * @param {number} timeout - Timeout in milliseconds (default: 30000)
  * @returns {Object} - { success: boolean, data: array, error: string }
  */
-export const fetchFromCMS = async (url, timeout = 10000) => {
+export const fetchFromCMS = async (url, timeout = 30000) => {
   try {
     // Add timestamp for cache-busting
     const cacheBuster = `_t=${Date.now()}`;

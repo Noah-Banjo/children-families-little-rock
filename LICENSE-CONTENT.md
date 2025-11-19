@@ -2,7 +2,7 @@
 
 ## Historical Materials Protection
 
-Historical photographs, documents, oral histories, family stories, and personal accounts contained in this archive are protected under fair use provisions for academic research and educational purposes.
+Historical photographs, documents, family stories, and personal accounts contained in this archive are protected under fair use provisions for academic research and educational purposes.
 
 ## Permitted Uses
 

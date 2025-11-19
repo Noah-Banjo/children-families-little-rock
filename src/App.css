@@ -2723,6 +2723,17 @@
   box-shadow: var(--shadow-md);
 }
 
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.action-btn:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
 .link-btn {
   background: none;
   border: none;
@@ -2737,6 +2748,17 @@
 .link-btn:hover {
   color: var(--vivid-orange);
   transform: translateX(4px);
+}
+
+.link-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.link-btn:disabled:hover {
+  color: var(--brand-red);
+  transform: none;
 }
 
 /* Citation Container - Enhanced Visibility */
@@ -2808,6 +2830,17 @@
 .citation-btn:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-crimson);
+}
+
+.citation-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.citation-btn:disabled:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 /* Enhanced AI Chatbot - CONSISTENT FIRE EMOJI */

@@ -743,19 +743,6 @@ const HistoricalArchive = () => {
                 )}
               </div>
             </div>
-
-            {/* Citation Information */}
-            <div className="citation-container">
-              <h3>Cite This Research</h3>
-              <div className="citation-box">
-                <p>[Noah]. (2025). <em>Preserving the Untold Stories: Leveraging Emerging Technologies (AI and Machine Learning) for Archiving Hidden Histories of Children and Families Impacted by the Little Rock School Integration Crisis</em>. Master's Thesis, [University of Arkansas at Little Rock].</p>
-              </div>
-              <div className="citation-buttons">
-                <button className="citation-btn" disabled>Copy APA Citation</button>
-                <button className="citation-btn" disabled>Copy MLA Citation</button>
-                <button className="citation-btn" disabled>Export BibTeX</button>
-              </div>
-            </div>
           </div>
         </section>
       )}

@@ -45,7 +45,7 @@ const AboutSection = ({ families, stories }) => {
             </div>
 
             <div className="researcher-bio">
-              <h3 className="researcher-name">Noah Adebanjo</h3>
+              <h3 className="researcher-name">Oluseyi Noah Adebanjo</h3>
               <p className="researcher-program">Master of Public History</p>
               <p className="researcher-institution">University of Arkansas at Little Rock</p>
 
@@ -142,8 +142,8 @@ const AboutSection = ({ families, stories }) => {
             <p className="card-intro">The researcher would also like to thank:</p>
             <ul className="contributor-list">
               {/* USER: Replace these placeholders with actual names */}
-              <li>My family and church members, Emily Housdan, Joshua Ozovehe</li>
-              <li>Brigitte Billeaudeaux, Elise Tanner, Emily Summers, James Young Blood and Somaya Langley</li>
+              <li>His family and church members, Emily Housdan, Joshua Ozovehe</li>
+              <li>Brigitte Billeaudeaux, Elise Tanner, Emily Summers, James Young Blood and Somaya Langley, to be updated</li>
             </ul>
           </div>
         </div>

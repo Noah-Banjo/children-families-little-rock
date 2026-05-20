@@ -49,7 +49,7 @@ const ImageAttribution = ({ family }) => {
       >
         <img
           src={featuredImageUrl}
-          alt={`${family.familyName || 'Family'} featured photo`}
+          alt={`${family.familyName || 'Family'} portrait`}
           onError={(e) => {
             console.error('Failed to load image:', featuredImageUrl);
             e.target.style.display = 'none';

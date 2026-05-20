@@ -301,18 +301,18 @@ const HistoricalArchive = () => {
           </div>
 
           <nav className="nav">
-            <a href="#" onClick={() => setActiveSection('stories')}
-               className={activeSection === 'stories' ? 'active' : ''}>Stories</a>
-            <a href="#" onClick={() => setActiveSection('timeline')}
-               className={activeSection === 'timeline' ? 'active' : ''}>Timeline</a>
-            <a href="#" onClick={() => setActiveSection('families')}
-               className={activeSection === 'families' ? 'active' : ''}>Families</a>
-            <a href="#" onClick={() => setActiveSection('multimedia')}
-               className={activeSection === 'multimedia' ? 'active' : ''}>Multimedia</a>
-            <a href="#" onClick={() => setActiveSection('scholarship')}
-               className={activeSection === 'scholarship' ? 'active' : ''}>Scholarship</a>
-            <a href="#" onClick={() => setActiveSection('about')}
-               className={activeSection === 'about' ? 'active' : ''}>About</a>
+            <button onClick={() => setActiveSection('stories')}
+               className={activeSection === 'stories' ? 'active' : ''}>Stories</button>
+            <button onClick={() => setActiveSection('timeline')}
+               className={activeSection === 'timeline' ? 'active' : ''}>Timeline</button>
+            <button onClick={() => setActiveSection('families')}
+               className={activeSection === 'families' ? 'active' : ''}>Families</button>
+            <button onClick={() => setActiveSection('multimedia')}
+               className={activeSection === 'multimedia' ? 'active' : ''}>Multimedia</button>
+            <button onClick={() => setActiveSection('scholarship')}
+               className={activeSection === 'scholarship' ? 'active' : ''}>Scholarship</button>
+            <button onClick={() => setActiveSection('about')}
+               className={activeSection === 'about' ? 'active' : ''}>About</button>
           </nav>
 
           <button className="mobile-menu-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -324,12 +324,12 @@ const HistoricalArchive = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="mobile-menu">
-          <a href="#" onClick={() => {setActiveSection('stories'); setIsMenuOpen(false);}}>Stories</a>
-          <a href="#" onClick={() => {setActiveSection('timeline'); setIsMenuOpen(false);}}>Timeline</a>
-          <a href="#" onClick={() => {setActiveSection('families'); setIsMenuOpen(false);}}>Families</a>
-          <a href="#" onClick={() => {setActiveSection('multimedia'); setIsMenuOpen(false);}}>Multimedia</a>
-          <a href="#" onClick={() => {setActiveSection('scholarship'); setIsMenuOpen(false);}}>Scholarship</a>
-          <a href="#" onClick={() => {setActiveSection('about'); setIsMenuOpen(false);}}>About</a>
+          <button onClick={() => {setActiveSection('stories'); setIsMenuOpen(false);}}>Stories</button>
+          <button onClick={() => {setActiveSection('timeline'); setIsMenuOpen(false);}}>Timeline</button>
+          <button onClick={() => {setActiveSection('families'); setIsMenuOpen(false);}}>Families</button>
+          <button onClick={() => {setActiveSection('multimedia'); setIsMenuOpen(false);}}>Multimedia</button>
+          <button onClick={() => {setActiveSection('scholarship'); setIsMenuOpen(false);}}>Scholarship</button>
+          <button onClick={() => {setActiveSection('about'); setIsMenuOpen(false);}}>About</button>
         </div>
       )}
 
@@ -362,19 +362,19 @@ const HistoricalArchive = () => {
                 <div className="feature-icon">📖</div>
                 <h3>Family Stories</h3>
                 <p>Personal accounts from families who lived through integration.</p>
-                <a href="#" onClick={() => setActiveSection('families')}>Explore Families →</a>
+                <button onClick={() => setActiveSection('families')}>Explore Families →</button>
               </div>
               <div className="feature-card card-blue">
                 <div className="feature-icon">📅</div>
                 <h3>Interactive Timeline</h3>
                 <p>Journey through key moments and personal experiences chronologically.</p>
-                <a href="#" onClick={() => setActiveSection('timeline')}>View Timeline →</a>
+                <button onClick={() => setActiveSection('timeline')}>View Timeline →</button>
               </div>
               <div className="feature-card card-green">
                 <div className="feature-icon">📁</div>
                 <h3>Multimedia Archive</h3>
                 <p>Photos, videos, and documents from the era.</p>
-                <a href="#" onClick={() => setActiveSection('multimedia')}>Browse Media →</a>
+                <button onClick={() => setActiveSection('multimedia')}>Browse Media →</button>
               </div>
             </div>
           </section>

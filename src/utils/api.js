@@ -6,56 +6,24 @@
  * @returns {string|null} - Full image URL or null if no image
  */
 export const getStrapiImageUrl = (imageObj) => {
-  console.log('🖼️ getStrapiImageUrl input:', imageObj);
-
-  // Handle null/undefined
-  if (!imageObj) {
-    console.log('❌ No image object provided');
-    return null;
-  }
+  if (!imageObj) return null;
 
   let imageUrl = null;
 
-  // Handle array structure (actual Strapi response)
   if (Array.isArray(imageObj) && imageObj.length > 0) {
-    // featuredPhoto is an array, get first image
-    const firstImage = imageObj[0];
-    if (firstImage?.url) {
-      imageUrl = firstImage.url;
-      console.log('✅ Found image URL in array structure:', imageUrl);
-    }
-  }
-  // Handle legacy nested structure
-  else if (imageObj?.data?.attributes?.url) {
+    imageUrl = imageObj[0]?.url ?? null;
+  } else if (imageObj?.data?.attributes?.url) {
     imageUrl = imageObj.data.attributes.url;
-    console.log('✅ Found image URL in v4 nested structure:', imageUrl);
-  }
-  // Handle flattened structure
-  else if (imageObj?.attributes?.url) {
+  } else if (imageObj?.attributes?.url) {
     imageUrl = imageObj.attributes.url;
-    console.log('✅ Found image URL in flattened structure:', imageUrl);
-  }
-  // Handle direct URL
-  else if (imageObj?.url) {
+  } else if (imageObj?.url) {
     imageUrl = imageObj.url;
-    console.log('✅ Found direct image URL:', imageUrl);
-  }
-  else {
-    console.log('❌ No image URL found in any expected structure');
-    return null;
   }
 
-  if (!imageUrl) {
-    console.log('❌ Image URL is empty');
-    return null;
-  }
+  if (!imageUrl) return null;
 
   const CMS_BASE_URL = 'https://children-families-cms.onrender.com';
-
-  // If URL is already absolute, return as-is, otherwise construct full URL
-  const fullUrl = imageUrl.startsWith('http') ? imageUrl : `${CMS_BASE_URL}${imageUrl}`;
-  console.log('🌐 Final image URL:', fullUrl);
-  return fullUrl;
+  return imageUrl.startsWith('http') ? imageUrl : `${CMS_BASE_URL}${imageUrl}`;
 };
 
 /**
@@ -71,9 +39,6 @@ export const fetchFromCMS = async (url, timeout = 30000) => {
     const urlWithCacheBuster = url.includes('?')
       ? `${url}&${cacheBuster}`
       : `${url}?${cacheBuster}`;
-
-    console.log('🌐 Making API request to URL:', urlWithCacheBuster);
-    console.log('🕐 Cache-buster timestamp:', Date.now());
 
     const response = await fetch(urlWithCacheBuster, {
       method: 'GET',
@@ -91,53 +56,25 @@ export const fetchFromCMS = async (url, timeout = 30000) => {
     }
 
     const data = await response.json();
-    console.log('🔍 Strapi API Response:', data);
-    console.log('🔍 Families data array:', data.data);
 
-    if (data.data && data.data[0]) {
-      console.log('🔍 First family complete structure:', JSON.stringify(data.data[0], null, 2));
-      console.log('🔍 Available attributes keys:', Object.keys(data.data[0].attributes || {}));
-      console.log('🔍 First family featuredPhoto:', data.data[0].attributes?.featuredPhoto);
-
-      // Check for different possible image field names
-      const attrs = data.data[0].attributes || {};
-      ['featuredPhoto', 'featured_photo', 'image', 'photo', 'thumbnail'].forEach(field => {
-        if (attrs[field] !== undefined) {
-          console.log(`📷 Found image field '${field}':`, attrs[field]);
-        }
-      });
-    }
-
-    // Transform Strapi response: Since we're using populate=*, the data is already flat
-    // The API returns featuredPhoto as an array directly in the attributes
-    const transformedData = data.data?.map(item => {
-      // In this version of Strapi, attributes are already at the root level
-      const familyData = {
-        id: item.id,
-        documentId: item.documentId,
-        familyName: item.familyName,
-        timePeriod: item.timePeriod,
-        description: item.description,
-        location: item.location,
-        childrenNames: item.childrenNames,
-        featuredPhoto: item.featuredPhoto, // This will be an array or null
-        imageSource: item.imageSource,
-        photographer: item.photographer,
-        imageDate: item.imageDate,
-        collection: item.collection,
-        usageRights: item.usageRights,
-        createdAt: item.createdAt,
-        updatedAt: item.updatedAt,
-        publishedAt: item.publishedAt
-      };
-
-      console.log(`📋 Processing family: ${familyData.familyName}`);
-      console.log(`📷 Featured photo data:`, familyData.featuredPhoto);
-
-      return familyData;
-    }) || [];
-
-    console.log('🔍 Transformed data sample:', transformedData[0]);
+    const transformedData = data.data?.map(item => ({
+      id: item.id,
+      documentId: item.documentId,
+      familyName: item.familyName,
+      timePeriod: item.timePeriod,
+      description: item.description,
+      location: item.location,
+      childrenNames: item.childrenNames,
+      featuredPhoto: item.featuredPhoto,
+      imageSource: item.imageSource,
+      photographer: item.photographer,
+      imageDate: item.imageDate,
+      collection: item.collection,
+      usageRights: item.usageRights,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+      publishedAt: item.publishedAt
+    })) || [];
 
     return { success: true, data: transformedData, error: null };
   } catch (error) {
@@ -152,9 +89,6 @@ export const fetchFromCMS = async (url, timeout = 30000) => {
  */
 export const fetchFamilies = async () => {
   const CMS_BASE_URL = 'https://children-families-cms.onrender.com/api';
-
-  // Use populate=* which works according to our API test
-  console.log('🔄 Fetching families with populate=* to include featuredPhoto');
   return await fetchFromCMS(`${CMS_BASE_URL}/families?populate=*`);
 };
 

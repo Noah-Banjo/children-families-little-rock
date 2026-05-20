@@ -97,12 +97,6 @@ const FamiliesSection = React.memo(({
               const description = family.description || 'No description available.';
               const shouldTruncate = description.length > 180;
 
-              console.log('Family data for', family.familyName, ':', {
-                family,
-                featuredPhoto: family.featuredPhoto,
-                featuredImageUrl
-              });
-
               return (
                 <div key={family.id} className={`family-card ${isExpanded ? 'expanded' : ''}`}>
                   <div className="family-header">

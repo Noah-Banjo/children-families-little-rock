@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { getStrapiImageUrl } from '../utils/api';
 import ImageAttribution from './ImageAttribution';
 
 const FamiliesSection = React.memo(({
@@ -92,16 +91,9 @@ const FamiliesSection = React.memo(({
         {!loading && families.length > 0 && (
           <div className="families-grid">
             {displayFamilies.map((family) => {
-              const featuredImageUrl = getStrapiImageUrl(family.featuredPhoto);
               const isExpanded = expandedCard === family.id;
               const description = family.description || 'No description available.';
               const shouldTruncate = description.length > 180;
-
-              console.log('Family data for', family.familyName, ':', {
-                family,
-                featuredPhoto: family.featuredPhoto,
-                featuredImageUrl
-              });
 
               return (
                 <div key={family.id} className={`family-card ${isExpanded ? 'expanded' : ''}`}>

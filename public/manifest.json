@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "LR9 Families",
+  "name": "Children & Families of Little Rock | 1957 Integration Archive",
+  "description": "A digital archive preserving the hidden histories of children and families impacted by the 1957 Little Rock School Integration Crisis.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#b91c1c",
   "background_color": "#ffffff"
 }

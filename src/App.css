@@ -148,7 +148,8 @@
   gap: 0.5rem;
 }
 
-.nav a {
+.nav a,
+.nav button {
   color: var(--brand-offwhite);
   text-decoration: none;
   padding: 0.8rem 1.4rem;
@@ -157,9 +158,15 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
 }
 
-.nav a::before {
+.nav a::before,
+.nav button::before {
   content: '';
   position: absolute;
   top: 0;
@@ -173,18 +180,21 @@
   z-index: -1;
 }
 
-.nav a:hover::before {
+.nav a:hover::before,
+.nav button:hover::before {
   transform: scaleX(1);
   transform-origin: left;
 }
 
-.nav a.active {
+.nav a.active,
+.nav button.active {
   color: var(--brand-offwhite);
   font-weight: 600;
   border-bottom: 2px solid var(--brand-red);
 }
 
-.nav a.active::before {
+.nav a.active::before,
+.nav button.active::before {
   transform: scaleX(1);
   transform-origin: left;
 }
@@ -215,16 +225,27 @@
   gap: 0.5rem;
 }
 
-.mobile-menu a {
+.mobile-menu a,
+.mobile-menu button {
   color: var(--brand-offwhite);
   text-decoration: none;
   padding: 1rem 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   font-weight: 500;
   transition: all 0.3s ease;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: left;
+  width: 100%;
 }
 
-.mobile-menu a:hover {
+.mobile-menu a:hover,
+.mobile-menu button:hover {
   color: var(--brand-yellow);
   transform: translateX(8px);
 }
@@ -537,7 +558,8 @@
   margin-bottom: 1.5rem;
 }
 
-.feature-card a {
+.feature-card a,
+.feature-card button {
   color: var(--brand-red);
   text-decoration: none;
   font-weight: 600;
@@ -549,9 +571,14 @@
   gap: 0.5rem;
   transition: all 0.3s ease;
   cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
 }
 
-.feature-card a:hover {
+.feature-card a:hover,
+.feature-card button:hover {
   color: var(--vivid-orange);
   transform: translateX(4px);
 }
@@ -3826,7 +3853,8 @@
     font-size: 0.75rem;
   }
 
-  .nav a {
+  .nav a,
+  .nav button {
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
   }

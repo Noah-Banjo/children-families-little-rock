@@ -187,7 +187,7 @@ const ChatBot = React.memo(({
     } finally {
       setIsLoading(false);
     }
-  }, [setChatMessages, families, stories, timelineData, chatMessages, isLoading]);
+  }, [setChatMessages, setCurrentMessage, families, stories, timelineData, chatMessages, isLoading]);
 
   return (
     <div className="chatbot-container">

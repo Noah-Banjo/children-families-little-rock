@@ -1,0 +1,57 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d1810;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d0805;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentFade" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c4862b;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#c4862b;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Outer border -->
+  <rect x="30" y="30" width="1140" height="570" fill="none" stroke="#c4862b" stroke-width="1.5" opacity="0.5"/>
+  <rect x="38" y="38" width="1124" height="554" fill="none" stroke="#c4862b" stroke-width="0.5" opacity="0.25"/>
+
+  <!-- Left accent bar -->
+  <rect x="72" y="110" width="5" height="410" fill="url(#accentFade)"/>
+
+  <!-- Top label -->
+  <text x="600" y="96" font-family="Georgia, serif" font-size="12" fill="#c4862b" text-anchor="middle" letter-spacing="5" opacity="0.9">DIGITAL HISTORICAL ARCHIVE</text>
+  <line x1="350" y1="102" x2="500" y2="102" stroke="#c4862b" stroke-width="0.75" opacity="0.4"/>
+  <line x1="700" y1="102" x2="850" y2="102" stroke="#c4862b" stroke-width="0.75" opacity="0.4"/>
+
+  <!-- Main title line 1 -->
+  <text x="100" y="230" font-family="Georgia, 'Times New Roman', serif" font-size="72" font-weight="bold" fill="#f5e6c8" letter-spacing="-1">Children &amp; Families</text>
+
+  <!-- Main title line 2 -->
+  <text x="100" y="316" font-family="Georgia, 'Times New Roman', serif" font-size="72" font-weight="bold" fill="#c4862b" letter-spacing="-1">of Little Rock</text>
+
+  <!-- Divider -->
+  <line x1="100" y1="352" x2="820" y2="352" stroke="#c4862b" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Subtitle -->
+  <text x="100" y="394" font-family="Georgia, 'Times New Roman', serif" font-size="27" fill="#e8d5b0" opacity="0.88">Hidden Histories of the 1957 School Integration Crisis</text>
+
+  <!-- Year marker -->
+  <text x="100" y="444" font-family="Georgia, serif" font-size="17" fill="#c4862b" letter-spacing="6" opacity="0.75">1954 — 1960</text>
+
+  <!-- Feature line -->
+  <text x="100" y="502" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#a89070" letter-spacing="1.5" opacity="0.85">Family Stories  ·  Interactive Timeline  ·  Dr. Archives AI Historian</text>
+
+  <!-- Institution / URL -->
+  <text x="100" y="550" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#7a6248" letter-spacing="0.5">University of Arkansas at Little Rock  ·  lr9childrenandfamilies.com</text>
+
+  <!-- Decorative right panel -->
+  <rect x="920" y="155" width="220" height="310" fill="#c4862b" opacity="0.04" rx="2"/>
+  <rect x="920" y="155" width="220" height="310" fill="none" stroke="#c4862b" stroke-width="1" opacity="0.2" rx="2"/>
+  <text x="1030" y="292" font-family="Georgia, serif" font-size="80" fill="#c4862b" text-anchor="middle" opacity="0.12" font-weight="bold">1957</text>
+  <line x1="935" y1="240" x2="1125" y2="240" stroke="#c4862b" stroke-width="0.75" opacity="0.18"/>
+  <line x1="935" y1="360" x2="1125" y2="360" stroke="#c4862b" stroke-width="0.75" opacity="0.18"/>
+  <text x="1030" y="220" font-family="Georgia, serif" font-size="13" fill="#c4862b" text-anchor="middle" opacity="0.5" letter-spacing="2">LITTLE ROCK</text>
+  <text x="1030" y="395" font-family="Georgia, serif" font-size="13" fill="#c4862b" text-anchor="middle" opacity="0.5" letter-spacing="2">CENTRAL HIGH</text>
+</svg>

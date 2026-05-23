@@ -19,13 +19,11 @@ const ChatBot = React.memo(({
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Load disclaimer state from localStorage
   useEffect(() => {
     const collapsed = localStorage.getItem('chatbotDisclaimerCollapsed') === 'true';
     setDisclaimerCollapsed(collapsed);
   }, []);
 
-  // Auto-scroll to bottom when new messages arrive
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -36,63 +34,50 @@ const ChatBot = React.memo(({
     }
   }, [chatMessages, isChatOpen]);
 
-  // Auto-focus input when chat opens (mobile)
   useEffect(() => {
     if (isChatOpen && inputRef.current) {
-      // Delay to ensure chat is fully rendered
       setTimeout(() => {
         inputRef.current?.focus();
       }, 300);
     }
   }, [isChatOpen]);
 
-  // Toggle disclaimer collapse
   const toggleDisclaimer = useCallback(() => {
     const newState = !disclaimerCollapsed;
     setDisclaimerCollapsed(newState);
     localStorage.setItem('chatbotDisclaimerCollapsed', String(newState));
   }, [disclaimerCollapsed]);
 
-  // Send message handler - now uses Claude API
-  const handleSendMessage = useCallback(async () => {
-    if (!currentMessage.trim() || isLoading) return;
+  const sendMessage = useCallback(async (messageText) => {
+    if (isLoading) return;
 
-    const messageToSend = currentMessage.trim();
-    setCurrentMessage('');
     setHasInteracted(true);
     setIsLoading(true);
 
-    // Add user message immediately
     const userMsg = {
       id: Date.now(),
       type: 'user',
-      message: messageToSend,
+      message: messageText,
       timestamp: new Date().toISOString()
     };
-
     setChatMessages(prev => [...prev, userMsg]);
 
-    // Add typing indicator
     const typingMsg = {
       id: Date.now() + 1,
       type: 'bot',
       message: 'Dr. Archives is thinking...',
       isTyping: true
     };
-
     setChatMessages(prev => [...prev, typingMsg]);
 
     try {
-      // Call Claude API with full context
       const response = await sendMessageToClaude(
-        messageToSend,
+        messageText,
         families,
         stories,
         timelineData,
         chatMessages
       );
-
-      // Remove typing indicator and add Claude's response
       setChatMessages(prev =>
         prev.filter(msg => !msg.isTyping).concat([{
           id: Date.now() + 2,
@@ -103,8 +88,6 @@ const ChatBot = React.memo(({
       );
     } catch (error) {
       console.error('Error getting response from Claude:', error);
-
-      // Remove typing indicator and show error message
       setChatMessages(prev =>
         prev.filter(msg => !msg.isTyping).concat([{
           id: Date.now() + 2,
@@ -117,9 +100,15 @@ const ChatBot = React.memo(({
     } finally {
       setIsLoading(false);
     }
-  }, [currentMessage, setChatMessages, setCurrentMessage, families, stories, timelineData, chatMessages, isLoading]);
+  }, [isLoading, families, stories, timelineData, chatMessages, setChatMessages]);
 
-  // Handle Enter key (submit) and Shift+Enter (new line)
+  const handleSendMessage = useCallback(() => {
+    if (!currentMessage.trim()) return;
+    const text = currentMessage.trim();
+    setCurrentMessage('');
+    sendMessage(text);
+  }, [currentMessage, setCurrentMessage, sendMessage]);
+
   const handleKeyPress = useCallback((e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -127,71 +116,12 @@ const ChatBot = React.memo(({
     }
   }, [handleSendMessage]);
 
-  // Quick suggestion click handler
-  const handleSuggestionClick = useCallback(async (suggestion) => {
-    if (isLoading) return;
-
-    setCurrentMessage('');
-    setHasInteracted(true);
-    setIsLoading(true);
-
-    // Add user message
-    const userMsg = {
-      id: Date.now(),
-      type: 'user',
-      message: suggestion,
-      timestamp: new Date().toISOString()
-    };
-
-    setChatMessages(prev => [...prev, userMsg]);
-
-    // Add typing indicator
-    const typingMsg = {
-      id: Date.now() + 1,
-      type: 'bot',
-      message: 'Dr. Archives is thinking...',
-      isTyping: true
-    };
-
-    setChatMessages(prev => [...prev, typingMsg]);
-
-    try {
-      const response = await sendMessageToClaude(
-        suggestion,
-        families,
-        stories,
-        timelineData,
-        chatMessages
-      );
-
-      setChatMessages(prev =>
-        prev.filter(msg => !msg.isTyping).concat([{
-          id: Date.now() + 2,
-          type: 'bot',
-          message: response,
-          timestamp: new Date().toISOString()
-        }])
-      );
-    } catch (error) {
-      console.error('Error getting response from Claude:', error);
-
-      setChatMessages(prev =>
-        prev.filter(msg => !msg.isTyping).concat([{
-          id: Date.now() + 2,
-          type: 'bot',
-          message: "I'm having trouble connecting right now. Please try again.",
-          timestamp: new Date().toISOString(),
-          isError: true
-        }])
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  }, [setChatMessages, setCurrentMessage, families, stories, timelineData, chatMessages, isLoading]);
+  const handleSuggestionClick = useCallback((suggestion) => {
+    sendMessage(suggestion);
+  }, [sendMessage]);
 
   return (
     <div className="chatbot-container">
-      {/* Floating Chat Button */}
       {!isChatOpen && (
         <button
           onClick={() => setIsChatOpen(true)}
@@ -202,10 +132,8 @@ const ChatBot = React.memo(({
         </button>
       )}
 
-      {/* Chat Window */}
       {isChatOpen && (
         <div className="enhanced-chatbot">
-          {/* Header */}
           <div className="enhanced-chatbot-header">
             <div className="chatbot-info">
               <div className="enhanced-chatbot-avatar">🎓</div>
@@ -227,7 +155,6 @@ const ChatBot = React.memo(({
             </button>
           </div>
 
-          {/* Disclaimer Banner - Collapsible */}
           <div className={`chatbot-disclaimer-banner ${disclaimerCollapsed ? 'collapsed' : ''}`}>
             {disclaimerCollapsed ? (
               <div className="disclaimer-collapsed" onClick={toggleDisclaimer}>
@@ -257,7 +184,6 @@ const ChatBot = React.memo(({
             )}
           </div>
 
-          {/* Messages Area */}
           <div className="enhanced-chatbot-messages">
             {chatMessages.map((msg) => (
               <div key={msg.id} className={`enhanced-message ${msg.type} ${msg.isTyping ? 'typing' : ''}`}>
@@ -277,7 +203,6 @@ const ChatBot = React.memo(({
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Suggestions - Above input, hide after interaction */}
           {!hasInteracted && (
             <div className="quick-suggestions">
               <p className="suggestions-label">Quick Questions:</p>
@@ -314,7 +239,6 @@ const ChatBot = React.memo(({
             </div>
           )}
 
-          {/* Input Area - Fixed at bottom */}
           <div className="enhanced-chatbot-input">
             <div className="input-wrapper">
               <textarea

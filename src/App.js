@@ -528,11 +528,11 @@ const HistoricalArchive = () => {
               <h1>The Academic Foundation</h1>
               <p>Leveraging Emerging Technologies (AI and Machine Learning) for Archiving Hidden Histories of Children and Families Impacted by the Little Rock School Integration</p>
 
-              <p style={{maxWidth: '720px', margin: '1.25rem auto 0.5rem', fontSize: '0.95rem', lineHeight: '1.75', color: '#e2e8f0', opacity: '0.88'}}>
+              <p style={{maxWidth: '720px', margin: '1.25rem auto 0.5rem', fontSize: '0.95rem', lineHeight: '1.75'}}>
                 This thesis challenges the dominant narrative of the Little Rock School Integration Crisis by recovering the hidden histories of families and siblings who made integration possible but have been systematically overlooked by historians. It demonstrates that integration was fundamentally a family crisis requiring collective decision-making, economic sacrifice, and multigenerational support networks — not merely an act of individual student courage.
               </p>
 
-              <div style={{fontSize: '0.82rem', color: '#94a3b8', margin: '0.75rem auto 1.5rem', maxWidth: '680px', lineHeight: '2'}}>
+              <div style={{fontSize: '0.82rem', margin: '0.75rem auto 1.5rem', maxWidth: '680px', lineHeight: '2'}}>
                 <strong>Committee Chair:</strong> Dr. Barclay Key, Associate Professor, Department of History&nbsp;&nbsp;|&nbsp;&nbsp;
                 <strong>Committee:</strong> Dr. Charles Romney &middot; Dr. Jess Porter (Executive Director, CAHC)<br />
                 Department of Public History &middot; University of Arkansas at Little Rock &middot; December 2025
@@ -687,7 +687,7 @@ const HistoricalArchive = () => {
                       </div>
                       <div className="phase">
                         <h4>Phase 3: AI Integration</h4>
-                        <p>Developing Dr. Archives, an intelligent chatbot for personalized historical engagement. The chatbot answers specific questions about family experiences, identifies patterns across multiple family stories, and adapts responses to different users’ needs. A middle school student asking “what was it like to be a sibling?” receives age-appropriate answers drawn from multiple families. A researcher asking about protection strategies receives a synthesized analysis across all archived materials. The AI makes these hidden histories truly accessible rather than just digitally stored.</p>
+                        <p>Developing Dr. Archives, an intelligent chatbot for personalized historical engagement. The chatbot answers specific questions about family experiences, identifies patterns across multiple family stories, and adapts responses to different users’ needs. A middle school student asking “what was it like to be a sibling?” receives age-appropriate answers drawn from multiple families. A researcher asking about protection strategies receives a synthesized analysis across all archived materials.</p>
                       </div>
                       <div className="phase">
                         <h4>Phase 4: Analysis &amp; Interpretation</h4>
@@ -729,14 +729,14 @@ const HistoricalArchive = () => {
                     </div>
 
                     <div style={{marginTop: '1.25rem', padding: '0 0.25rem'}}>
-                      <p style={{marginBottom: '1rem', color: '#cbd5e1', lineHeight: '1.7'}}>
-                        <strong style={{color: '#e2e8f0'}}>Economic retaliation was systematic:</strong> Every documented family faced job loss, credit cutoffs, or forced relocation. Elizabeth Eckford’s mother lost her teaching position at the State School for the Blind. Carlotta Walls’ father was forced to leave Arkansas to find work. Gloria Ray Karlmark’s mother was made to resign from the Welfare Department — even though Gloria’s parents had opposed her enrollment at Central.
+                      <p style={{marginBottom: '1rem', lineHeight: '1.7'}}>
+                        <strong>Economic retaliation was systematic:</strong> Every documented family faced job loss, credit cutoffs, or forced relocation. Elizabeth Eckford’s mother lost her teaching position at the State School for the Blind. Carlotta Walls’ father was forced to leave Arkansas to find work. Gloria Ray Karlmark’s mother was made to resign from the Welfare Department — even though Gloria’s parents had opposed her enrollment at Central.
                       </p>
-                      <p style={{marginBottom: '1rem', color: '#cbd5e1', lineHeight: '1.7'}}>
-                        <strong style={{color: '#e2e8f0'}}>Siblings absorbed hidden trauma:</strong> Conrad Beals (Melba’s brother) could not play outside alone and walked to school only in groups. Three-year-old Tina Walls was sent to relatives after the family home was bombed in 1960. Phyllis Brown lost her dancing companion when her sister Minnijean was expelled and relocated to New York — asking simply, “Who is going to dance with me?”
+                      <p style={{marginBottom: '1rem', lineHeight: '1.7'}}>
+                        <strong>Siblings absorbed hidden trauma:</strong> Conrad Beals (Melba’s brother) could not play outside alone and walked to school only in groups. Three-year-old Tina Walls was sent to relatives after the family home was bombed in 1960. Phyllis Brown lost her dancing companion when her sister Minnijean was expelled and relocated to New York — asking simply, “Who is going to dance with me?”
                       </p>
-                      <p style={{color: '#cbd5e1', lineHeight: '1.7'}}>
-                        <strong style={{color: '#e2e8f0'}}>Church networks organized collective survival:</strong> Bethel AME Church connected the families of Ernest Green, Carlotta Walls, Melba Pattillo Beals, Gloria Ray Karlmark, and Sybil Jordan Hampton — providing organizational infrastructure across multiple families simultaneously and demonstrating that community networks were as essential as individual courage.
+                      <p style={{lineHeight: '1.7'}}>
+                        <strong>Church networks organized collective survival:</strong> Bethel AME Church connected the families of Ernest Green, Carlotta Walls, Melba Pattillo Beals, Gloria Ray Karlmark, and Sybil Jordan Hampton — providing organizational infrastructure across multiple families simultaneously and demonstrating that community networks were as essential as individual courage.
                       </p>
                     </div>
 

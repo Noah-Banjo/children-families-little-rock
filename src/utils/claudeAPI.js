@@ -1,17 +1,3 @@
-/**
- * Claude API Integration for Dr. Archives Chatbot
- * Provides intelligent conversational responses using Claude AI
- */
-
-/**
- * Sends a message to Claude API and gets an intelligent response
- * @param {string} userMessage - The user's question/message
- * @param {Array} families - Array of family data from the archive
- * @param {Array} stories - Array of story data from the archive
- * @param {Object} timelineData - Timeline events organized by year
- * @param {Array} conversationHistory - Recent messages for context (last 3-4 messages)
- * @returns {Promise<string>} - Claude's response text
- */
 export const sendMessageToClaude = async (
   userMessage,
   families = [],
@@ -20,11 +6,9 @@ export const sendMessageToClaude = async (
   conversationHistory = []
 ) => {
   try {
-    // Create a concise summary of available archive data (optimize tokens)
     const familySummary = createFamilySummary(families);
     const timelineSummary = createTimelineSummary(timelineData);
 
-    // Build the system prompt
     const systemPrompt = `You are Dr. Archives, the Family Stories Guide for the Little Rock School Integration Crisis digital archive (1957-1960).
 
 ABOUT YOU:
@@ -61,14 +45,9 @@ EXAMPLE RESPONSES:
 
 TONE: Professional, warm, educational. You're a knowledgeable guide, not a robotic database.`;
 
-    // Build conversation messages array
     const messages = buildConversationMessages(conversationHistory, userMessage);
 
-    // API endpoint for Vercel serverless function
-    // Works in both development and production
-    const apiUrl = '/api/chat';
-
-    const response = await fetch(apiUrl, {
+    const response = await fetch('/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -81,16 +60,13 @@ TONE: Professional, warm, educational. You're a knowledgeable guide, not a robot
       })
     });
 
-    // Check if request was successful
     if (!response.ok) {
       console.error('Claude API error:', response.status, response.statusText);
       throw new Error(`API request failed with status ${response.status}`);
     }
 
-    // Parse response
     const data = await response.json();
 
-    // Extract text from Claude's response
     if (data.content && data.content[0] && data.content[0].text) {
       return data.content[0].text;
     } else {
@@ -100,17 +76,10 @@ TONE: Professional, warm, educational. You're a knowledgeable guide, not a robot
 
   } catch (error) {
     console.error('Error calling Claude API:', error);
-
-    // Return user-friendly fallback message
     return "I'm having trouble connecting right now. Please try asking your question again, or explore the family profiles directly on the site. If the problem persists, you can browse the Timeline and Family Stories sections for detailed information.";
   }
 };
 
-/**
- * Creates a concise summary of families for the system prompt
- * @param {Array} families - Family data array
- * @returns {string} - Formatted summary
- */
 const createFamilySummary = (families) => {
   if (!families || families.length === 0) {
     return 'Families are being loaded from the archive...';
@@ -128,11 +97,6 @@ const createFamilySummary = (families) => {
   return summaries.join('\n');
 };
 
-/**
- * Creates a concise summary of timeline events
- * @param {Object} timelineData - Timeline data organized by year
- * @returns {string} - Formatted summary
- */
 const createTimelineSummary = (timelineData) => {
   if (!timelineData || Object.keys(timelineData).length === 0) {
     return 'Timeline events are being loaded...';
@@ -140,11 +104,9 @@ const createTimelineSummary = (timelineData) => {
 
   const keyEvents = [];
 
-  // Extract major events (up to 10)
   Object.keys(timelineData).slice(0, 5).forEach(year => {
     const yearData = timelineData[year];
     if (yearData.historical && yearData.historical.length > 0) {
-      // Get first 2 major events per year
       yearData.historical.slice(0, 2).forEach(event => {
         keyEvents.push(`• ${year}: ${event.title}`);
       });
@@ -154,17 +116,10 @@ const createTimelineSummary = (timelineData) => {
   return keyEvents.join('\n') || 'Major events from 1954-1960 integration crisis';
 };
 
-/**
- * Builds the messages array for Claude API from conversation history
- * @param {Array} conversationHistory - Previous messages
- * @param {string} currentMessage - Current user message
- * @returns {Array} - Formatted messages array
- */
 const buildConversationMessages = (conversationHistory, currentMessage) => {
   const messages = [];
 
-  // Add recent conversation history (last 3-4 exchanges for context)
-  const recentHistory = conversationHistory.slice(-6); // Last 6 messages = 3 exchanges
+  const recentHistory = conversationHistory.slice(-6);
 
   recentHistory.forEach(msg => {
     if (msg.type === 'user') {
@@ -180,47 +135,12 @@ const buildConversationMessages = (conversationHistory, currentMessage) => {
     }
   });
 
-  // Add current user message
   messages.push({
     role: 'user',
     content: currentMessage
   });
 
   return messages;
-};
-
-/**
- * Estimates token usage and cost for a conversation
- * @param {string} userMessage - User's message
- * @param {Array} conversationHistory - Recent messages
- * @returns {Object} - Estimation object with tokens and cost
- */
-export const estimateTokenUsage = (userMessage, conversationHistory = []) => {
-  // Rough estimation (1 token ≈ 4 characters)
-  const systemPromptTokens = 500; // Approximate
-  const contextTokens = Math.ceil(JSON.stringify(conversationHistory).length / 4);
-  const userMessageTokens = Math.ceil(userMessage.length / 4);
-  const responseTokens = 800; // Max we're allowing
-
-  const totalTokens = systemPromptTokens + contextTokens + userMessageTokens + responseTokens;
-
-  // Claude Sonnet pricing (as of 2025)
-  // Input: $3 per million tokens
-  // Output: $15 per million tokens
-  const inputCost = ((systemPromptTokens + contextTokens + userMessageTokens) / 1000000) * 3;
-  const outputCost = (responseTokens / 1000000) * 15;
-  const totalCost = inputCost + outputCost;
-
-  return {
-    estimatedTokens: totalTokens,
-    estimatedCost: totalCost.toFixed(6),
-    breakdown: {
-      systemPrompt: systemPromptTokens,
-      context: contextTokens,
-      userMessage: userMessageTokens,
-      response: responseTokens
-    }
-  };
 };
 
 export default sendMessageToClaude;

@@ -1,6 +1,65 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import './chatbot-mobile-first.css';
+
+const XIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+
+const StoryViewModal = ({ story, onClose }) => {
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', handleKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="story-modal-backdrop"
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Full story: ${story.title}`}
+    >
+      <div className="story-modal">
+        <div className="story-modal-header">
+          <div className="story-modal-title">
+            <h2>{story.title || 'Untitled Story'}</h2>
+            {story.storyType && <span className="time-badge">{story.storyType}</span>}
+          </div>
+          <button className="story-modal-close" onClick={onClose} aria-label="Close story">
+            <XIcon />
+          </button>
+        </div>
+        <div className="story-modal-body">
+          <p className="story-modal-description">
+            {story.content || 'No content available.'}
+          </p>
+          <div className="story-modal-details">
+            {story.timePeriod && (
+              <div className="detail-item">
+                <span className="label">Time Period:</span>
+                <span className="value">{story.timePeriod}</span>
+              </div>
+            )}
+            {story.familyName && (
+              <div className="detail-item">
+                <span className="label">Family:</span>
+                <span className="value">{story.familyName}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // Components
 import ErrorBoundary from './components/ErrorBoundary';
@@ -38,6 +97,9 @@ const HistoricalArchive = () => {
   ]);
   const [currentMessage, setCurrentMessage] = useState('');
   const [isChatOpen, setIsChatOpen] = useState(false);
+
+  // Story viewer state
+  const [selectedStory, setSelectedStory] = useState(null);
 
   // Citation modal state
   const [showCitationModal, setShowCitationModal] = useState(false);
@@ -390,7 +452,7 @@ const HistoricalArchive = () => {
                           : 'No description available.'
                         }
                       </p>
-                      <p className="location">📍 {family.location || 'Unknown Location'}</p>
+                      <p className="location">{family.location || 'Unknown Location'}</p>
                       {family.childrenNames && (
                         <p className="children">Children: {family.childrenNames}</p>
                       )}
@@ -460,7 +522,12 @@ const HistoricalArchive = () => {
                       </div>
 
                       <div className="story-actions">
-                        <button className="btn-primary">Read Full Story</button>
+                        <button
+                          className="btn-primary"
+                          onClick={() => setSelectedStory(story)}
+                        >
+                          Read Full Story
+                        </button>
                       </div>
                     </div>
                   ))}
@@ -474,6 +541,10 @@ const HistoricalArchive = () => {
               )}
             </div>
           </section>
+
+          {selectedStory && (
+            <StoryViewModal story={selectedStory} onClose={() => setSelectedStory(null)} />
+          )}
         </ErrorBoundary>
       )}
 
@@ -501,12 +572,40 @@ const HistoricalArchive = () => {
       {activeSection === 'multimedia' && (
         <section className="multimedia-section">
           <div className="container">
-            <h1>Multimedia Archive</h1>
-            <p>Photos, videos, and documents from the era</p>
+            <div className="section-intro">
+              <h1>Multimedia Archive</h1>
+              <p>Photographs, documents, and audio recordings from families who lived through the Little Rock integration crisis</p>
+            </div>
 
-            <div className="multimedia-placeholder">
-              <p>Multimedia content from family stories will be displayed here.</p>
-              <p>Content is being processed and will be available soon.</p>
+            <div className="multimedia-coming-soon">
+              <div className="multimedia-coming-icon">
+                <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+                  <rect x="4" y="10" width="48" height="36" rx="4" stroke="currentColor" strokeWidth="2"/>
+                  <circle cx="28" cy="28" r="9" stroke="currentColor" strokeWidth="2"/>
+                  <circle cx="28" cy="28" r="3.5" fill="currentColor"/>
+                  <rect x="10" y="6" width="8" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                  <rect x="38" y="6" width="8" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                </svg>
+              </div>
+              <h2>Content In Preparation</h2>
+              <p>Photographs, oral history audio recordings, and archival documents from the families of the Little Rock Nine are currently being digitized and processed. This section will feature materials drawn from the Butler Center for Arkansas Studies and family collections.</p>
+              <div className="multimedia-preview-categories">
+                <div className="multimedia-cat">
+                  <span className="multimedia-cat-label">Archival Photographs</span>
+                  <span className="multimedia-cat-status">Processing</span>
+                </div>
+                <div className="multimedia-cat">
+                  <span className="multimedia-cat-label">Oral History Audio</span>
+                  <span className="multimedia-cat-status">Processing</span>
+                </div>
+                <div className="multimedia-cat">
+                  <span className="multimedia-cat-label">Primary Documents</span>
+                  <span className="multimedia-cat-status">Processing</span>
+                </div>
+              </div>
+              <button className="btn-primary" onClick={() => setActiveSection('families')}>
+                Explore Family Stories in the Meantime
+              </button>
             </div>
           </div>
         </section>

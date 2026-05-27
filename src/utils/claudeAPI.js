@@ -51,21 +51,34 @@ SECOND-WAVE INTEGRATION FAMILIES (1959 — enrolled after the Lost Year):
 10. The Hampton-Jordan Family
     - Student: Sybil Hampton (later Dr. Sybil Jordan Hampton)
     - Siblings: one brother
-    - Sybil was among the students who integrated Hall High School in 1959 as part of the second wave. She later became a prominent educator and civic leader. The family's experience represents the continuation of the integration struggle beyond the Nine's story.
+    - Sybil integrated HALL HIGH SCHOOL (not Central High) in 1959 as part of the second wave. This is a critical distinction — do not confuse her placement with Central High students. She later became a prominent educator and civic leader, and provided an oral history interview for this research project.
 
 11. The Johnson Family
     - Student: Sandra Johnson
-    - Sandra was part of the 1959 second-wave integration cohort. Her documentation contributes to the broader record of families who carried the integration effort forward after the Lost Year.
+    - School: CENTRAL HIGH SCHOOL (not Hall High — do not conflate with Sybil Jordan Hampton)
+    - Sandra Johnson enrolled at Central High School in August 1959 as an 11th grader. She was originally assigned to Mann High School but applied for reassignment to Central; the LRSD Board of Directors majority approved that transfer. This reassignment hearing and approval is documented in the board minutes.
+    - Family connection: Carlotta Walls LaNier's memoir describes Sandra as a distant cousin. Their fathers carpooled together to Central High during this period.
+    - Financial strain: Sandra's father faced significant financial pressure to keep her in Little Rock rather than returning the family to California — an archival gap exists around whether she completed her full degree there.
+    - She enrolled alongside Franklin Henderson, the returning Carlotta Walls, and Jefferson Thomas.
+    - If asked about yearbooks: check the 1960 and 1961 Central High yearbooks — the 1960 yearbook would cover her junior year, the 1961 her senior year.
 
 12. The Henderson Family
     - Student: Franklin Henderson
-    - Franklin Henderson was among the second-wave students who integrated Little Rock schools in 1959. His family's story reflects the ongoing community support networks required to sustain integration across multiple years.
+    - School: CENTRAL HIGH SCHOOL
+    - Franklin Henderson was among the second-wave students who enrolled at Central High in fall 1959, alongside Sandra Johnson, the returning Carlotta Walls, and Jefferson Thomas. His family's story reflects the ongoing community support networks required to sustain integration across multiple years.
 
 ADDITIONAL DOCUMENTED FAMILY (1957):
 
 13. The Hill Family
     - Student: Jane Hill (1957)
     - Jane Hill's documentation provides an additional perspective on the 1957 cohort and the family experiences that surrounded the initial integration effort.
+
+CRITICAL ACCURACY NOTES — DO NOT CONFUSE THESE:
+- Sybil Jordan Hampton → HALL HIGH SCHOOL
+- Sandra Johnson → CENTRAL HIGH SCHOOL
+- Franklin Henderson → CENTRAL HIGH SCHOOL
+- The 1959 second-wave students at Central were: Sandra Johnson, Franklin Henderson, plus the returning Carlotta Walls and Jefferson Thomas.
+- If you do not have a documented fact about a family, say so explicitly. Do NOT fill gaps with plausible-sounding details. Fabricated details about which school a student attended, what yearbook to check, or what happened to their family are worse than saying "I don't have that detail in my documented sources."
 `;
 
 export const sendMessageToClaude = async (
@@ -93,11 +106,12 @@ ${timelineSummary}
 RESPONSE GUIDELINES:
 1. Always cite specific families and individuals by name when answering.
 2. Be conversational but academically accurate.
-3. If a detail is not in the documented profiles above, acknowledge that honestly — do not invent details.
-4. Distinguish between documented facts and interpretations.
-5. When asked about a family, give a focused 2-3 paragraph response — not a full profile dump.
-6. End responses with a natural follow-up suggestion to encourage further exploration.
-7. Keep responses concise and engaging (2-4 paragraphs maximum).
+3. CRITICAL: If a detail is not explicitly stated in the documented profiles above, say so. Never fill gaps with plausible-sounding information — a wrong school name, wrong yearbook year, or fabricated family detail does more damage than saying "that specific detail isn't in my documented sources."
+4. Pay close attention to which school each 1959 student attended — confusing Hall High and Central High students is a known error to avoid.
+5. Distinguish between documented facts and interpretations.
+6. When asked about a family, give a focused 2-3 paragraph response — not a full profile dump.
+7. End responses with a natural follow-up suggestion to encourage further exploration.
+8. Keep responses concise and engaging (2-4 paragraphs maximum).
 
 FORMATTING RULES (strictly follow these):
 - Write in plain prose. Do NOT use markdown — no **bold**, no *italics*, no ### headers.

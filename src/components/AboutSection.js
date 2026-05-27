@@ -39,7 +39,10 @@ const AboutSection = ({ families, stories }) => {
           <div className="researcher-layout">
             <div className="researcher-photo">
               <div className="photo-placeholder">
-                <span className="photo-icon">👤</span>
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <circle cx="24" cy="18" r="10" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M6 42c0-9.941 8.059-18 18-18s18 8.059 18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
                 <p>Photo Coming Soon</p>
               </div>
             </div>
@@ -143,7 +146,7 @@ const AboutSection = ({ families, stories }) => {
             <ul className="contributor-list">
               {/* USER: Replace these placeholders with actual names */}
               <li>His family and church members, Emily Housdan, Joshua Ozovehe</li>
-              <li>Brigitte Billeaudeaux, Elise Tanner, Emily Summers, James Young Blood and Somaya Langley, to be updated</li>
+              <li>Brigitte Billeaudeaux, Elise Tanner, Emily Summers, James Young Blood, and Somaya Langley</li>
             </ul>
           </div>
         </div>

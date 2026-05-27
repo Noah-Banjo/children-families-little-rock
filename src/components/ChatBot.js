@@ -262,7 +262,12 @@ const ChatBot = React.memo(({
                 <SendIcon />
               </button>
             </div>
-            <p className="ai-disclaimer-mini">Always verify against primary sources</p>
+            <p className="ai-disclaimer-mini">
+              Cross-reference with the{' '}
+              <a href="/thesis/thesis.pdf" target="_blank" rel="noopener noreferrer" className="disclaimer-source-link">
+                primary sources used in this research
+              </a>
+            </p>
           </div>
 
         </div>

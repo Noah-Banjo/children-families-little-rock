@@ -1,6 +1,13 @@
 import React from 'react';
 import heroBackgroundImage from '../assets/images/hero-background.jpg';
 
+const SearchIconHero = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <circle cx="9" cy="9" r="6.5" stroke="currentColor" strokeWidth="1.8"/>
+    <path d="M14 14L17.5 17.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+  </svg>
+);
+
 const HeroSection = React.memo(({
   setActiveSection,
   globalSearch,
@@ -36,8 +43,9 @@ const HeroSection = React.memo(({
             Explore Stories
           </button>
           <button
-            className="btn-secondary"
-            onClick={() => window.open('https://www.youtube.com/watch?v=PLACEHOLDER_VIDEO_ID', '_blank')}
+            className="btn-secondary btn-coming-soon"
+            title="Video introduction coming soon"
+            disabled
           >
             Watch Introduction
           </button>
@@ -51,7 +59,7 @@ const HeroSection = React.memo(({
             onChange={(e) => handleSearchChange(e.target.value)}
             onFocus={() => setShowSearchOverlay(globalSearch.length > 0)}
           />
-          <span className="search-icon">🔍</span>
+          <span className="search-icon"><SearchIconHero /></span>
         </div>
       </div>
     </section>

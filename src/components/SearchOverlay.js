@@ -22,7 +22,7 @@ const SearchOverlay = React.memo(({
             {/* Families Results */}
             {searchResults.families.length > 0 && (
               <div className="search-section">
-                <h4>👨‍👩‍👧‍👦 Families ({searchResults.families.length})</h4>
+                <h4>Families <span className="search-count">({searchResults.families.length})</span></h4>
                 <div className="search-items">
                   {searchResults.families.slice(0, 3).map(family => (
                     <div
@@ -47,7 +47,7 @@ const SearchOverlay = React.memo(({
             {/* Stories Results */}
             {searchResults.stories.length > 0 && (
               <div className="search-section">
-                <h4>📖 Stories ({searchResults.stories.length})</h4>
+                <h4>Stories <span className="search-count">({searchResults.stories.length})</span></h4>
                 <div className="search-items">
                   {searchResults.stories.slice(0, 3).map(story => (
                     <div
@@ -72,7 +72,7 @@ const SearchOverlay = React.memo(({
             {/* Timeline Results */}
             {searchResults.timeline.length > 0 && (
               <div className="search-section">
-                <h4>⏰ Timeline Events ({searchResults.timeline.length})</h4>
+                <h4>Timeline Events <span className="search-count">({searchResults.timeline.length})</span></h4>
                 <div className="search-items">
                   {searchResults.timeline.slice(0, 3).map(event => (
                     <div

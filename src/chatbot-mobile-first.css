@@ -489,6 +489,18 @@
   letter-spacing: 0.01em;
 }
 
+.disclaimer-source-link {
+  color: var(--brand-charcoal);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease;
+}
+
+.disclaimer-source-link:hover {
+  color: var(--brand-red);
+}
+
 /* ---- Mobile Full-Screen ---- */
 @media (max-width: 767px) {
   .enhanced-chatbot {

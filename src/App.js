@@ -2,6 +2,21 @@ import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import './chatbot-mobile-first.css';
 
+// Components
+import ErrorBoundary from './components/ErrorBoundary';
+import SearchOverlay from './components/SearchOverlay';
+import HeroSection from './components/HeroSection';
+import FamiliesSection from './components/FamiliesSection';
+import TimelineSection from './components/TimelineSection';
+import AboutSection from './components/AboutSection';
+import ChatBot from './components/ChatBot';
+import ChatBotPrompt from './components/ChatBotPrompt';
+import CitationModal from './components/CitationModal';
+
+// Custom Hooks
+import { useArchiveData } from './hooks/useArchiveData';
+import { useSearch } from './hooks/useSearch';
+
 const XIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
     <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -60,21 +75,6 @@ const StoryViewModal = ({ story, onClose }) => {
     </div>
   );
 };
-
-// Components
-import ErrorBoundary from './components/ErrorBoundary';
-import SearchOverlay from './components/SearchOverlay';
-import HeroSection from './components/HeroSection';
-import FamiliesSection from './components/FamiliesSection';
-import TimelineSection from './components/TimelineSection';
-import AboutSection from './components/AboutSection';
-import ChatBot from './components/ChatBot';
-import ChatBotPrompt from './components/ChatBotPrompt';
-import CitationModal from './components/CitationModal';
-
-// Custom Hooks
-import { useArchiveData } from './hooks/useArchiveData';
-import { useSearch } from './hooks/useSearch';
 
 const HistoricalArchive = () => {
   // UI State

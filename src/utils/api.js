@@ -89,7 +89,7 @@ export const fetchFromCMS = async (url, timeout = 30000) => {
  */
 export const fetchFamilies = async () => {
   const CMS_BASE_URL = 'https://children-families-cms.onrender.com/api';
-  return await fetchFromCMS(`${CMS_BASE_URL}/families?populate=*`);
+  return await fetchFromCMS(`${CMS_BASE_URL}/families?populate=*&sort=id:asc`);
 };
 
 /**

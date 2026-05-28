@@ -53,9 +53,8 @@ const ChatBot = React.memo(({
   const inputRef = useRef(null);
 
   useEffect(() => {
-    const hidden = localStorage.getItem('chatbotDisclaimerHidden') === 'true';
-    setDisclaimerVisible(!hidden);
-  }, []);
+    if (isChatOpen) setDisclaimerVisible(true);
+  }, [isChatOpen]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -74,7 +73,6 @@ const ChatBot = React.memo(({
   const hideDisclaimer = useCallback((e) => {
     e.stopPropagation();
     setDisclaimerVisible(false);
-    localStorage.setItem('chatbotDisclaimerHidden', 'true');
   }, []);
 
   const sendMessage = useCallback(async (messageText) => {

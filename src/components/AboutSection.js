@@ -147,6 +147,7 @@ const AboutSection = ({ families, stories }) => {
               {/* USER: Replace these placeholders with actual names */}
               <li>His family and church members, Emily Housdan, Joshua Ozovehe</li>
               <li>Brigitte Billeaudeaux, Elise Tanner, Emily Summers, James Young Blood, and Somaya Langley</li>
+              <li>Sharing Stories from 1977 project</li>
             </ul>
           </div>
         </div>

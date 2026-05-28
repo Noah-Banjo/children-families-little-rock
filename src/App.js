@@ -588,7 +588,7 @@ const HistoricalArchive = () => {
                 </svg>
               </div>
               <h2>Content In Preparation</h2>
-              <p>Photographs, oral history audio recordings, and archival documents from the families of the Little Rock Nine will added soon</p>
+              <p>Photographs, oral history audio recordings, and archival documents from the families of the Little Rock Nine will be added soon</p>
               <button className="btn-primary" onClick={() => setActiveSection('families')}>
                 Explore Family Stories in the Meantime
               </button>

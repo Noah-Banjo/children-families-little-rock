@@ -588,21 +588,7 @@ const HistoricalArchive = () => {
                 </svg>
               </div>
               <h2>Content In Preparation</h2>
-              <p>Photographs, oral history audio recordings, and archival documents from the families of the Little Rock Nine are currently being digitized and processed. This section will feature materials drawn from the Butler Center for Arkansas Studies and family collections.</p>
-              <div className="multimedia-preview-categories">
-                <div className="multimedia-cat">
-                  <span className="multimedia-cat-label">Archival Photographs</span>
-                  <span className="multimedia-cat-status">Processing</span>
-                </div>
-                <div className="multimedia-cat">
-                  <span className="multimedia-cat-label">Oral History Audio</span>
-                  <span className="multimedia-cat-status">Processing</span>
-                </div>
-                <div className="multimedia-cat">
-                  <span className="multimedia-cat-label">Primary Documents</span>
-                  <span className="multimedia-cat-status">Processing</span>
-                </div>
-              </div>
+              <p>Photographs, oral history audio recordings, and archival documents from the families of the Little Rock Nine will be added soon</p>
               <button className="btn-primary" onClick={() => setActiveSection('families')}>
                 Explore Family Stories in the Meantime
               </button>

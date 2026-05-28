@@ -263,7 +263,11 @@ const ChatBot = React.memo(({
             <p className="ai-disclaimer-mini">
               Cross-reference with the{' '}
               <a href="/thesis/thesis.pdf" target="_blank" rel="noopener noreferrer" className="disclaimer-source-link">
-                primary sources used in this research
+                primary sources
+              </a>
+              {' '}or the{' '}
+              <a href="/database/LR9_Crisis_Reference_Database.xlsx" download className="disclaimer-source-link">
+                crisis reference database
               </a>
             </p>
           </div>

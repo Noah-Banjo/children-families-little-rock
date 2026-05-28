@@ -415,7 +415,7 @@ TONE: Professional, warm, educational. You are a knowledgeable guide, not a robo
 
   } catch (error) {
     console.error('Error calling Claude API:', error);
-    return "I'm having trouble connecting right now. Please try asking your question again, or explore the family profiles directly on the site.";
+    return "Dr. Archives is temporarily unavailable — please try your question again in a moment. If the issue continues, the family profiles and timeline on the site contain the same information.";
   }
 };
 

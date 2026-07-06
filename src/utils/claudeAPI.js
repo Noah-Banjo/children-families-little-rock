@@ -406,8 +406,10 @@ TONE: Professional, warm, educational. You are a knowledgeable guide, not a robo
 
     const data = await response.json();
 
-    if (data.content && data.content[0] && data.content[0].text) {
-      return data.content[0].text;
+    const textBlock = data.content && data.content.find(block => block.type === 'text');
+
+    if (textBlock && textBlock.text) {
+      return textBlock.text;
     } else {
       console.error('Unexpected response format:', data);
       throw new Error('Invalid response format from API');

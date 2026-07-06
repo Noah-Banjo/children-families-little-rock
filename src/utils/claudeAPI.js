@@ -392,7 +392,7 @@ TONE: Professional, warm, educational. You are a knowledgeable guide, not a robo
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-5',
         max_tokens: 1500,
         system: systemPrompt,
         messages: messages

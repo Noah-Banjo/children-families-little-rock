@@ -12,6 +12,7 @@ import AboutSection from './components/AboutSection';
 import ChatBot from './components/ChatBot';
 import ChatBotPrompt from './components/ChatBotPrompt';
 import CitationModal from './components/CitationModal';
+import PlumPrint from './components/PlumPrint';
 
 // Custom Hooks
 import { useArchiveData } from './hooks/useArchiveData';
@@ -635,6 +636,10 @@ const HistoricalArchive = () => {
                 <button className="btn-primary" onClick={() => setShowCitationModal(true)}>
                   Cite This Work
                 </button>
+              </div>
+
+              <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'center' }}>
+                <PlumPrint />
               </div>
             </div>
 

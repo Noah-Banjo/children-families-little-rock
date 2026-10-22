@@ -638,8 +638,16 @@ const HistoricalArchive = () => {
                 </button>
               </div>
 
-              <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'center' }}>
+              <div style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                 <PlumPrint />
+                <a
+                  href="https://research.ualr.edu/etd/1336"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ fontSize: '0.85rem', color: 'var(--brand-charcoal)' }}
+                >
+                  Official record at UALR ScholarWorks ↗
+                </a>
               </div>
             </div>
 

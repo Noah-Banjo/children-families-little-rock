@@ -1,4 +1,7 @@
 import React, { useMemo } from 'react';
+import { isPreview } from '../preview/previewFlag';
+import TwoTrackView from '../preview/TwoTrackView';
+import MapView from '../preview/MapView';
 
 const CATEGORY_META = {
   'legal-milestone':      { label: 'Legal Milestone',       color: '#2563eb' },
@@ -29,8 +32,14 @@ const TimelineSection = React.memo(({
   globalSearch,
   handleSearchChange,
   debouncedSearch,
-  setActiveSection
+  setActiveSection,
+  tlView = 'year',
+  setTlView,
+  mapFocus,
+  onOpenStory
 }) => {
+  const preview = isPreview();
+  const view = preview ? tlView : 'year';
   const historicalEvents = useMemo(() => ({
     1954: [
       {
@@ -288,7 +297,22 @@ const TimelineSection = React.memo(({
           </div>
         </div>
 
+        {preview && setTlView && (
+          <div className="pv-toggle" role="group" aria-label="Timeline view">
+            {[['year', 'By year'], ['tracks', 'Two tracks'], ['map', 'Map']].map(([k, label]) => (
+              <button key={k} type="button" aria-pressed={tlView === k} onClick={() => setTlView(k)}>{label}</button>
+            ))}
+          </div>
+        )}
+        {view === 'tracks' && (
+          <TwoTrackView years={years} timelineData={timelineData} categoryMeta={CATEGORY_META} />
+        )}
+        {view === 'map' && (
+          <MapView focusId={mapFocus} onOpenStory={onOpenStory} />
+        )}
+
         {/* Timeline */}
+        {view === 'year' && (
         <div className="timeline-container">
           <div className="timeline-spine">
             {years.map((year, index) => {
@@ -384,6 +408,7 @@ const TimelineSection = React.memo(({
             })}
           </div>
         </div>
+        )}
 
         {/* Stats */}
         <div className="timeline-stats">

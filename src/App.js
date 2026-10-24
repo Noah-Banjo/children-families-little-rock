@@ -15,6 +15,9 @@ import CitationModal from './components/CitationModal';
 import PlumPrint from './components/PlumPrint';
 
 // Custom Hooks
+import { isPreview } from './preview/previewFlag';
+import StoriesPreview from './preview/StoriesPreview';
+import MediaPreview from './preview/MediaPreview';
 import { useArchiveData } from './hooks/useArchiveData';
 import { useSearch } from './hooks/useSearch';
 
@@ -101,6 +104,13 @@ const HistoricalArchive = () => {
 
   // Story viewer state
   const [selectedStory, setSelectedStory] = useState(null);
+  const preview = isPreview();
+  const [tlView, setTlView] = useState('year');
+  const [mapFocus, setMapFocus] = useState(null);
+  const [narratorId, setNarratorId] = useState('hampton');
+  const openMap = (id) => { setMapFocus(id); setTlView('map'); setActiveSection('timeline'); };
+  const openTimelineEvent = () => { setTlView('tracks'); setActiveSection('timeline'); setTimeout(() => { const el = document.querySelector('.pv-tt'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 50); };
+  const openStory = (id) => { setNarratorId(id); setActiveSection('stories'); };
 
   // Citation modal state
   const [showCitationModal, setShowCitationModal] = useState(false);
@@ -535,7 +545,16 @@ const HistoricalArchive = () => {
                 </div>
               )}
 
-              {!loading && stories.length === 0 && (
+              {preview && (
+                <StoriesPreview
+                  narratorId={narratorId}
+                  setNarratorId={setNarratorId}
+                  onOpenMap={openMap}
+                  onOpenTimeline={openTimelineEvent}
+                />
+              )}
+
+              {!preview && !loading && stories.length === 0 && (
                 <div className="no-content">
                   <p>Individual stories are being added to the archive. Check back soon.</p>
                 </div>
@@ -565,6 +584,10 @@ const HistoricalArchive = () => {
             handleSearchChange={handleSearchChange}
             debouncedSearch={debouncedSearch}
             setActiveSection={setActiveSection}
+            tlView={tlView}
+            setTlView={setTlView}
+            mapFocus={mapFocus}
+            onOpenStory={openStory}
           />
         </ErrorBoundary>
       )}
@@ -578,6 +601,8 @@ const HistoricalArchive = () => {
               <p>Photographs, documents, and audio recordings from families who lived through the Little Rock integration crisis</p>
             </div>
 
+            {preview && <MediaPreview />}
+            {!preview && (
             <div className="multimedia-coming-soon">
               <div className="multimedia-coming-icon">
                 <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
@@ -594,6 +619,7 @@ const HistoricalArchive = () => {
                 Explore Family Stories in the Meantime
               </button>
             </div>
+            )}
           </div>
         </section>
       )}

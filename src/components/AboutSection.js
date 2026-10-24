@@ -1,4 +1,6 @@
 import React from 'react';
+import { isPreview } from '../preview/previewFlag';
+import { AboutPreview } from '../preview/SectionPreviews';
 
 const AboutSection = ({ families, stories }) => {
   return (
@@ -152,6 +154,7 @@ const AboutSection = ({ families, stories }) => {
           </div>
         </div>
 
+        {isPreview() && <AboutPreview />}
       </div>
     </section>
   );

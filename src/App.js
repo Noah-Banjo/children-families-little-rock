@@ -18,6 +18,7 @@ import PlumPrint from './components/PlumPrint';
 import { isPreview } from './preview/previewFlag';
 import StoriesPreview from './preview/StoriesPreview';
 import MediaPreview from './preview/MediaPreview';
+import { ScholarshipPreview } from './preview/SectionPreviews';
 import { useArchiveData } from './hooks/useArchiveData';
 import { useSearch } from './hooks/useSearch';
 
@@ -886,6 +887,7 @@ const HistoricalArchive = () => {
                 )}
               </div>
             </div>
+            {preview && <ScholarshipPreview />}
           </div>
         </section>
       )}

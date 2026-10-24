@@ -1,3 +1,5 @@
+import { isPreview } from '../preview/previewFlag';
+import { FamiliesPreview } from '../preview/SectionPreviews';
 import React, { useState, useEffect, useCallback } from 'react';
 import ImageAttribution from './ImageAttribution';
 
@@ -219,6 +221,7 @@ const FamiliesSection = React.memo(({
             })}
           </div>
         )}
+        {isPreview() && <FamiliesPreview />}
       </div>
 
       {selectedFamily && (

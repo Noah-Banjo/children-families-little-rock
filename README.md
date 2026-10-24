@@ -18,7 +18,7 @@ This thesis project leverages emerging technologies (AI and machine learning) to
 
 ## Live Site
 
-Coming soon: childrenandfamilieslr.com
+https://lr9childrenandfamilies.com
 
 ## Technology Stack
 

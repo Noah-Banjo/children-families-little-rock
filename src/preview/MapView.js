@@ -64,7 +64,7 @@ const MapView = ({ focusId, onOpenStory }) => {
         style: STYLE,
         center: NEIGHBORHOOD_VIEW.center,
         zoom: NEIGHBORHOOD_VIEW.zoom,
-        attributionControl: { compact: true }
+        attributionControl: { compact: false }
       });
       map.current = m;
       m.addControl(new ml.NavigationControl({ visualizePitch: true }), 'top-right');

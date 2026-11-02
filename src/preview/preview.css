@@ -88,6 +88,7 @@
 .pv-dot.business{background:var(--brand-yellow)}
 .pv-dot.institution{background:var(--brand-charcoal)}
 .pv-dot.school{background:var(--brand-black);border-radius:3px}
+.pv-dot.sample{background:#fff;border:2px dashed var(--brand-charcoal);box-shadow:none}
 .pv-dot.arc{height:3px;border:0;border-radius:2px;background:var(--brand-red);width:16px;box-shadow:none}
 .pv-ctl{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:.8rem 0}
 .pv-ctl button{padding:.4rem .8rem;border-radius:8px;border:1px solid var(--brand-charcoal);background:#fff;cursor:pointer;font-family:inherit;color:var(--brand-charcoal)}
@@ -96,6 +97,8 @@
 .pv-cap{font-size:.9rem;margin:.2rem 0 .8rem;color:var(--brand-charcoal)}
 .pv-panel{position:absolute;left:.7rem;top:.7rem;width:min(300px,calc(100% - 1.4rem));background:#fff;border-radius:10px;padding:.9rem;box-shadow:0 2px 12px rgba(0,0,0,.22);z-index:3;font-size:.85rem;color:var(--brand-charcoal)}
 .pv-panel h4{margin:0 0 .4rem}
+.pv-src{margin:.6rem 0 0;font-size:.78rem;color:#555}
+.pv-src a{color:var(--brand-charcoal);text-decoration:underline}
 .pv-panel .x{position:absolute;right:.5rem;top:.4rem;border:0;background:none;font-size:1.2rem;cursor:pointer}
 .pv-mk{width:22px;height:22px;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.45);cursor:pointer;padding:0}
 .pv-mk.family{background:var(--brand-red)}

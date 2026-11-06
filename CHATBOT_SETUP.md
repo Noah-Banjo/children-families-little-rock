@@ -18,7 +18,7 @@ npm install
 ### 2. Configure Environment Variables
 Create or verify `.env` file in project root:
 ```
-REACT_APP_ANTHROPIC_API_KEY=sk-ant-api03-YOUR_ACTUAL_KEY_HERE
+ANTHROPIC_API_KEY=sk-ant-api03-YOUR_ACTUAL_KEY_HERE
 ```
 
 **Get your API key:**
@@ -96,7 +96,7 @@ git push origin main
 4. **Add Environment Variable:**
    - Go to "Environment" tab
    - Click "Add Environment Variable"
-   - **Key:** `REACT_APP_ANTHROPIC_API_KEY`
+   - **Key:** `ANTHROPIC_API_KEY`
    - **Value:** (paste your API key from .env file)
    - Click "Save Changes"
 
@@ -188,7 +188,7 @@ curl http://localhost:3001/api/health
 
 1. **Verify Environment Variable on Render:**
    - Go to Render Dashboard → Your Service → Environment
-   - Confirm `REACT_APP_ANTHROPIC_API_KEY` exists
+   - Confirm `ANTHROPIC_API_KEY` exists
    - Confirm `NODE_ENV` = `production`
 
 2. **Check Render Logs:**

@@ -18,7 +18,7 @@ This chatbot uses **Vercel serverless functions** for API routes. No separate ba
 2. **Select your project:** `children-families-little-rock`
 3. **Go to Settings** → **Environment Variables**
 4. **Add New Variable:**
-   - **Name:** `REACT_APP_ANTHROPIC_API_KEY`
+   - **Name:** `ANTHROPIC_API_KEY`
    - **Value:** `your-anthropic-api-key-here` (get from .env file or Anthropic console)
    - **Environment:** Select all (Production, Preview, Development)
 5. **Click "Save"**
@@ -100,7 +100,7 @@ npm start
 
 **Check 1: Environment Variable**
 - Go to Vercel Dashboard → Settings → Environment Variables
-- Verify `REACT_APP_ANTHROPIC_API_KEY` exists
+- Verify `ANTHROPIC_API_KEY` exists
 - Make sure it's enabled for Production
 
 **Check 2: Deployment Logs**

@@ -1,10 +1,43 @@
 // Vercel Serverless Function for Claude API
 // This handles chatbot requests on Vercel
 
+// The key is read only on the server. ANTHROPIC_API_KEY is the preferred name.
+// The old REACT_APP_ name still works so existing deployments keep running.
+const getApiKey = () => process.env.ANTHROPIC_API_KEY || process.env.REACT_APP_ANTHROPIC_API_KEY;
+
+// Limits so the endpoint cannot be used as a free general-purpose proxy.
+const ALLOWED_MODELS = ['claude-sonnet-5'];
+const MAX_TOKENS_CAP = 1500;
+const MAX_SYSTEM_CHARS = 120000;
+const MAX_MESSAGES = 20;
+const MAX_MESSAGE_CHARS = 8000;
+
+// Optional. Set ALLOWED_ORIGINS to a comma-separated list to restrict browser access.
+// When it is not set, behavior is unchanged.
+const pickOrigin = (req) => {
+  const list = (process.env.ALLOWED_ORIGINS || '').split(',').map((o) => o.trim()).filter(Boolean);
+  if (list.length === 0) return '*';
+  const origin = req.headers.origin;
+  return list.includes(origin) ? origin : list[0];
+};
+
+const validMessages = (messages) =>
+  Array.isArray(messages) &&
+  messages.length > 0 &&
+  messages.length <= MAX_MESSAGES &&
+  messages.every(
+    (m) =>
+      m &&
+      (m.role === 'user' || m.role === 'assistant') &&
+      typeof m.content === 'string' &&
+      m.content.length <= MAX_MESSAGE_CHARS
+  );
+
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', pickOrigin(req));
+  res.setHeader('Vary', 'Origin');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader(
     'Access-Control-Allow-Headers',
@@ -23,14 +56,27 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { model, max_tokens, system, messages } = req.body;
+    const { model, max_tokens, system, messages } = req.body || {};
 
     // Validate API key exists
-    if (!process.env.REACT_APP_ANTHROPIC_API_KEY) {
+    const apiKey = getApiKey();
+    if (!apiKey) {
       console.error('API key not configured');
       return res.status(500).json({
-        error: 'API key not configured. Add REACT_APP_ANTHROPIC_API_KEY to Vercel environment variables.'
+        error: 'API key not configured. Add ANTHROPIC_API_KEY to Vercel environment variables.'
       });
+    }
+
+    // Validate the request before spending any tokens
+    const chosenModel = model || ALLOWED_MODELS[0];
+    if (!ALLOWED_MODELS.includes(chosenModel)) {
+      return res.status(400).json({ error: 'Model not allowed' });
+    }
+    if (system !== undefined && (typeof system !== 'string' || system.length > MAX_SYSTEM_CHARS)) {
+      return res.status(400).json({ error: 'Invalid system prompt' });
+    }
+    if (!validMessages(messages)) {
+      return res.status(400).json({ error: 'Invalid messages' });
     }
 
     // Call Anthropic API
@@ -38,12 +84,12 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.REACT_APP_ANTHROPIC_API_KEY,
+        'x-api-key': apiKey,
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: model || 'claude-sonnet-5',
-        max_tokens: max_tokens || 1024,
+        model: chosenModel,
+        max_tokens: Math.min(Number(max_tokens) || 1024, MAX_TOKENS_CAP),
         system,
         messages
       })

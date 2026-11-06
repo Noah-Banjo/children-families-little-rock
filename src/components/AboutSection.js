@@ -9,7 +9,7 @@ const AboutSection = ({ families, stories }) => {
         {/* ===== SECTION 1: EXISTING CONTENT ===== */}
         <h1>About This Archive</h1>
         <div className="about-content">
-          <p>Many people are familiar with the names of the Little Rock Nine, but often the stories of their siblings, parents who faced job losses, or grandmothers who kept watch go unnoticed. This mini digital exhibit aims to bring those lesser-known stories to light, highlighting how real change often happens within family networks rather than through historic events alone.</p>
+          <p>Many people are familiar with the names of the Little Rock Nine, but often the stories of their siblings, parents who faced job losses, or grandparents who kept watch go unnoticed. This mini digital exhibit aims to bring those lesser-known stories to light, highlighting how real change often happens within family networks rather than through historic events alone.</p>
 
           <p>The exhibit arranges materials by families rather than by famous individuals, offering a glimpse into how the integration crisis touched entire households: siblings who endured harassment in their schools, parents who developed security measures for daily protection, and extended family members who provided financial support when segregationists cut off credit. These glimpses help us understand the deeply personal, family-centered experiences that contributed to children's sense of agency in history.</p>
 

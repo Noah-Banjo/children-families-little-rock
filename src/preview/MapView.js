@@ -49,7 +49,7 @@ const MapView = ({ focusId, onOpenStory }) => {
   const [ready, setReady] = useState(false);
   const [error, setError] = useState(false);
   const [state, setState] = useState(0);
-  const [on, setOn] = useState({ family: true, business: true, institution: true, school: true, arc: true });
+  const [on, setOn] = useState({ family: true, business: true, institution: true, school: true, arc: true, sample: false });
   const [tilt, setTilt] = useState(false);
   const [globe, setGlobe] = useState(false);
   const [sel, setSel] = useState(focusId || null);
@@ -64,7 +64,7 @@ const MapView = ({ focusId, onOpenStory }) => {
         style: STYLE,
         center: NEIGHBORHOOD_VIEW.center,
         zoom: NEIGHBORHOOD_VIEW.zoom,
-        attributionControl: { compact: true }
+        attributionControl: { compact: false }
       });
       map.current = m;
       m.addControl(new ml.NavigationControl({ visualizePitch: true }), 'top-right');
@@ -98,6 +98,7 @@ const MapView = ({ focusId, onOpenStory }) => {
     markers.current = [];
     PINS.forEach((p) => {
       if (!p.states.includes(state) || !on[p.type]) return;
+      if (!p.verified && !on.sample) return;
       if (national && !p.national) return;
       const el = document.createElement('button');
       el.type = 'button';
@@ -114,8 +115,8 @@ const MapView = ({ focusId, onOpenStory }) => {
     if (!ready || !m) return;
     const v = national ? NATIONAL_VIEW : NEIGHBORHOOD_VIEW;
     m.flyTo({ center: v.center, zoom: v.zoom, pitch: tilt && !national ? 62 : 0, bearing: tilt && !national ? -20 : 0, duration: 1400 });
-    if (m.getLayer('arcs')) m.setLayoutProperty('arcs', 'visibility', national && on.arc ? 'visible' : 'none');
-  }, [ready, national, on.arc]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (m.getLayer('arcs')) m.setLayoutProperty('arcs', 'visibility', national && on.arc && on.sample ? 'visible' : 'none');
+  }, [ready, national, on.arc, on.sample]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const m = map.current;
@@ -133,6 +134,7 @@ const MapView = ({ focusId, onOpenStory }) => {
     const p = PINS.find((x) => x.id === focusId);
     if (p && map.current && ready) {
       setSel(p.id);
+      if (!p.verified) setOn((o) => ({ ...o, sample: true }));
       if (!p.states.includes(state)) setState(p.states[0]);
       map.current.flyTo({ center: [p.lon, p.lat], zoom: p.national ? 4 : 16, duration: 1200 });
     }
@@ -142,7 +144,7 @@ const MapView = ({ focusId, onOpenStory }) => {
 
   return (
     <div className="pv-wrap">
-      <PreviewBadge>Sample map. Positions are illustrative until the surveyed addresses are loaded.</PreviewBadge>
+      <PreviewBadge>The Bates home is the first source-verified point. Turn on sample points in the legend to see the rest, which are placeholders with illustrative positions.</PreviewBadge>
       <div className="pv-ctl">
         <div className="pv-steps" role="group" aria-label="Time period">
           {MAP_STATES.map((s, i) => (
@@ -162,6 +164,11 @@ const MapView = ({ focusId, onOpenStory }) => {
             <button type="button" className="x" aria-label="Close" onClick={() => setSel(null)}>×</button>
             <h4>{pin.title}</h4>
             <p>{pin.text}</p>
+            {pin.verified ? (
+              <p className="pv-src"><b>Source:</b> <a href={pin.sourceUrl} target="_blank" rel="noopener noreferrer">{pin.source}</a></p>
+            ) : (
+              <p className="pv-src">Sample point. A cited source is added when the address is verified.</p>
+            )}
             {pin.story && (
               <button type="button" className="pv-chip btn" onClick={() => onOpenStory(pin.story)}>Hear the story</button>
             )}

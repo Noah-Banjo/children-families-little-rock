@@ -15,7 +15,7 @@ import CitationModal from './components/CitationModal';
 import PlumPrint from './components/PlumPrint';
 
 // Custom Hooks
-import { isPreview } from './preview/previewFlag';
+import { isPreview, isShot } from './preview/previewFlag';
 import StoriesPreview from './preview/StoriesPreview';
 import MediaPreview from './preview/MediaPreview';
 import { ScholarshipPreview } from './preview/SectionPreviews';
@@ -893,10 +893,10 @@ const HistoricalArchive = () => {
       )}
 
       {/* ChatBot Visibility Prompt */}
-      <ChatBotPrompt onChatBotOpen={() => setIsChatOpen(true)} />
+      {!isShot() && <ChatBotPrompt onChatBotOpen={() => setIsChatOpen(true)} />}
 
       {/* Enhanced AI Chatbot */}
-      <ErrorBoundary fallbackMessage="The chatbot encountered an error. Please refresh the page to restore functionality.">
+      {!isShot() && <ErrorBoundary fallbackMessage="The chatbot encountered an error. Please refresh the page to restore functionality.">
         <ChatBot
           families={families}
           stories={stories}
@@ -909,7 +909,7 @@ const HistoricalArchive = () => {
           isChatOpen={isChatOpen}
           setIsChatOpen={setIsChatOpen}
         />
-      </ErrorBoundary>
+      </ErrorBoundary>}
 
       {/* Citation Modal */}
       <CitationModal

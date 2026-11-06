@@ -86,10 +86,11 @@ export const MAP_CATEGORIES = {
   business: 'Family business',
   institution: 'Institution or network',
   school: 'School',
-  arc: 'Lost Year journey'
+  arc: 'Lost Year journey',
+  sample: 'Sample points (not yet verified)'
 };
 
-export const NEIGHBORHOOD_VIEW = { center: [-92.2895, 34.7392], zoom: 13.3 };
+export const NEIGHBORHOOD_VIEW = { center: [-92.2942, 34.7289], zoom: 13.3 };
 export const NATIONAL_VIEW = { center: [-96.5, 38.2], zoom: 3.1 };
 
 // Positions are illustrative until the surveyed addresses are loaded.
@@ -104,8 +105,9 @@ export const PINS = [
     text: 'The Roberts family home at 1624 Izard Street before the move in 1952.' },
   { id: 'rhoward', type: 'family', lon: -92.2994, lat: 34.7388, states: [0, 1, 3], title: 'Terrence Roberts, Howard Street',
     text: 'The family moved in 1952 to Howard Street, one block from Park Street. The block was racially integrated in an otherwise rigidly segregated neighborhood.' },
-  { id: 'bates', type: 'institution', lon: -92.2776, lat: 34.7399, states: [0, 1, 2, 3], title: 'Daisy Bates and the NAACP network',
-    text: 'The organizational spine of the integration effort on 9th Street, where journalists, politicians and NAACP workers gathered.' },
+  { id: 'bates', type: 'institution', verified: true, lon: -92.28825, lat: 34.72162, states: [0, 1, 2, 3], title: 'Home of Daisy and L.C. Bates, 1207 West 28th Street',
+    text: 'The command post of the 1957 crisis and the pick-up and drop-off point for the Little Rock Nine on their trips to school.',
+    source: 'National Park Service, Home of Daisy and L.C. Bates', sourceUrl: 'https://www.nps.gov/places/home-of-daisy-and-l-c-bates.htm' },
   { id: 'press', type: 'institution', lon: -92.2792, lat: 34.74, states: [0, 1, 2, 3], title: 'The State Press, 9th Street',
     text: 'The newspaper that printed the names and home address of Minnijean Brown’s parents.' },
   { id: 'lr', type: 'family', national: true, lon: -92.2896, lat: 34.7465, states: [0, 1, 2, 3], title: 'Little Rock',
